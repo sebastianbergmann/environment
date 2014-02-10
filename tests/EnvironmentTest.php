@@ -96,4 +96,28 @@ class EnvironmentTest extends PHPUnit_Framework_TestCase
     {
         $this->assertInternalType('boolean', $this->env->hasXdebug());
     }
+
+    /**
+     * @covers \SebastianBergmann\Environment\Environment::getRuntimeNameWithVersion
+     */
+    public function testRuntimeNameAndVersionCanBeRetrieved()
+    {
+        $this->assertInternalType('string', $this->env->getRuntimeNameWithVersion());
+    }
+
+    /**
+     * @covers \SebastianBergmann\Environment\Environment::getRuntimeName
+     */
+    public function testRuntimeNameCanBeRetrieved()
+    {
+        $this->assertInternalType('string', $this->env->getRuntimeName());
+    }
+
+    /**
+     * @covers \SebastianBergmann\Environment\Environment::getRuntimeVersion
+     */
+    public function testRuntimeVersionCanBeRetrieved()
+    {
+        $this->assertInternalType('string', $this->env->getRuntimeVersion());
+    }
 }

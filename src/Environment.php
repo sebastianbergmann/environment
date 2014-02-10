@@ -134,6 +134,38 @@ class Environment
     }
 
     /**
+     * @return string
+     */
+    public function getRuntimeNameWithVersion()
+    {
+        return $this->getRuntimeName() . ' ' . $this->getRuntimeVersion();
+    }
+
+    /**
+     * @return string
+     */
+    public function getRuntimeName()
+    {
+        if ($this->isHHVM()) {
+            return 'HHVM';
+        } else {
+            return 'PHP';
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getRuntimeVersion()
+    {
+        if ($this->isHHVM()) {
+            return HPHP_VERSION;
+        } else {
+            return PHP_VERSION;
+        }
+    }
+
+    /**
      * Returns true when the runtime used is PHP and Xdebug is loaded.
      *
      * @return boolean
