@@ -23,11 +23,14 @@ use SebastianBergmann\Environment\Environment;
 
 $env = new Environment;
 
-var_dump($env->canCollectCodeCoverage());
+var_dump($env->getRuntimeNameWithVersion());
+var_dump($env->getRuntimeName());
+var_dump($env->getRuntimeVersion());
 var_dump($env->getBinary());
-var_dump($env->hasXdebug());
 var_dump($env->isHHVM());
 var_dump($env->isPHP());
+var_dump($env->hasXdebug());
+var_dump($env->canCollectCodeCoverage());
 ```
 
 ### Output on PHP
@@ -40,10 +43,13 @@ var_dump($env->isPHP());
 
 
     $ php example.php
-    bool(true)
+    string(9) "PHP 5.5.8"
+    string(3) "PHP"
+    string(5) "5.5.8"
     string(14) "'/usr/bin/php'"
-    bool(true)
     bool(false)
+    bool(true)
+    bool(true)
     bool(true)
 
 ### Output on HHVM
@@ -55,9 +61,12 @@ var_dump($env->isPHP());
 
 
     $ hhvm example.php
-    bool(true)
+    string(14) "HHVM 2.4.0-dev"
+    string(4) "HHVM"
+    string(9) "2.4.0-dev"
     string(42) "'/usr/local/src/hhvm/hphp/hhvm/hhvm' --php"
-    bool(false)
     bool(true)
     bool(false)
+    bool(false)
+    bool(true)
 
