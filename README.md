@@ -2,6 +2,9 @@
 
 This component provides functionality that helps writing PHP code that has runtime-specific (PHP / HHVM) execution paths.
 
+[![Latest Stable Version](https://poser.pugx.org/sebastian/environment/v/stable.png)](https://packagist.org/packages/sebastian/environment)
+[![Build Status](https://travis-ci.org/sebastianbergmann/environment.png?branch=master)](https://travis-ci.org/sebastianbergmann/environment)
+
 ## Installation
 
 To add Environment as a local, per-project dependency to your project, simply add a dependency on `sebastian/environment` to your project's `composer.json` file. Here is a minimal example of a `composer.json` file that just defines a dependency on Environment 1.0:
