@@ -120,4 +120,12 @@ class EnvironmentTest extends PHPUnit_Framework_TestCase
     {
         $this->assertInternalType('string', $this->env->getRuntimeVersion());
     }
+
+    /**
+     * @covers \SebastianBergmann\Environment\Environment::getRuntimeVendorUrl
+     */
+    public function testRuntimeVendorUrlCanBeRetrieved()
+    {
+        $this->assertInternalType('string', $this->env->getRuntimeVendorUrl());
+    }
 }

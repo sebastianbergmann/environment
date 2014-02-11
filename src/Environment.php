@@ -155,6 +155,18 @@ class Environment
     /**
      * @return string
      */
+    public function getRuntimeVendorUrl()
+    {
+        if ($this->isHHVM()) {
+            return 'http://hhvm.com/';
+        } else {
+            return 'http://php.net/';
+        }
+    }
+
+    /**
+     * @return string
+     */
     public function getRuntimeVersion()
     {
         if ($this->isHHVM()) {
