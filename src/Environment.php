@@ -46,8 +46,7 @@ namespace SebastianBergmann\Environment;
 /**
  * Utility class for HHVM/PHP environment handling.
  *
- * @package    Comparator
- * @subpackage Framework
+ * @package    Environment
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
  * @copyright  2014 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
