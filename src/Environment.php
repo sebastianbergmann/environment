@@ -158,7 +158,7 @@ class Environment
     public function getRuntimeVersion()
     {
         if ($this->isHHVM()) {
-            return HPHP_VERSION;
+            return HHVM_VERSION;
         } else {
             return PHP_VERSION;
         }
@@ -181,7 +181,7 @@ class Environment
      */
     public function isHHVM()
     {
-        return defined('HPHP_VERSION');
+        return defined('HHVM_VERSION');
     }
 
     /**
