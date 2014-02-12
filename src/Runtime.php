@@ -52,7 +52,7 @@ namespace SebastianBergmann\Environment;
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.github.com/sebastianbergmann/environment
  */
-class Environment
+class Runtime
 {
     /**
      * @var string
@@ -135,15 +135,15 @@ class Environment
     /**
      * @return string
      */
-    public function getRuntimeNameWithVersion()
+    public function getNameWithVersion()
     {
-        return $this->getRuntimeName() . ' ' . $this->getRuntimeVersion();
+        return $this->getName() . ' ' . $this->getVersion();
     }
 
     /**
      * @return string
      */
-    public function getRuntimeName()
+    public function getName()
     {
         if ($this->isHHVM()) {
             return 'HHVM';
@@ -155,7 +155,7 @@ class Environment
     /**
      * @return string
      */
-    public function getRuntimeVendorUrl()
+    public function getVendorUrl()
     {
         if ($this->isHHVM()) {
             return 'http://hhvm.com/';
@@ -167,7 +167,7 @@ class Environment
     /**
      * @return string
      */
-    public function getRuntimeVersion()
+    public function getVersion()
     {
         if ($this->isHHVM()) {
             return HHVM_VERSION;

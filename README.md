@@ -19,13 +19,13 @@ To add Environment as a local, per-project dependency to your project, simply ad
 
 ```php
 <?php
-use SebastianBergmann\Environment\Environment;
+use SebastianBergmann\Environment\Runtime;
 
-$env = new Environment;
+$env = new Runtime;
 
-var_dump($env->getRuntimeNameWithVersion());
-var_dump($env->getRuntimeName());
-var_dump($env->getRuntimeVersion());
+var_dump($env->getNameWithVersion());
+var_dump($env->getName());
+var_dump($env->getVersion());
 var_dump($env->getBinary());
 var_dump($env->isHHVM());
 var_dump($env->isPHP());
