@@ -66,7 +66,7 @@ class Console
             return false !== getenv('ANSICON') || 'ON' === getenv('ConEmuANSI');
         }
 
-        return function_exists('posix_isatty') && @posix_isatty(STDOUT);
+        return $this->isTty();
     }
 
     /**
@@ -91,5 +91,13 @@ class Console
         }
 
         return 80;
+    }
+
+    /**
+     * @return boolean
+     */
+    private function isTty()
+    {
+        return function_exists('posix_isatty') && @posix_isatty(STDOUT);
     }
 }
