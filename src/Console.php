@@ -68,4 +68,28 @@ class Console
 
         return function_exists('posix_isatty') && @posix_isatty(STDOUT);
     }
+
+    /**
+     * Returns the number of columns of the terminal.
+     *
+     * @return integer
+     */
+    public function getNumberOfColumns()
+    {
+        // Windows terminals have a fixed size of 80
+        // but one column is used for the cursor.
+        if (DIRECTORY_SEPARATOR == '\\') {
+            return 79;
+        }
+
+        if (preg_match('#\d+ (\d+)#', shell_exec('stty size'), $match) === 1) {
+            return (int) $match[1];
+        }
+
+        if (preg_match('#columns = (\d+);#', shell_exec('stty'), $match) === 1) {
+            return (int) $match[1];
+        }
+
+        return 80;
+    }
 }
