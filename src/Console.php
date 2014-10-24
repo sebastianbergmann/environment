@@ -66,7 +66,7 @@ class Console
             return false !== getenv('ANSICON') || 'ON' === getenv('ConEmuANSI');
         }
 
-        return $this->isTty();
+        return $this->isTty(STDOUT);
     }
 
     /**
@@ -82,6 +82,10 @@ class Console
             return 79;
         }
 
+        if (!$this->isTty(STDIN)) {
+            return 80;
+        }
+
         if (preg_match('#\d+ (\d+)#', shell_exec('stty size'), $match) === 1) {
             return (int) $match[1];
         }
@@ -94,10 +98,11 @@ class Console
     }
 
     /**
+     * @param  resource $fd
      * @return boolean
      */
-    private function isTty()
+    private function isTty($fd)
     {
-        return function_exists('posix_isatty') && @posix_isatty(STDOUT);
+        return function_exists('posix_isatty') && @posix_isatty($fd);
     }
 }
