@@ -66,6 +66,10 @@ class Console
             return false !== getenv('ANSICON') || 'ON' === getenv('ConEmuANSI');
         }
 
+        if (!defined('STDOUT')) {
+            return false;
+        }
+
         return $this->isTty(STDOUT);
     }
 
@@ -82,7 +86,7 @@ class Console
             return 79;
         }
 
-        if (!$this->isTty(STDIN)) {
+        if (!defined('STDIN') || !$this->isTty(STDIN)) {
             return 80;
         }
 
