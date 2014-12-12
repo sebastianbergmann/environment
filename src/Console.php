@@ -102,11 +102,14 @@ class Console
     }
 
     /**
-     * @param  resource $fd
+     * Returns if the file descriptor is an interactive terminal or not.
+     *
+     * @param  int|resource $fileDescriptor
+     *
      * @return boolean
      */
-    private function isTty($fd)
+    public function isTty($fileDescriptor)
     {
-        return function_exists('posix_isatty') && @posix_isatty($fd);
+        return function_exists('posix_isatty') && @posix_isatty($fileDescriptor);
     }
 }
