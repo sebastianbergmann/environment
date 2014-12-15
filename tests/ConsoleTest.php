@@ -66,6 +66,14 @@ class ConsoleTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \SebastianBergmann\Environment\Console::isTty
+     */
+    public function testCanDetectIfFileDescriptorIsInAnInteractiveTerminal()
+    {
+        $this->assertInternalType('boolean', $this->console->isTty(1));
+    }
+
+    /**
      * @covers \SebastianBergmann\Environment\Console::hasColorSupport
      */
     public function testCanDetectNumberOfColumns()
