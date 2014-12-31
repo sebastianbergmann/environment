@@ -70,7 +70,7 @@ class Console
             return false;
         }
 
-        return $this->isTty(STDOUT);
+        return $this->isInteractive(STDOUT);
     }
 
     /**
@@ -86,7 +86,7 @@ class Console
             return 79;
         }
 
-        if (!defined('STDIN') || !$this->isTty(STDIN)) {
+        if (!defined('STDIN') || !$this->isInteractive(STDIN)) {
             return 80;
         }
 
@@ -108,8 +108,16 @@ class Console
      *
      * @return boolean
      */
-    public function isTty($fileDescriptor)
+    public function isInteractive($fileDescriptor = null)
     {
+        if ($fileDescriptor === null) {
+            if (defined('STDOUT')) {
+                $fileDescriptor = STDOUT;
+            } else {
+                return false;
+            }
+        }
+
         return function_exists('posix_isatty') && @posix_isatty($fileDescriptor);
     }
 }
