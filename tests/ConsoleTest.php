@@ -27,7 +27,7 @@ class ConsoleTest extends PHPUnit_Framework_TestCase
     /**
      * @covers \SebastianBergmann\Environment\Console::isInteractive
      */
-    public function testCanDetectIfStdoutIsInteractive()
+    public function testCanDetectIfStdoutIsInteractiveByDefault()
     {
         $this->assertInternalType('boolean', $this->console->isInteractive());
     }
