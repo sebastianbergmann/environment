@@ -19,6 +19,10 @@ namespace SebastianBergmann\Environment;
  */
 class Console
 {
+    const STDIN  = 0;
+    const STDOUT = 1;
+    const STDERR = 2;
+
     /**
      * Returns true if STDOUT supports colorization.
      *
@@ -53,7 +57,7 @@ class Console
             return 79;
         }
 
-        if (!defined('STDIN') || !$this->isInteractive(STDIN)) {
+        if (!$this->isInteractive(self::STDIN)) {
             return 80;
         }
 
@@ -75,16 +79,8 @@ class Console
      *
      * @return boolean
      */
-    public function isInteractive($fileDescriptor = null)
+    public function isInteractive($fileDescriptor = self::STDOUT)
     {
-        if ($fileDescriptor === null) {
-            if (defined('STDOUT')) {
-                $fileDescriptor = STDOUT;
-            } else {
-                return false;
-            }
-        }
-
         return function_exists('posix_isatty') && @posix_isatty($fileDescriptor);
     }
 }
