@@ -11,11 +11,6 @@
 namespace SebastianBergmann\Environment;
 
 /**
- * @package    Environment
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2014 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/environment
  */
 class Console
 {
@@ -29,7 +24,7 @@ class Console
      * This code has been copied and adapted from
      * Symfony\Component\Console\Output\OutputStream.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasColorSupport()
     {
@@ -47,7 +42,7 @@ class Console
     /**
      * Returns the number of columns of the terminal.
      *
-     * @return integer
+     * @return int
      */
     public function getNumberOfColumns()
     {
@@ -75,9 +70,9 @@ class Console
     /**
      * Returns if the file descriptor is an interactive terminal or not.
      *
-     * @param  int|resource $fileDescriptor
+     * @param int|resource $fileDescriptor
      *
-     * @return boolean
+     * @return bool
      */
     public function isInteractive($fileDescriptor = self::STDOUT)
     {
