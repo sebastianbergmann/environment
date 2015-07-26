@@ -162,7 +162,7 @@ class Runtime
     }
 
     /**
-     * Returns true when the runtime used is PHP.
+     * Returns true when the runtime used is PHP without the PHPDBG SAPI.
      *
      * @return bool
      */
@@ -172,7 +172,7 @@ class Runtime
     }
 
     /**
-     * Returns true when the runtime used is PHP.
+     * Returns true when the runtime used is PHP with the PHPDBG SAPI.
      *
      * @return bool
      */
