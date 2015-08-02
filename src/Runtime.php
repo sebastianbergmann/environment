@@ -21,7 +21,7 @@ class Runtime
     private static $binary;
 
     /**
-     * Returns true when the runtime used is PHP + Xdeburg or
+     * Returns true when Xdebug is supported or
      * the runtime used is PHPDBG (PHP >= 7.0).
      *
      * @return bool
@@ -147,7 +147,7 @@ class Runtime
      */
     public function hasXdebug()
     {
-        return $this->isPHP() && extension_loaded('xdebug');
+        return ($this->isPHP() || $this->isHHVM()) && extension_loaded('xdebug');
     }
 
     /**
