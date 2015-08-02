@@ -21,15 +21,14 @@ class Runtime
     private static $binary;
 
     /**
-     * Returns true when the runtime used is HHVM or
-     * the runtime used is PHP + Xdebug.
+     * Returns true when the runtime used is PHP + Xdeburg or
+     * the runtime used is PHPDBG (PHP >= 7.0).
      *
      * @return bool
      */
     public function canCollectCodeCoverage()
     {
-        return $this->isHHVM() ||
-               $this->hasXdebug() ||
+        return $this->hasXdebug() ||
                ($this->isPHPDBG() && function_exists('phpdbg_start_oplog'));
     }
 
