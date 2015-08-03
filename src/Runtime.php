@@ -177,6 +177,6 @@ class Runtime
      */
     public function isPHPDBG()
     {
-        return !$this->isHHVM() && PHP_SAPI === 'phpdbg';
+        return PHP_SAPI === 'phpdbg' && !$this->isHHVM();
     }
 }
