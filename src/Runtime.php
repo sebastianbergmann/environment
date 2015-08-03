@@ -28,8 +28,7 @@ class Runtime
      */
     public function canCollectCodeCoverage()
     {
-        return $this->hasXdebug() ||
-               ($this->isPHPDBG() && function_exists('phpdbg_start_oplog'));
+        return $this->hasXdebug() || $this->hasPHPDBGCodeCoverage();
     }
 
     /**
@@ -178,5 +177,16 @@ class Runtime
     public function isPHPDBG()
     {
         return PHP_SAPI === 'phpdbg' && !$this->isHHVM();
+    }
+
+    /**
+     * Returns true when the runtime used is PHP with the PHPDBG SAPI
+     * and the phpdbg_*_oplog() functions are available (PHP >= 7.0).
+     *
+     * @return bool
+     */
+    public function hasPHPDBGCodeCoverage()
+    {
+        return $this->isPHPDBG() && function_exists('phpdbg_start_oplog');
     }
 }
