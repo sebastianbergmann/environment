@@ -46,23 +46,33 @@ class Console
      */
     public function getNumberOfColumns()
     {
-        // Detect Windows terminals width.
         if (DIRECTORY_SEPARATOR == '\\') {
-
             $columns = 80;
+
             if (preg_match('/^(\d+)x\d+ \(\d+x(\d+)\)$/', trim(getenv('ANSICON')), $matches)) {
                 $columns = $matches[1];
             } elseif (function_exists('proc_open')) {
-                $descriptorSpec = array(1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
-                $process = proc_open('mode CON', $descriptorSpec, $pipes, null, null, array('suppress_errors' => true));
+                $process = proc_open(
+                    'mode CON',
+                    array(
+                        1 => array('pipe', 'w'),
+                        2 => array('pipe', 'w')
+                    ),
+                    $pipes,
+                    null,
+                    null,
+                    array('suppress_errors' => true)
+                );
+
                 if (is_resource($process)) {
                     $info = stream_get_contents($pipes[1]);
+
                     fclose($pipes[1]);
                     fclose($pipes[2]);
                     proc_close($process);
 
                     if (preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', $info, $matches)) {
-                        $columns =  $matches[2];
+                        $columns = $matches[2];
                     }
                 }
             }
