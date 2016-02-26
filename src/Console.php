@@ -49,11 +49,10 @@ class Console
         // Detect Windows terminals width.
         if (DIRECTORY_SEPARATOR == '\\') {
 
+            $columns = 80;
             if (preg_match('/^(\d+)x\d+ \(\d+x(\d+)\)$/', trim(getenv('ANSICON')), $matches)) {
-                return (int)$matches[1];
-            }
-
-            if (function_exists('proc_open')) {
+                $columns = $matches[1];
+            } elseif (function_exists('proc_open')) {
                 $descriptorSpec = array(1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
                 $process = proc_open('mode CON', $descriptorSpec, $pipes, null, null, array('suppress_errors' => true));
                 if (is_resource($process)) {
@@ -63,12 +62,12 @@ class Console
                     proc_close($process);
 
                     if (preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', $info, $matches)) {
-                        return (int)$matches[2];
+                        $columns =  $matches[2];
                     }
                 }
             }
 
-            return 79;
+            return $columns - 1;
         }
 
         if (!$this->isInteractive(self::STDIN)) {
