@@ -46,9 +46,28 @@ class Console
      */
     public function getNumberOfColumns()
     {
-        // Windows terminals have a fixed size of 80
-        // but one column is used for the cursor.
+        // Detect Windows terminals width.
         if (DIRECTORY_SEPARATOR == '\\') {
+
+            if (preg_match('/^(\d+)x\d+ \(\d+x(\d+)\)$/', trim(getenv('ANSICON')), $matches)) {
+                return (int)$matches[1];
+            }
+
+            if (function_exists('proc_open')) {
+                $descriptorSpec = array(1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+                $process = proc_open('mode CON', $descriptorSpec, $pipes, null, null, array('suppress_errors' => true));
+                if (is_resource($process)) {
+                    $info = stream_get_contents($pipes[1]);
+                    fclose($pipes[1]);
+                    fclose($pipes[2]);
+                    proc_close($process);
+
+                    if (preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', $info, $matches)) {
+                        return (int)$matches[2];
+                    }
+                }
+            }
+
             return 79;
         }
 
