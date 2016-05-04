@@ -123,7 +123,7 @@ class Runtime
         if ($this->isHHVM()) {
             return 'http://hhvm.com/';
         } else {
-            return 'http://php.net/';
+            return 'https://secure.php.net/';
         }
     }
 
