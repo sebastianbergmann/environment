@@ -54,14 +54,14 @@ class Console
             } elseif (function_exists('proc_open')) {
                 $process = proc_open(
                     'mode CON',
-                    array(
-                        1 => array('pipe', 'w'),
-                        2 => array('pipe', 'w')
-                    ),
+                    [
+                        1 => ['pipe', 'w'],
+                        2 => ['pipe', 'w']
+                    ],
                     $pipes,
                     null,
                     null,
-                    array('suppress_errors' => true)
+                    ['suppress_errors' => true]
                 );
 
                 if (is_resource($process)) {
