@@ -10,9 +10,9 @@
 
 namespace SebastianBergmann\Environment;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ConsoleTest extends PHPUnit_Framework_TestCase
+class ConsoleTest extends TestCase
 {
     /**
      * @var \SebastianBergmann\Environment\Console
