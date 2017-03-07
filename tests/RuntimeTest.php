@@ -27,9 +27,10 @@ class RuntimeTest extends TestCase
     /**
      * @covers \SebastianBergmann\Environment\Runtime::canCollectCodeCoverage
      *
-     * @uses   \SebastianBergmann\Environment\Runtime::hasXdebug
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
-     * @uses   \SebastianBergmann\Environment\Runtime::isPHP
+     * @uses \SebastianBergmann\Environment\Runtime::hasXdebug
+     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
+     * @uses \SebastianBergmann\Environment\Runtime::isPHP
+     * @uses \SebastianBergmann\Environment\Runtime::isPHPDBG
      */
     public function testAbilityToCollectCodeCoverageCanBeAssessed()
     {
@@ -57,7 +58,8 @@ class RuntimeTest extends TestCase
     /**
      * @covers \SebastianBergmann\Environment\Runtime::isPHP
      *
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
+     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
+     * @uses \SebastianBergmann\Environment\Runtime::isPHPDBG
      */
     public function testCanBeDetected2()
     {
@@ -67,8 +69,9 @@ class RuntimeTest extends TestCase
     /**
      * @covers \SebastianBergmann\Environment\Runtime::hasXdebug
      *
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
-     * @uses   \SebastianBergmann\Environment\Runtime::isPHP
+     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
+     * @uses \SebastianBergmann\Environment\Runtime::isPHP
+     * @uses \SebastianBergmann\Environment\Runtime::isPHPDBG
      */
     public function testXdebugCanBeDetected()
     {
@@ -78,10 +81,11 @@ class RuntimeTest extends TestCase
     /**
      * @covers \SebastianBergmann\Environment\Runtime::getNameWithVersion
      *
-     * @uses   \SebastianBergmann\Environment\Runtime::getName
-     * @uses   \SebastianBergmann\Environment\Runtime::getVersion
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
-     * @uses   \SebastianBergmann\Environment\Runtime::isPHP
+     * @uses \SebastianBergmann\Environment\Runtime::getName
+     * @uses \SebastianBergmann\Environment\Runtime::getVersion
+     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
+     * @uses \SebastianBergmann\Environment\Runtime::isPHP
+     * @uses \SebastianBergmann\Environment\Runtime::isPHPDBG
      */
     public function testNameAndVersionCanBeRetrieved()
     {
@@ -91,7 +95,8 @@ class RuntimeTest extends TestCase
     /**
      * @covers \SebastianBergmann\Environment\Runtime::getName
      *
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
+     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
+     * @uses \SebastianBergmann\Environment\Runtime::isPHPDBG
      */
     public function testNameCanBeRetrieved()
     {
@@ -101,7 +106,7 @@ class RuntimeTest extends TestCase
     /**
      * @covers \SebastianBergmann\Environment\Runtime::getVersion
      *
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
+     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
      */
     public function testVersionCanBeRetrieved()
     {
@@ -111,7 +116,7 @@ class RuntimeTest extends TestCase
     /**
      * @covers \SebastianBergmann\Environment\Runtime::getVendorUrl
      *
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
+     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
      */
     public function testVendorUrlCanBeRetrieved()
     {

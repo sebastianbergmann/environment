@@ -43,7 +43,7 @@ class ConsoleTest extends TestCase
     /**
      * @covers \SebastianBergmann\Environment\Console::hasColorSupport
      *
-     * @uses   \SebastianBergmann\Environment\Console::isInteractive
+     * @uses \SebastianBergmann\Environment\Console::isInteractive
      */
     public function testCanDetectColorSupport()
     {
@@ -53,7 +53,7 @@ class ConsoleTest extends TestCase
     /**
      * @covers \SebastianBergmann\Environment\Console::getNumberOfColumns
      *
-     * @uses   \SebastianBergmann\Environment\Console::isInteractive
+     * @uses \SebastianBergmann\Environment\Console::isInteractive
      */
     public function testCanDetectNumberOfColumns()
     {
