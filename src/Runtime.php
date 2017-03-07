@@ -50,29 +50,8 @@ class Runtime
             // @codeCoverageIgnoreEnd
         }
 
-        // PHP >= 5.4.0
-        if (self::$binary === null && defined('PHP_BINARY')) {
-            if (PHP_BINARY !== '') {
-                self::$binary = escapeshellarg(PHP_BINARY);
-            }
-        }
-
-        // PHP < 5.4.0
-        if (self::$binary === null) {
-            if (PHP_SAPI == 'cli' && isset($_SERVER['_'])) {
-                if (strpos($_SERVER['_'], 'phpunit') !== false) {
-                    $file = file($_SERVER['_']);
-
-                    if (strpos($file[0], ' ') !== false) {
-                        $tmp          = explode(' ', $file[0]);
-                        self::$binary = escapeshellarg(trim($tmp[1]));
-                    } else {
-                        self::$binary = escapeshellarg(ltrim(trim($file[0]), '#!'));
-                    }
-                } elseif (strpos(basename($_SERVER['_']), 'php') !== false) {
-                    self::$binary = escapeshellarg($_SERVER['_']);
-                }
-            }
+        if (PHP_BINARY !== '') {
+            self::$binary = escapeshellarg(PHP_BINARY);
         }
 
         if (self::$binary === null) {
