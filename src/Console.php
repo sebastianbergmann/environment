@@ -56,22 +56,20 @@ class Console
      * Returns the number of columns of the terminal.
      *
      * @return int
+     *
+     * @codeCoverageIgnore
      */
     public function getNumberOfColumns()
     {
         if ($this->isWindows()) {
-            // @codeCoverageIgnoreStart
             return $this->getNumberOfColumnsWindows();
-            // @codeCoverageIgnoreEnd
         }
 
         if (!$this->isInteractive(self::STDIN)) {
             return 80;
         }
 
-        // @codeCoverageIgnoreStart
         return $this->getNumberOfColumnsInteractive();
-        // @codeCoverageIgnoreEnd
     }
 
     /**
