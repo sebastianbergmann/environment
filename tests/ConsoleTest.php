@@ -12,6 +12,9 @@ namespace SebastianBergmann\Environment;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \SebastianBergmann\Environment\Console
+ */
 class ConsoleTest extends TestCase
 {
     /**
@@ -24,37 +27,21 @@ class ConsoleTest extends TestCase
         $this->console = new Console;
     }
 
-    /**
-     * @covers \SebastianBergmann\Environment\Console::isInteractive
-     */
     public function testCanDetectIfStdoutIsInteractiveByDefault()
     {
         $this->assertInternalType('boolean', $this->console->isInteractive());
     }
 
-    /**
-     * @covers \SebastianBergmann\Environment\Console::isInteractive
-     */
     public function testCanDetectIfFileDescriptorIsInteractive()
     {
         $this->assertInternalType('boolean', $this->console->isInteractive(STDOUT));
     }
 
-    /**
-     * @covers \SebastianBergmann\Environment\Console::hasColorSupport
-     *
-     * @uses \SebastianBergmann\Environment\Console::isInteractive
-     */
     public function testCanDetectColorSupport()
     {
         $this->assertInternalType('boolean', $this->console->hasColorSupport());
     }
 
-    /**
-     * @covers \SebastianBergmann\Environment\Console::getNumberOfColumns
-     *
-     * @uses \SebastianBergmann\Environment\Console::isInteractive
-     */
     public function testCanDetectNumberOfColumns()
     {
         $this->assertInternalType('integer', $this->console->getNumberOfColumns());

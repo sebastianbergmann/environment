@@ -12,6 +12,9 @@ namespace SebastianBergmann\Environment;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \SebastianBergmann\Environment\Runtime
+ */
 class RuntimeTest extends TestCase
 {
     /**
@@ -24,100 +27,46 @@ class RuntimeTest extends TestCase
         $this->env = new Runtime;
     }
 
-    /**
-     * @covers \SebastianBergmann\Environment\Runtime::canCollectCodeCoverage
-     *
-     * @uses \SebastianBergmann\Environment\Runtime::hasXdebug
-     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
-     * @uses \SebastianBergmann\Environment\Runtime::isPHP
-     * @uses \SebastianBergmann\Environment\Runtime::isPHPDBG
-     */
     public function testAbilityToCollectCodeCoverageCanBeAssessed()
     {
         $this->assertInternalType('boolean', $this->env->canCollectCodeCoverage());
     }
 
-    /**
-     * @covers \SebastianBergmann\Environment\Runtime::getBinary
-     *
-     * @uses   \SebastianBergmann\Environment\Runtime::isHHVM
-     */
     public function testBinaryCanBeRetrieved()
     {
         $this->assertInternalType('string', $this->env->getBinary());
     }
 
-    /**
-     * @covers \SebastianBergmann\Environment\Runtime::isHHVM
-     */
     public function testCanBeDetected()
     {
         $this->assertInternalType('boolean', $this->env->isHHVM());
     }
 
-    /**
-     * @covers \SebastianBergmann\Environment\Runtime::isPHP
-     *
-     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
-     * @uses \SebastianBergmann\Environment\Runtime::isPHPDBG
-     */
     public function testCanBeDetected2()
     {
         $this->assertInternalType('boolean', $this->env->isPHP());
     }
 
-    /**
-     * @covers \SebastianBergmann\Environment\Runtime::hasXdebug
-     *
-     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
-     * @uses \SebastianBergmann\Environment\Runtime::isPHP
-     * @uses \SebastianBergmann\Environment\Runtime::isPHPDBG
-     */
     public function testXdebugCanBeDetected()
     {
         $this->assertInternalType('boolean', $this->env->hasXdebug());
     }
 
-    /**
-     * @covers \SebastianBergmann\Environment\Runtime::getNameWithVersion
-     *
-     * @uses \SebastianBergmann\Environment\Runtime::getName
-     * @uses \SebastianBergmann\Environment\Runtime::getVersion
-     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
-     * @uses \SebastianBergmann\Environment\Runtime::isPHP
-     * @uses \SebastianBergmann\Environment\Runtime::isPHPDBG
-     */
     public function testNameAndVersionCanBeRetrieved()
     {
         $this->assertInternalType('string', $this->env->getNameWithVersion());
     }
 
-    /**
-     * @covers \SebastianBergmann\Environment\Runtime::getName
-     *
-     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
-     * @uses \SebastianBergmann\Environment\Runtime::isPHPDBG
-     */
     public function testNameCanBeRetrieved()
     {
         $this->assertInternalType('string', $this->env->getName());
     }
 
-    /**
-     * @covers \SebastianBergmann\Environment\Runtime::getVersion
-     *
-     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
-     */
     public function testVersionCanBeRetrieved()
     {
         $this->assertInternalType('string', $this->env->getVersion());
     }
 
-    /**
-     * @covers \SebastianBergmann\Environment\Runtime::getVendorUrl
-     *
-     * @uses \SebastianBergmann\Environment\Runtime::isHHVM
-     */
     public function testVendorUrlCanBeRetrieved()
     {
         $this->assertInternalType('string', $this->env->getVendorUrl());
