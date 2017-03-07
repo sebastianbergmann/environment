@@ -37,12 +37,16 @@ class Console
      */
     public function hasColorSupport()
     {
-        if (DIRECTORY_SEPARATOR == '\\') {
+        if ($this->isWindows()) {
+            // @codeCoverageIgnoreStart
             return false !== getenv('ANSICON') || 'ON' === getenv('ConEmuANSI') || 'xterm' === getenv('TERM');
+            // @codeCoverageIgnoreEnd
         }
 
         if (!defined('STDOUT')) {
+            // @codeCoverageIgnoreStart
             return false;
+            // @codeCoverageIgnoreEnd
         }
 
         return $this->isInteractive(STDOUT);
@@ -55,44 +59,48 @@ class Console
      */
     public function getNumberOfColumns()
     {
-        if (DIRECTORY_SEPARATOR == '\\') {
-            $columns = 80;
-
-            if (preg_match('/^(\d+)x\d+ \(\d+x(\d+)\)$/', trim(getenv('ANSICON')), $matches)) {
-                $columns = $matches[1];
-            } elseif (function_exists('proc_open')) {
-                $process = proc_open(
-                    'mode CON',
-                    [
-                        1 => ['pipe', 'w'],
-                        2 => ['pipe', 'w']
-                    ],
-                    $pipes,
-                    null,
-                    null,
-                    ['suppress_errors' => true]
-                );
-
-                if (is_resource($process)) {
-                    $info = stream_get_contents($pipes[1]);
-
-                    fclose($pipes[1]);
-                    fclose($pipes[2]);
-                    proc_close($process);
-
-                    if (preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', $info, $matches)) {
-                        $columns = $matches[2];
-                    }
-                }
-            }
-
-            return $columns - 1;
+        if ($this->isWindows()) {
+            // @codeCoverageIgnoreStart
+            return $this->getNumberOfColumnsWindows();
+            // @codeCoverageIgnoreEnd
         }
 
         if (!$this->isInteractive(self::STDIN)) {
             return 80;
         }
 
+        // @codeCoverageIgnoreStart
+        return $this->getNumberOfColumnsInteractive();
+        // @codeCoverageIgnoreEnd
+    }
+
+    /**
+     * Returns if the file descriptor is an interactive terminal or not.
+     *
+     * @param int|resource $fileDescriptor
+     *
+     * @return bool
+     */
+    public function isInteractive($fileDescriptor = self::STDOUT)
+    {
+        return function_exists('posix_isatty') && @posix_isatty($fileDescriptor);
+    }
+
+    /**
+     * @return bool
+     */
+    private function isWindows()
+    {
+        return DIRECTORY_SEPARATOR === '\\';
+    }
+
+    /**
+     * @return int
+     *
+     * @codeCoverageIgnore
+     */
+    private function getNumberOfColumnsInteractive()
+    {
         if (function_exists('shell_exec') && preg_match('#\d+ (\d+)#', shell_exec('stty size'), $match) === 1) {
             if ((int) $match[1] > 0) {
                 return (int) $match[1];
@@ -109,14 +117,42 @@ class Console
     }
 
     /**
-     * Returns if the file descriptor is an interactive terminal or not.
+     * @return int
      *
-     * @param int|resource $fileDescriptor
-     *
-     * @return bool
+     * @codeCoverageIgnore
      */
-    public function isInteractive($fileDescriptor = self::STDOUT)
+    private function getNumberOfColumnsWindows()
     {
-        return function_exists('posix_isatty') && @posix_isatty($fileDescriptor);
+        $columns = 80;
+
+        if (preg_match('/^(\d+)x\d+ \(\d+x(\d+)\)$/', trim(getenv('ANSICON')), $matches)) {
+            $columns = $matches[1];
+        } elseif (function_exists('proc_open')) {
+            $process = proc_open(
+                'mode CON',
+                [
+                    1 => ['pipe', 'w'],
+                    2 => ['pipe', 'w']
+                ],
+                $pipes,
+                null,
+                null,
+                ['suppress_errors' => true]
+            );
+
+            if (is_resource($process)) {
+                $info = stream_get_contents($pipes[1]);
+
+                fclose($pipes[1]);
+                fclose($pipes[2]);
+                proc_close($process);
+
+                if (preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', $info, $matches)) {
+                    $columns = $matches[2];
+                }
+            }
+        }
+
+        return $columns - 1;
     }
 }
