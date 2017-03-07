@@ -55,6 +55,7 @@ class Runtime
         }
 
         if (self::$binary === null) {
+            // @codeCoverageIgnoreStart
             $possibleBinaryLocations = [
                 PHP_BINDIR . '/php',
                 PHP_BINDIR . '/php-cli.exe',
@@ -67,10 +68,13 @@ class Runtime
                     break;
                 }
             }
+            // @codeCoverageIgnoreEnd
         }
 
         if (self::$binary === null) {
+            // @codeCoverageIgnoreStart
             self::$binary = 'php';
+            // @codeCoverageIgnoreEnd
         }
 
         return self::$binary;
