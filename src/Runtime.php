@@ -109,9 +109,13 @@ class Runtime
     public function getName()
     {
         if ($this->isHHVM()) {
+            // @codeCoverageIgnoreStart
             return 'HHVM';
+            // @codeCoverageIgnoreEnd
         } elseif ($this->isPHPDBG()) {
+            // @codeCoverageIgnoreStart
             return 'PHPDBG';
+            // @codeCoverageIgnoreEnd
         } else {
             return 'PHP';
         }
@@ -123,7 +127,9 @@ class Runtime
     public function getVendorUrl()
     {
         if ($this->isHHVM()) {
+            // @codeCoverageIgnoreStart
             return 'http://hhvm.com/';
+            // @codeCoverageIgnoreEnd
         } else {
             return 'https://secure.php.net/';
         }
@@ -135,7 +141,9 @@ class Runtime
     public function getVersion()
     {
         if ($this->isHHVM()) {
+            // @codeCoverageIgnoreStart
             return HHVM_VERSION;
+            // @codeCoverageIgnoreEnd
         } else {
             return PHP_VERSION;
         }
@@ -186,6 +194,8 @@ class Runtime
      * and the phpdbg_*_oplog() functions are available (PHP >= 7.0).
      *
      * @return bool
+     *
+     * @codeCoverageIgnore
      */
     public function hasPHPDBGCodeCoverage()
     {
