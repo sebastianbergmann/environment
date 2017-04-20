@@ -32,6 +32,36 @@ class Runtime
     }
 
     /**
+     * Returns true when OPcache is loaded and opcache.save_comments=0 is set.
+     *
+     * Code taken from Doctrine\Common\Annotations\AnnotationReader::__construct().
+     *
+     * @return bool
+     */
+    public function discardsComments()
+    {
+        if (extension_loaded('Zend Optimizer+') && (ini_get('zend_optimizerplus.save_comments') === '0' || ini_get('opcache.save_comments') === '0')) {
+            return false;
+        }
+
+        if (extension_loaded('Zend OPcache') && ini_get('opcache.save_comments') == 0) {
+            return false;
+        }
+
+        if (PHP_VERSION_ID < 70000) {
+            if (extension_loaded('Zend Optimizer+') && (ini_get('zend_optimizerplus.load_comments') === '0' || ini_get('opcache.load_comments') === '0')) {
+                return false;
+            }
+
+            if (extension_loaded('Zend OPcache') && ini_get('opcache.load_comments') == 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Returns the path to the binary of the current runtime.
      * Appends ' --php' to the path when the runtime is HHVM.
      *
