@@ -110,9 +110,10 @@ final class Console
      */
     private function getNumberOfColumnsWindows(): int
     {
+        $ansicon = \getenv('ANSICON');
         $columns = 80;
 
-        if (\preg_match('/^(\d+)x\d+ \(\d+x(\d+)\)$/', \trim(\getenv('ANSICON')), $matches)) {
+        if (is_string($ansicon) && \preg_match('/^(\d+)x\d+ \(\d+x(\d+)\)$/', \trim($ansicon), $matches)) {
             $columns = $matches[1];
         } elseif (\function_exists('proc_open')) {
             $process = \proc_open(
