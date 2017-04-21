@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of sebastianbergmann/environment.
+ * This file is part of sebastian/environment.
  *
  * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *

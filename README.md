@@ -1,4 +1,4 @@
-# Environment
+# sebastian/environment
 
 This component provides functionality that helps writing PHP code that has runtime-specific (PHP / HHVM) execution paths.
 
