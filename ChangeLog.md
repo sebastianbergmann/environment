@@ -2,7 +2,13 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [3.0.0] - 2017-MM-DD
+## [3.0.1] - 2017-04-21
+
+### Fixed
+
+* Fixed inverted logic in `Runtime::discardsComments()`
+
+## [3.0.0] - 2017-04-21
 
 ### Added
 
@@ -12,5 +18,6 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[3.0.1]: https://github.com/sebastianbergmann/phpunit/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/sebastianbergmann/phpunit/compare/2.0...3.0.0
 

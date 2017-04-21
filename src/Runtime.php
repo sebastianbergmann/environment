@@ -39,14 +39,14 @@ final class Runtime
     public function discardsComments(): bool
     {
         if (\extension_loaded('Zend Optimizer+') && (\ini_get('zend_optimizerplus.save_comments') === '0' || \ini_get('opcache.save_comments') === '0')) {
-            return false;
+            return true;
         }
 
         if (\extension_loaded('Zend OPcache') && \ini_get('opcache.save_comments') == 0) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
