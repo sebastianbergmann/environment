@@ -2,6 +2,12 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [3.0.3] - 2017-05-18
+
+### Fixed
+
+* Fixed [#18](https://github.com/sebastianbergmann/environment/issues/18): `Uncaught TypeError: preg_match() expects parameter 2 to be string, null given`
+
 ## [3.0.2] - 2017-04-21
 
 ### Fixed
@@ -24,6 +30,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[3.0.3]: https://github.com/sebastianbergmann/phpunit/compare/3.0.2...3.0.3
 [3.0.2]: https://github.com/sebastianbergmann/phpunit/compare/3.0.1...3.0.2
 [3.0.1]: https://github.com/sebastianbergmann/phpunit/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/sebastianbergmann/phpunit/compare/2.0...3.0.0
