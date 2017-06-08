@@ -66,7 +66,7 @@ final class Runtime
             // @codeCoverageIgnoreEnd
         }
 
-        if (PHP_BINARY !== '') {
+        if (self::$binary === null && PHP_BINARY !== '') {
             self::$binary = \escapeshellarg(PHP_BINARY);
         }
 
