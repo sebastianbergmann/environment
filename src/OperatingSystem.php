@@ -20,7 +20,7 @@ final class OperatingSystem
      */
     public function getFamily(): string
     {
-        if (defined('PHP_OS_FAMILY')) {
+        if (\defined('PHP_OS_FAMILY')) {
             return PHP_OS_FAMILY;
         }
 

@@ -17,14 +17,14 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \SebastianBergmann\Environment\OperatingSystem
  */
-class OperatingSystemTest extends TestCase
+final class OperatingSystemTest extends TestCase
 {
     /**
      * @var \SebastianBergmann\Environment\OperatingSystem
      */
     private $os;
 
-    protected function setUp()
+    protected function setUp()/*: void*/
     {
         $this->os = new OperatingSystem;
     }
@@ -32,7 +32,7 @@ class OperatingSystemTest extends TestCase
     /**
      * @requires os Linux
      */
-    public function testFamilyCanBeRetrieved()
+    public function testFamilyCanBeRetrieved()/*: void*/
     {
         $this->assertEquals('Linux', $this->os->getFamily());
     }

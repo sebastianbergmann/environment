@@ -113,7 +113,7 @@ final class Console
         $ansicon = \getenv('ANSICON');
         $columns = 80;
 
-        if (is_string($ansicon) && \preg_match('/^(\d+)x\d+ \(\d+x(\d+)\)$/', \trim($ansicon), $matches)) {
+        if (\is_string($ansicon) && \preg_match('/^(\d+)x\d+ \(\d+x(\d+)\)$/', \trim($ansicon), $matches)) {
             $columns = $matches[1];
         } elseif (\function_exists('proc_open')) {
             $process = \proc_open(
