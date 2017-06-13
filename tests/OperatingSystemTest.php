@@ -32,7 +32,7 @@ class OperatingSystemTest extends TestCase
     /**
      * @requires os Linux
      */
-    public function testFamilyCanBeRetrieved(): void
+    public function testFamilyCanBeRetrieved()
     {
         $this->assertEquals('Linux', $this->os->getFamily());
     }
