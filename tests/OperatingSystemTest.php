@@ -30,7 +30,7 @@ final class OperatingSystemTest extends TestCase
     }
 
     /**
-     * @requires os Linux
+     * @requires OS Linux
      */
     public function testFamilyCanBeRetrieved()/*: void*/
     {
