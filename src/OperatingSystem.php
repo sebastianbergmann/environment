@@ -30,7 +30,7 @@ final class OperatingSystem
 
         switch (PHP_OS) {
             case 'Darwin':
-                return 'Mac';
+                return 'Darwin';
 
             case 'DragonFly':
             case 'FreeBSD':
