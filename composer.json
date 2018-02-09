@@ -12,7 +12,8 @@
     ],
     "prefer-stable": true,
     "require": {
-        "php": "^7.0"
+        "php": "^7.0",
+        "ext-posix": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.1"
