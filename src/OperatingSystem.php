@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of sebastian/environment.
  *
@@ -7,9 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-declare(strict_types=1);
-
 namespace SebastianBergmann\Environment;
 
 final class OperatingSystem
@@ -21,14 +18,14 @@ final class OperatingSystem
     public function getFamily(): string
     {
         if (\defined('PHP_OS_FAMILY')) {
-            return PHP_OS_FAMILY;
+            return \PHP_OS_FAMILY;
         }
 
-        if (DIRECTORY_SEPARATOR === '\\') {
+        if (\DIRECTORY_SEPARATOR === '\\') {
             return 'Windows';
         }
 
-        switch (PHP_OS) {
+        switch (\PHP_OS) {
             case 'Darwin':
                 return 'Darwin';
 

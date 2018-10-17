@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of sebastian/environment.
  *
@@ -7,9 +7,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-declare(strict_types=1);
-
 namespace SebastianBergmann\Environment;
 
 /**
@@ -59,7 +56,7 @@ final class Runtime
         if (self::$binary === null && $this->isHHVM()) {
             // @codeCoverageIgnoreStart
             if ((self::$binary = \getenv('PHP_BINARY')) === false) {
-                self::$binary = PHP_BINARY;
+                self::$binary = \PHP_BINARY;
             }
 
             self::$binary = \escapeshellarg(self::$binary) . ' --php' .
@@ -67,21 +64,22 @@ final class Runtime
             // @codeCoverageIgnoreEnd
         }
 
-        if (self::$binary === null && PHP_BINARY !== '') {
-            self::$binary = \escapeshellarg(PHP_BINARY);
+        if (self::$binary === null && \PHP_BINARY !== '') {
+            self::$binary = \escapeshellarg(\PHP_BINARY);
         }
 
         if (self::$binary === null) {
             // @codeCoverageIgnoreStart
             $possibleBinaryLocations = [
-                PHP_BINDIR . '/php',
-                PHP_BINDIR . '/php-cli.exe',
-                PHP_BINDIR . '/php.exe'
+                \PHP_BINDIR . '/php',
+                \PHP_BINDIR . '/php-cli.exe',
+                \PHP_BINDIR . '/php.exe',
             ];
 
             foreach ($possibleBinaryLocations as $binary) {
                 if (\is_readable($binary)) {
                     self::$binary = \escapeshellarg($binary);
+
                     break;
                 }
             }
@@ -138,7 +136,7 @@ final class Runtime
             // @codeCoverageIgnoreEnd
         }
 
-        return PHP_VERSION;
+        return \PHP_VERSION;
     }
 
     /**
@@ -170,7 +168,7 @@ final class Runtime
      */
     public function isPHPDBG(): bool
     {
-        return PHP_SAPI === 'phpdbg' && !$this->isHHVM();
+        return \PHP_SAPI === 'phpdbg' && !$this->isHHVM();
     }
 
     /**

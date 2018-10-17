@@ -2,6 +2,16 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [4.0.0] - 2018-MM-DD
+
+### Fixed
+
+* Fixed [#25](https://github.com/sebastianbergmann/environment/pull/25): `Console::hasColorSupport()` does not work on Windows
+
+### Removed
+
+* This component is no longer supported on PHP 7.0
+
 ## [3.1.0] - 2017-07-01
 
 ### Added
@@ -42,6 +52,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[4.0.0]: https://github.com/sebastianbergmann/phpunit/compare/3.1.0...4.0.0
 [3.1.0]: https://github.com/sebastianbergmann/phpunit/compare/3.0...3.1.0
 [3.0.4]: https://github.com/sebastianbergmann/phpunit/compare/3.0.3...3.0.4
 [3.0.3]: https://github.com/sebastianbergmann/phpunit/compare/3.0.2...3.0.3
