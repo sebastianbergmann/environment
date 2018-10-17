@@ -76,7 +76,7 @@ final class Console
             return $this->getNumberOfColumnsWindows();
         }
 
-        if (!$this->isInteractive(self::STDIN)) {
+        if (!$this->isInteractive(STDIN)) {
             return 80;
         }
 
@@ -88,7 +88,7 @@ final class Console
      *
      * @param int|resource $fileDescriptor
      */
-    public function isInteractive($fileDescriptor = self::STDOUT): bool
+    public function isInteractive($fileDescriptor = STDOUT): bool
     {
         return (\is_resource($fileDescriptor) && \function_exists('stream_isatty') && @\stream_isatty($fileDescriptor)) // stream_isatty requires that descriptor is a real resource, not numeric ID of it
             || (\function_exists('posix_isatty') && @\posix_isatty($fileDescriptor));
