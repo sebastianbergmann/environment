@@ -63,7 +63,7 @@ final class Console
             return $this->getNumberOfColumnsWindows();
         }
 
-        if (!$this->isInteractive(self::STDIN)) {
+        if (!$this->isInteractive(STDIN)) {
             return 80;
         }
 
@@ -75,7 +75,7 @@ final class Console
      *
      * @param int|resource $fileDescriptor
      */
-    public function isInteractive($fileDescriptor = self::STDOUT): bool
+    public function isInteractive($fileDescriptor = STDOUT): bool
     {
         return \function_exists('posix_isatty') && @\posix_isatty($fileDescriptor);
     }
