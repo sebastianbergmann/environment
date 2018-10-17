@@ -90,7 +90,7 @@ final class Console
      */
     public function isInteractive($fileDescriptor = self::STDOUT): bool
     {
-        return (\function_exists('stream_isatty') && @\stream_isatty($fileDescriptor))
+        return (\is_resource($fileDescriptor) && \function_exists('stream_isatty') && @\stream_isatty($fileDescriptor)) // stream_isatty requires that descriptor is a real resource, not numeric ID of it
             || (\function_exists('posix_isatty') && @\posix_isatty($fileDescriptor));
     }
 
