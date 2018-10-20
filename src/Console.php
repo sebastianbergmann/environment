@@ -12,21 +12,6 @@ namespace SebastianBergmann\Environment;
 final class Console
 {
     /**
-     * @var int
-     */
-    public const STDIN  = 0;
-
-    /**
-     * @var int
-     */
-    public const STDOUT = 1;
-
-    /**
-     * @var int
-     */
-    public const STDERR = 2;
-
-    /**
      * Returns true if STDOUT supports colorization.
      *
      * This code has been copied and adapted from
