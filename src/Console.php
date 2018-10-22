@@ -25,16 +25,10 @@ final class Console
 
         if ($this->isWindows()) {
             // @codeCoverageIgnoreStart
-            return (\defined('STDOUT') && \function_exists('sapi_windows_vt100_support') && @sapi_windows_vt100_support(\STDOUT))
+            return (\function_exists('sapi_windows_vt100_support') && @sapi_windows_vt100_support(\STDOUT))
                 || false !== \getenv('ANSICON')
                 || 'ON' === \getenv('ConEmuANSI')
                 || 'xterm' === \getenv('TERM');
-            // @codeCoverageIgnoreEnd
-        }
-
-        if (!\defined('STDOUT')) {
-            // @codeCoverageIgnoreStart
-            return false;
             // @codeCoverageIgnoreEnd
         }
 
@@ -68,11 +62,11 @@ final class Console
     /**
      * Returns if the file descriptor is an interactive terminal or not.
      *
-     * @param int|resource $fileDescriptor
+     * @param resource $fileDescriptor
      */
     public function isInteractive($fileDescriptor = \STDOUT): bool
     {
-        return (\is_resource($fileDescriptor) && \function_exists('stream_isatty') && @\stream_isatty($fileDescriptor)) // stream_isatty requires that descriptor is a real resource, not numeric ID of it
+        return (\function_exists('stream_isatty') && @\stream_isatty($fileDescriptor))
             || (\function_exists('posix_isatty') && @\posix_isatty($fileDescriptor));
     }
 
