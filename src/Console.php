@@ -12,21 +12,6 @@ namespace SebastianBergmann\Environment;
 final class Console
 {
     /**
-     * @var int
-     */
-    public const STDIN  = 0;
-
-    /**
-     * @var int
-     */
-    public const STDOUT = 1;
-
-    /**
-     * @var int
-     */
-    public const STDERR = 2;
-
-    /**
      * Returns true if STDOUT supports colorization.
      *
      * This code has been copied and adapted from
@@ -40,7 +25,7 @@ final class Console
 
         if ($this->isWindows()) {
             // @codeCoverageIgnoreStart
-            return (\function_exists('sapi_windows_vt100_support') && sapi_windows_vt100_support(\STDOUT))
+            return (\function_exists('sapi_windows_vt100_support') && @sapi_windows_vt100_support(\STDOUT))
                 || false !== \getenv('ANSICON')
                 || 'ON' === \getenv('ConEmuANSI')
                 || 'xterm' === \getenv('TERM');
