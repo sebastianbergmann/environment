@@ -2,7 +2,7 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [4.0.0] - 2018-MM-DD
+## [4.0.0] - 2018-10-23
 
 ### Fixed
 
