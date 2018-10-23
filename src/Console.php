@@ -73,7 +73,7 @@ final class Console
             return $this->getNumberOfColumnsWindows();
         }
 
-        if (!$this->isInteractive(self::STDIN)) {
+        if (!$this->isInteractive(\defined('STDIN') ? \STDIN : self::STDIN)) {
             return 80;
         }
 
