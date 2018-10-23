@@ -2,7 +2,13 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [4.0.0] - 2018-10-23
+## [4.0.1] - 2018-MM-DD
+
+### Fixed
+
+* Fixed [#31](https://github.com/sebastianbergmann/environment/issues/31): Regressions in `Console` class
+
+## [4.0.0] - 2018-10-23 [YANKED]
 
 ### Fixed
 
@@ -52,7 +58,8 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
-[4.0.0]: https://github.com/sebastianbergmann/phpunit/compare/3.1.0...4.0.0
+[4.0.1]: https://github.com/sebastianbergmann/phpunit/compare/66691f8e2dc4641909166b275a9a4f45c0e89092...4.0.1
+[4.0.0]: https://github.com/sebastianbergmann/phpunit/compare/3.1.0...66691f8e2dc4641909166b275a9a4f45c0e89092
 [3.1.0]: https://github.com/sebastianbergmann/phpunit/compare/3.0...3.1.0
 [3.0.4]: https://github.com/sebastianbergmann/phpunit/compare/3.0.3...3.0.4
 [3.0.3]: https://github.com/sebastianbergmann/phpunit/compare/3.0.2...3.0.3
