@@ -29,18 +29,26 @@ final class Runtime
     }
 
     /**
-     * Returns true when OPcache is loaded and opcache.save_comments=0 is set.
-     *
-     * Code taken from Doctrine\Common\Annotations\AnnotationReader::__construct().
+     * Returns true when Zend Optimizer+ or Zend OPcache is loaded, enabled, and is configured to discard comments.
      */
     public function discardsComments(): bool
     {
-        if (\extension_loaded('Zend Optimizer+') && (\ini_get('zend_optimizerplus.save_comments') === '0' || \ini_get('opcache.save_comments') === '0')) {
-            return true;
+        if (!\extension_loaded('Zend Optimizer+') && !\extension_loaded('Zend OPcache')) {
+            return false;
         }
 
-        if (\extension_loaded('Zend OPcache') && \ini_get('opcache.save_comments') === '0') {
-            return true;
+        if (!(\ini_get('zend_optimizerplus.save_comments') === '0' || \ini_get('opcache.save_comments') === '0')) {
+            return false;
+        }
+
+        if (PHP_SAPI === 'cli') {
+            if (\ini_get('zend_optimizerplus.enable_cli') === '1' || \ini_get('opcache.enable_cli') === '1') {
+                return true;
+            }
+        } else {
+            if (\ini_get('zend_optimizerplus.enable') === '1' || \ini_get('opcache.enable') === '1') {
+                return true;
+            }
         }
 
         return false;
