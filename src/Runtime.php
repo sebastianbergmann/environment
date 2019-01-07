@@ -41,14 +41,12 @@ final class Runtime
             return false;
         }
 
-        if (PHP_SAPI === 'cli') {
-            if (\ini_get('opcache.enable_cli') === '1') {
-                return true;
-            }
-        } else {
-            if (\ini_get('opcache.enable') === '1') {
-                return true;
-            }
+        if (\PHP_SAPI === 'cli' && \ini_get('opcache.enable_cli') === '1') {
+            return true;
+        }
+
+        if (\PHP_SAPI !== 'cli' && \ini_get('opcache.enable') === '1') {
+            return true;
         }
 
         return false;
