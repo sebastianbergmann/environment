@@ -29,24 +29,24 @@ final class Runtime
     }
 
     /**
-     * Returns true when Zend Optimizer+ or Zend OPcache is loaded, enabled, and is configured to discard comments.
+     * Returns true when Zend OPcache is loaded, enabled, and is configured to discard comments.
      */
     public function discardsComments(): bool
     {
-        if (!\extension_loaded('Zend Optimizer+') && !\extension_loaded('Zend OPcache')) {
+        if (!\extension_loaded('Zend OPcache')) {
             return false;
         }
 
-        if (!(\ini_get('zend_optimizerplus.save_comments') === '0' || \ini_get('opcache.save_comments') === '0')) {
+        if (\ini_get('opcache.save_comments') !== '0') {
             return false;
         }
 
         if (PHP_SAPI === 'cli') {
-            if (\ini_get('zend_optimizerplus.enable_cli') === '1' || \ini_get('opcache.enable_cli') === '1') {
+            if (\ini_get('opcache.enable_cli') === '1') {
                 return true;
             }
         } else {
-            if (\ini_get('zend_optimizerplus.enable') === '1' || \ini_get('opcache.enable') === '1') {
+            if (\ini_get('opcache.enable') === '1') {
                 return true;
             }
         }

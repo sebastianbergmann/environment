@@ -8,6 +8,10 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * Fixed [#33](https://github.com/sebastianbergmann/environment/issues/33): `Runtime::discardsComments()` returns true too eagerly
 
+### Removed
+
+* Removed support for Zend Optimizer+ in `Runtime::discardsComments()`
+
 ## [4.0.1] - 2018-11-25
 
 ### Fixed
