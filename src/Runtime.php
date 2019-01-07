@@ -39,7 +39,7 @@ final class Runtime
             return true;
         }
 
-        if (\extension_loaded('Zend OPcache') && \ini_get('opcache.save_comments') == 0) {
+        if (\extension_loaded('Zend OPcache') && \ini_get('opcache.save_comments') === '0') {
             return true;
         }
 
