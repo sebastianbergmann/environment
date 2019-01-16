@@ -25,7 +25,7 @@ final class Runtime
      */
     public function canCollectCodeCoverage(): bool
     {
-        return $this->hasXdebug() || $this->hasPHPDBGCodeCoverage();
+        return $this->hasXdebug() || $this->hasPHPDBGCodeCoverage() || $this->hasPCOV();
     }
 
     /**
@@ -186,5 +186,13 @@ final class Runtime
     public function hasPHPDBGCodeCoverage(): bool
     {
         return $this->isPHPDBG();
+    }
+
+    /**
+    * Returns true when the runtime used is PHP with pcov loaded and enabled
+    */
+    public function hasPCOV() : bool
+    {
+        return $this->isPHP() && \extension_loaded('pcov') && \ini_get("pcov.enabled");
     }
 }
