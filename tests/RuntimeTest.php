@@ -66,6 +66,15 @@ final class RuntimeTest extends TestCase
      * @todo Now that this component is PHP 7-only and uses return type declarations
      * this test makes even less sense than before
      */
+    public function testPCOVCanBeDetected(): void
+    {
+        $this->assertInternalType('boolean', $this->env->hasPCOV());
+    }
+
+    /**
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
+     */
     public function testXdebugCanBeDetected(): void
     {
         $this->assertIsBool($this->env->hasXdebug());
