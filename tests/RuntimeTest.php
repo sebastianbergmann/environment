@@ -68,7 +68,7 @@ final class RuntimeTest extends TestCase
      */
     public function testPCOVCanBeDetected(): void
     {
-        $this->assertInternalType('boolean', $this->env->hasPCOV());
+        $this->assertIsBool($this->env->hasPCOV());
     }
 
     /**

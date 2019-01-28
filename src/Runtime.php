@@ -20,12 +20,12 @@ final class Runtime
     private static $binary;
 
     /**
-     * Returns true when Xdebug is supported or
+     * Returns true when Xdebug or PCOV is available or
      * the runtime used is PHPDBG.
      */
     public function canCollectCodeCoverage(): bool
     {
-        return $this->hasXdebug() || $this->hasPHPDBGCodeCoverage() || $this->hasPCOV();
+        return $this->hasXdebug() || $this->hasPCOV() || $this->hasPHPDBGCodeCoverage();
     }
 
     /**
@@ -189,10 +189,10 @@ final class Runtime
     }
 
     /**
-    * Returns true when the runtime used is PHP with pcov loaded and enabled
-    */
-    public function hasPCOV() : bool
+     * Returns true when the runtime used is PHP with PCOV loaded and enabled
+     */
+    public function hasPCOV(): bool
     {
-        return $this->isPHP() && \extension_loaded('pcov') && \ini_get("pcov.enabled");
+        return $this->isPHP() && \extension_loaded('pcov') && \ini_get('pcov.enabled');
     }
 }
