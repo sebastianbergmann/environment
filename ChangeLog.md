@@ -4,6 +4,10 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 ## [4.1.0] - 2019-MM-DD
 
+### Added
+
+* Implemented [#34](https://github.com/sebastianbergmann/environment/pull/34): Support for PCOV extension
+
 ## [4.0.2] - 2019-01-28
 
 ### Fixed
