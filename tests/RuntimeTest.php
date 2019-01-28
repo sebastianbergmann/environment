@@ -32,7 +32,7 @@ final class RuntimeTest extends TestCase
      */
     public function testAbilityToCollectCodeCoverageCanBeAssessed(): void
     {
-        $this->assertInternalType('boolean', $this->env->canCollectCodeCoverage());
+        $this->assertIsBool($this->env->canCollectCodeCoverage());
     }
 
     /**
@@ -41,7 +41,7 @@ final class RuntimeTest extends TestCase
      */
     public function testBinaryCanBeRetrieved(): void
     {
-        $this->assertInternalType('string', $this->env->getBinary());
+        $this->assertIsString($this->env->getBinary());
     }
 
     /**
@@ -50,7 +50,7 @@ final class RuntimeTest extends TestCase
      */
     public function testCanBeDetected(): void
     {
-        $this->assertInternalType('boolean', $this->env->isHHVM());
+        $this->assertIsBool($this->env->isHHVM());
     }
 
     /**
@@ -59,7 +59,7 @@ final class RuntimeTest extends TestCase
      */
     public function testCanBeDetected2(): void
     {
-        $this->assertInternalType('boolean', $this->env->isPHP());
+        $this->assertIsBool($this->env->isPHP());
     }
 
     /**
@@ -68,7 +68,7 @@ final class RuntimeTest extends TestCase
      */
     public function testXdebugCanBeDetected(): void
     {
-        $this->assertInternalType('boolean', $this->env->hasXdebug());
+        $this->assertIsBool($this->env->hasXdebug());
     }
 
     /**
@@ -77,7 +77,7 @@ final class RuntimeTest extends TestCase
      */
     public function testNameAndVersionCanBeRetrieved(): void
     {
-        $this->assertInternalType('string', $this->env->getNameWithVersion());
+        $this->assertIsString($this->env->getNameWithVersion());
     }
 
     /**
@@ -86,7 +86,7 @@ final class RuntimeTest extends TestCase
      */
     public function testNameCanBeRetrieved(): void
     {
-        $this->assertInternalType('string', $this->env->getName());
+        $this->assertIsString($this->env->getName());
     }
 
     /**
@@ -95,7 +95,7 @@ final class RuntimeTest extends TestCase
      */
     public function testVersionCanBeRetrieved(): void
     {
-        $this->assertInternalType('string', $this->env->getVersion());
+        $this->assertIsString($this->env->getVersion());
     }
 
     /**
@@ -104,6 +104,6 @@ final class RuntimeTest extends TestCase
      */
     public function testVendorUrlCanBeRetrieved(): void
     {
-        $this->assertInternalType('string', $this->env->getVendorUrl());
+        $this->assertIsString($this->env->getVendorUrl());
     }
 }

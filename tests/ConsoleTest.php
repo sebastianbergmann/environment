@@ -32,7 +32,7 @@ final class ConsoleTest extends TestCase
      */
     public function testCanDetectIfStdoutIsInteractiveByDefault(): void
     {
-        $this->assertInternalType('boolean', $this->console->isInteractive());
+        $this->assertIsBool($this->console->isInteractive());
     }
 
     /**
@@ -41,7 +41,7 @@ final class ConsoleTest extends TestCase
      */
     public function testCanDetectIfFileDescriptorIsInteractive(): void
     {
-        $this->assertInternalType('boolean', $this->console->isInteractive(\STDOUT));
+        $this->assertIsBool($this->console->isInteractive(\STDOUT));
     }
 
     /**
@@ -50,7 +50,7 @@ final class ConsoleTest extends TestCase
      */
     public function testCanDetectColorSupport(): void
     {
-        $this->assertInternalType('boolean', $this->console->hasColorSupport());
+        $this->assertIsBool($this->console->hasColorSupport());
     }
 
     /**
@@ -59,6 +59,6 @@ final class ConsoleTest extends TestCase
      */
     public function testCanDetectNumberOfColumns(): void
     {
-        $this->assertInternalType('integer', $this->console->getNumberOfColumns());
+        $this->assertIsInt($this->console->getNumberOfColumns());
     }
 }

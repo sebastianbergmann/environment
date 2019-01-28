@@ -19,7 +19,7 @@
         "php": "^7.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.4"
+        "phpunit/phpunit": "^7.5"
     },
     "autoload": {
         "classmap": [
