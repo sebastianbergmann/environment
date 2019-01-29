@@ -106,6 +106,29 @@ final class Runtime
         return $this->getName() . ' ' . $this->getVersion();
     }
 
+    public function getNameWithVersionAndCodeCoverageDriver(): string
+    {
+        if (!$this->canCollectCodeCoverage() || $this->hasPHPDBGCodeCoverage()) {
+            return $this->getNameWithVersion();
+        }
+
+        if ($this->hasXdebug()) {
+            return \sprintf(
+                '%s with Xdebug %s',
+                $this->getNameWithVersion(),
+                \phpversion('xdebug')
+            );
+        }
+
+        if ($this->hasPCOV()) {
+            return \sprintf(
+                '%s with PCOV %s',
+                $this->getNameWithVersion(),
+                \phpversion('pcov')
+            );
+        }
+    }
+
     public function getName(): string
     {
         if ($this->isHHVM()) {

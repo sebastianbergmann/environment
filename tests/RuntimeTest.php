@@ -102,6 +102,15 @@ final class RuntimeTest extends TestCase
      * @todo Now that this component is PHP 7-only and uses return type declarations
      * this test makes even less sense than before
      */
+    public function testNameAndCodeCoverageDriverCanBeRetrieved(): void
+    {
+        $this->assertIsString($this->env->getNameWithVersionAndCodeCoverageDriver());
+    }
+
+    /**
+     * @todo Now that this component is PHP 7-only and uses return type declarations
+     * this test makes even less sense than before
+     */
     public function testVersionCanBeRetrieved(): void
     {
         $this->assertIsString($this->env->getVersion());
