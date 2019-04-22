@@ -218,4 +218,34 @@ final class Runtime
     {
         return $this->isPHP() && \extension_loaded('pcov') && \ini_get('pcov.enabled');
     }
+    
+    /*
+    * Returns the current settings for the given set of php configuration values
+    */
+    public function getCurrentSettings(array $values) : array {
+        $diff  = [];
+        $files = [];
+        
+        if (($file = \php_ini_loaded_file())) {
+            $files[] = $file;
+        }
+        
+        if ($scanned = \php_ini_scanned_files()) {
+            $files = \array_merge($files, $scanned);
+        }
+
+        foreach ($files as $ini) {
+            $config = \parse_ini_file($ini, true);
+
+            foreach ($values as $value) {
+                $set = \ini_get($value);
+
+                if (isset($config[$value]) && $set != $config[$value]) {
+                    $diff[] = sprintf("%s=%s", $value, $set);
+                }
+            }
+        }
+
+        return $diff;
+    }
 }
