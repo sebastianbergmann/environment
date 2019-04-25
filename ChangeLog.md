@@ -2,6 +2,10 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [4.2.1] - 2019-04-25
+
+* Fixed an issue in `Runtime::getCurrentSettings()`
+
 ## [4.2.0] - 2019-04-25
 
 ### Added
@@ -81,6 +85,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[4.2.1]: https://github.com/sebastianbergmann/phpunit/compare/4.2.0...4.2.1
 [4.2.0]: https://github.com/sebastianbergmann/phpunit/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/sebastianbergmann/phpunit/compare/4.0.2...4.1.0
 [4.0.2]: https://github.com/sebastianbergmann/phpunit/compare/4.0.1...4.0.2
