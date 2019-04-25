@@ -219,9 +219,18 @@ final class Runtime
         return $this->isPHP() && \extension_loaded('pcov') && \ini_get('pcov.enabled');
     }
 
-    /*
-    * Returns the current settings for the given set of php configuration values
-    */
+    /**
+     * Parses the loaded php.ini file (if any) as well as all
+     * additional php.ini files from the additional ini dir for
+     * a list of all configuration settings loaded from files
+     * at startup. Then checks for each php.ini setting passed
+     * via the `$values` parameter whether this setting has
+     * been changed at runtime. Returns an array of strings
+     * where each string has the format `key=value` denoting
+     * the name of a changed php.ini setting with its new value.
+     *
+     * @return string[]
+     */
     public function getCurrentSettings(array $values): array
     {
         $diff  = [];
