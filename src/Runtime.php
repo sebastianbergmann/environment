@@ -241,7 +241,13 @@ final class Runtime
         }
 
         if ($scanned = \php_ini_scanned_files()) {
-            $files = \array_merge($files, $scanned);
+            $files = \array_merge(
+                $files,
+                \array_map(
+                    'trim',
+                    \explode(",\n", $scanned)
+                )
+            );
         }
 
         foreach ($files as $ini) {
