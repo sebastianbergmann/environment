@@ -227,7 +227,7 @@ final class Runtime
         $diff  = [];
         $files = [];
 
-        if (($file = \php_ini_loaded_file())) {
+        if ($file = \php_ini_loaded_file()) {
             $files[] = $file;
         }
 
