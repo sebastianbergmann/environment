@@ -1,5 +1,10 @@
 language: php
 
+addons:
+  apt:
+    packages:
+      - libonig-dev
+
 php:
   - 7.1
   - 7.2
