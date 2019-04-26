@@ -27,6 +27,16 @@ final class Console
     public const STDERR = 2;
 
     /**
+     * @var OperatingSystem
+     */
+    private $operatingSystem;
+
+    public function __construct()
+    {
+        $this->operatingSystem = new OperatingSystem();
+    }
+
+    /**
      * Returns true if STDOUT supports colorization.
      *
      * This code has been copied and adapted from
@@ -96,7 +106,7 @@ final class Console
 
     private function isWindows(): bool
     {
-        return \DIRECTORY_SEPARATOR === '\\';
+        return $this->operatingSystem->getFamily() === 'Windows';
     }
 
     /**
