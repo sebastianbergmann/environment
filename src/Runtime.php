@@ -203,8 +203,6 @@ final class Runtime
     /**
      * Returns true when the runtime used is PHP with the PHPDBG SAPI
      * and the phpdbg_*_oplog() functions are available (PHP >= 7.0).
-     *
-     * @codeCoverageIgnore
      */
     public function hasPHPDBGCodeCoverage(): bool
     {
