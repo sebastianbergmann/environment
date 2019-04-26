@@ -33,4 +33,20 @@ final class OperatingSystemTest extends TestCase
     {
         $this->assertEquals('Linux', $this->os->getFamily());
     }
+
+    /**
+     * @requires OS Windows
+     */
+    public function testGetFamilyReturnsWindowsWhenRunningOnWindows(): void
+    {
+        $this->assertSame('Windows', $this->os->getFamily());
+    }
+
+    /**
+     * @requires PHP 7.2.0
+     */
+    public function testGetFamilyReturnsPhpOsFamilyWhenRunningOnPhp72AndGreater(): void
+    {
+        $this->assertSame(\PHP_OS_FAMILY, $this->os->getFamily());
+    }
 }
