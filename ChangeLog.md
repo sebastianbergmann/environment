@@ -2,7 +2,15 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [4.2.2] - 2019-05-05
+
+### Fixed
+
+* Fixed [#44](https://github.com/sebastianbergmann/environment/pull/44): `TypeError` in `Console::getNumberOfColumnsInteractive()`
+
 ## [4.2.1] - 2019-04-25
+
+### Fixed
 
 * Fixed an issue in `Runtime::getCurrentSettings()`
 
@@ -85,6 +93,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[4.2.2]: https://github.com/sebastianbergmann/phpunit/compare/4.2.1...4.2.2
 [4.2.1]: https://github.com/sebastianbergmann/phpunit/compare/4.2.0...4.2.1
 [4.2.0]: https://github.com/sebastianbergmann/phpunit/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/sebastianbergmann/phpunit/compare/4.0.2...4.1.0
