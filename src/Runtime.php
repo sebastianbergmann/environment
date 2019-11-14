@@ -127,6 +127,15 @@ final class Runtime
                 \phpversion('pcov')
             );
         }
+
+        // Catch-all default
+        // @codeCoverageIgnoreStart
+        return \sprintf(
+            '%s with [WARNING] injected%s coverage driver',
+            $this->getNameWithVersion(),
+            \extension_loaded('dbg') ? ' DBG' : ''
+        );
+        // @codeCoverageIgnoreEnd
     }
 
     public function getName(): string
