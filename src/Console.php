@@ -40,7 +40,7 @@ final class Console
 
         if ($this->isWindows()) {
             // @codeCoverageIgnoreStart
-            return (\defined('STDOUT') && \function_exists('sapi_windows_vt100_support') && @sapi_windows_vt100_support(\STDOUT))
+            return (\defined('STDOUT') && \function_exists('sapi_windows_vt100_support') && @\sapi_windows_vt100_support(\STDOUT))
                 || false !== \getenv('ANSICON')
                 || 'ON' === \getenv('ConEmuANSI')
                 || 'xterm' === \getenv('TERM');
