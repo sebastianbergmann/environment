@@ -4,6 +4,10 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 ## [4.2.3] - 2019-MM-DD
 
+### Changed
+
+* Implemented [#50](https://github.com/sebastianbergmann/environment/pull/50): Windows improvements to console capabilities
+
 ### Fixed
 
 * Fixed [#49](https://github.com/sebastianbergmann/environment/issues/49): Detection how OpCache handles docblocks does not work correctly when PHPDBG is used
