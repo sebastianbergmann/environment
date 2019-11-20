@@ -41,11 +41,11 @@ final class Runtime
             return false;
         }
 
-        if (\PHP_SAPI === 'cli' && \ini_get('opcache.enable_cli') === '1') {
+        if ((\PHP_SAPI === 'cli' || \PHP_SAPI === 'phpdbg') && \ini_get('opcache.enable_cli') === '1') {
             return true;
         }
 
-        if (\PHP_SAPI !== 'cli' && \ini_get('opcache.enable') === '1') {
+        if (\PHP_SAPI !== 'cli' && \PHP_SAPI !== 'phpdbg' && \ini_get('opcache.enable') === '1') {
             return true;
         }
 
