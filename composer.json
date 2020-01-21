@@ -11,15 +11,19 @@
         }
     ],
     "config": {
+        "platform": {
+            "php": "7.3.0"
+        },
         "optimize-autoloader": true,
         "sort-packages": true
     },
     "prefer-stable": true,
+    "minimum-stability": "dev",
     "require": {
-        "php": "^7.1"
+        "php": "^7.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^9.0"
     },
     "suggest": {
         "ext-posix": "*"
@@ -31,7 +35,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.2-dev"
+            "dev-master": "5.0-dev"
         }
     }
 }
