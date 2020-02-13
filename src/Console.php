@@ -132,7 +132,7 @@ final class Console
         $columns = 80;
 
         if (\is_string($ansicon) && \preg_match('/^(\d+)x\d+ \(\d+x(\d+)\)$/', \trim($ansicon), $matches)) {
-            $columns = $matches[1];
+            $columns = (int) $matches[1];
         } elseif (\function_exists('proc_open')) {
             $process = \proc_open(
                 'mode CON',
@@ -154,7 +154,7 @@ final class Console
                 \proc_close($process);
 
                 if (\preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', $info, $matches)) {
-                    $columns = $matches[2];
+                    $columns = (int) $matches[2];
                 }
             }
         }
