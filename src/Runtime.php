@@ -112,19 +112,19 @@ final class Runtime
             return $this->getNameWithVersion();
         }
 
-        if ($this->hasXdebug()) {
-            return \sprintf(
-                '%s with Xdebug %s',
-                $this->getNameWithVersion(),
-                \phpversion('xdebug')
-            );
-        }
-
         if ($this->hasPCOV()) {
             return \sprintf(
                 '%s with PCOV %s',
                 $this->getNameWithVersion(),
                 \phpversion('pcov')
+            );
+        }
+
+        if ($this->hasXdebug()) {
+            return \sprintf(
+                '%s with Xdebug %s',
+                $this->getNameWithVersion(),
+                \phpversion('xdebug')
             );
         }
     }
