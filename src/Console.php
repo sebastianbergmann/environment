@@ -89,6 +89,7 @@ final class Console
             if (\function_exists('stream_isatty') && @\stream_isatty($fileDescriptor)) {
                 return true;
             }
+
             // Check if formatted mode is S_IFCHR
             if (\function_exists('fstat') && @\stream_isatty($fileDescriptor)) {
                 $stat = @\fstat(\STDOUT);
