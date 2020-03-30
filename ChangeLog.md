@@ -18,17 +18,17 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 ### Changed
 
-* Implemented [#50](https://github.com/sebastianbergmann/environment/pull/50): Windows improvements to console capabilities
+* [#50](https://github.com/sebastianbergmann/environment/pull/50): Windows improvements to console capabilities
 
 ### Fixed
 
-* Fixed [#49](https://github.com/sebastianbergmann/environment/issues/49): Detection how OpCache handles docblocks does not work correctly when PHPDBG is used
+* [#49](https://github.com/sebastianbergmann/environment/issues/49): Detection how OpCache handles docblocks does not work correctly when PHPDBG is used
 
 ## [4.2.2] - 2019-05-05
 
 ### Fixed
 
-* Fixed [#44](https://github.com/sebastianbergmann/environment/pull/44): `TypeError` in `Console::getNumberOfColumnsInteractive()`
+* [#44](https://github.com/sebastianbergmann/environment/pull/44): `TypeError` in `Console::getNumberOfColumnsInteractive()`
 
 ## [4.2.1] - 2019-04-25
 
@@ -40,20 +40,20 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 ### Added
 
-* Implemented [#36](https://github.com/sebastianbergmann/environment/pull/36): `Runtime::getCurrentSettings()`
+* [#36](https://github.com/sebastianbergmann/environment/pull/36): `Runtime::getCurrentSettings()`
 
 ## [4.1.0] - 2019-02-01
 
 ### Added
 
 * Implemented `Runtime::getNameWithVersionAndCodeCoverageDriver()` method
-* Implemented [#34](https://github.com/sebastianbergmann/environment/pull/34): Support for PCOV extension
+* [#34](https://github.com/sebastianbergmann/environment/pull/34): Support for PCOV extension
 
 ## [4.0.2] - 2019-01-28
 
 ### Fixed
 
-* Fixed [#33](https://github.com/sebastianbergmann/environment/issues/33): `Runtime::discardsComments()` returns true too eagerly
+* [#33](https://github.com/sebastianbergmann/environment/issues/33): `Runtime::discardsComments()` returns true too eagerly
 
 ### Removed
 
@@ -63,13 +63,13 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 ### Fixed
 
-* Fixed [#31](https://github.com/sebastianbergmann/environment/issues/31): Regressions in `Console` class
+* [#31](https://github.com/sebastianbergmann/environment/issues/31): Regressions in `Console` class
 
 ## [4.0.0] - 2018-10-23 [YANKED]
 
 ### Fixed
 
-* Fixed [#25](https://github.com/sebastianbergmann/environment/pull/25): `Console::hasColorSupport()` does not work on Windows
+* [#25](https://github.com/sebastianbergmann/environment/pull/25): `Console::hasColorSupport()` does not work on Windows
 
 ### Removed
 
@@ -79,25 +79,25 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 ### Added
 
-* Implemented [#21](https://github.com/sebastianbergmann/environment/issues/21): Equivalent of `PHP_OS_FAMILY` (for PHP < 7.2) 
+* [#21](https://github.com/sebastianbergmann/environment/issues/21): Equivalent of `PHP_OS_FAMILY` (for PHP < 7.2) 
 
 ## [3.0.4] - 2017-06-20
 
 ### Fixed
 
-* Fixed [#20](https://github.com/sebastianbergmann/environment/pull/20): PHP 7 mode of HHVM not forced
+* [#20](https://github.com/sebastianbergmann/environment/pull/20): PHP 7 mode of HHVM not forced
 
 ## [3.0.3] - 2017-05-18
 
 ### Fixed
 
-* Fixed [#18](https://github.com/sebastianbergmann/environment/issues/18): `Uncaught TypeError: preg_match() expects parameter 2 to be string, null given`
+* [#18](https://github.com/sebastianbergmann/environment/issues/18): `Uncaught TypeError: preg_match() expects parameter 2 to be string, null given`
 
 ## [3.0.2] - 2017-04-21
 
 ### Fixed
 
-* Fixed [#17](https://github.com/sebastianbergmann/environment/issues/17): `Uncaught TypeError: trim() expects parameter 1 to be string, boolean given`
+* [#17](https://github.com/sebastianbergmann/environment/issues/17): `Uncaught TypeError: trim() expects parameter 1 to be string, boolean given`
 
 ## [3.0.1] - 2017-04-21
 
