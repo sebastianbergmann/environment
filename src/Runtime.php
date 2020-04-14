@@ -29,11 +29,12 @@ final class Runtime
     }
 
     /**
-     * Returns true when Zend OPcache is loaded, enabled, and is configured to discard comments.
+     * Returns true when Zend OPcache is loaded, enabled,
+     * and is configured to discard comments.
      */
     public function discardsComments(): bool
     {
-        if (!\extension_loaded('Zend OPcache')) {
+        if (!$this->isOpcacheActive()) {
             return false;
         }
 
@@ -41,15 +42,28 @@ final class Runtime
             return false;
         }
 
-        if ((\PHP_SAPI === 'cli' || \PHP_SAPI === 'phpdbg') && \ini_get('opcache.enable_cli') === '1') {
-            return true;
+        return true;
+    }
+
+    /**
+     * Returns true when Zend OPcache is loaded, enabled,
+     * and is configured to perform just-in-time compilation.
+     */
+    public function performsJustInTimeCompilation(): bool
+    {
+        if (\PHP_MAJOR_VERSION < 8) {
+            return false;
         }
 
-        if (\PHP_SAPI !== 'cli' && \PHP_SAPI !== 'phpdbg' && \ini_get('opcache.enable') === '1') {
-            return true;
+        if (!$this->isOpcacheActive()) {
+            return false;
         }
 
-        return false;
+        if (\strpos(\ini_get('opcache.jit'), '0') === 0) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -261,5 +275,22 @@ final class Runtime
         }
 
         return $diff;
+    }
+
+    private function isOpcacheActive(): bool
+    {
+        if (!\extension_loaded('Zend OPcache')) {
+            return false;
+        }
+
+        if ((\PHP_SAPI === 'cli' || \PHP_SAPI === 'phpdbg') && \ini_get('opcache.enable_cli') === '1') {
+            return true;
+        }
+
+        if (\PHP_SAPI !== 'cli' && \PHP_SAPI !== 'phpdbg' && \ini_get('opcache.enable') === '1') {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -2,6 +2,12 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [5.1.0] - 2020-MM-DD
+
+### Added
+
+* `Runtime::performsJustInTimeCompilation()` returns `true` if PHP 8's JIT is active, `false` otherwise
+
 ## [5.0.2] - 2020-03-31
 
 ### Fixed
@@ -121,6 +127,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[5.1.0]: https://github.com/sebastianbergmann/phpunit/compare/5.0.2...master
 [5.0.2]: https://github.com/sebastianbergmann/phpunit/compare/5.0.1...5.0.2
 [5.0.1]: https://github.com/sebastianbergmann/phpunit/compare/5.0.0...5.0.1
 [5.0.0]: https://github.com/sebastianbergmann/phpunit/compare/4.2.3...5.0.0
