@@ -9,6 +9,8 @@
  */
 namespace SebastianBergmann\Environment;
 
+use const PHP_SAPI;
+use const PHP_VERSION;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -129,7 +131,7 @@ final class RuntimeTest extends TestCase
      */
     public function testGetVersionReturnsPhpVersionWhenRunningPhp(): void
     {
-        $this->assertSame(\PHP_VERSION, $this->env->getVersion());
+        $this->assertSame(PHP_VERSION, $this->env->getVersion());
     }
 
     /**
@@ -160,6 +162,6 @@ final class RuntimeTest extends TestCase
 
     private function isRunningOnPhpdbg(): bool
     {
-        return \PHP_SAPI === 'phpdbg';
+        return PHP_SAPI === 'phpdbg';
     }
 }
