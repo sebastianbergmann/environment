@@ -2,6 +2,12 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [5.1.2] - 2020-06-26
+
+### Added
+
+* This component is now supported on PHP 8
+
 ## [5.1.1] - 2020-06-15
 
 ### Changed
@@ -133,6 +139,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[5.1.2]: https://github.com/sebastianbergmann/phpunit/compare/5.1.1...5.1.2
 [5.1.1]: https://github.com/sebastianbergmann/phpunit/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/sebastianbergmann/phpunit/compare/5.0.2...5.1.0
 [5.0.2]: https://github.com/sebastianbergmann/phpunit/compare/5.0.1...5.0.2
