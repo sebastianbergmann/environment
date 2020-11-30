@@ -20,7 +20,7 @@
     "prefer-stable": true,
     "minimum-stability": "dev",
     "require": {
-        "php": ">=8.0"
+        "php": ">=7.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0"
