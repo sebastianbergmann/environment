@@ -137,7 +137,7 @@ final class RuntimeTest extends TestCase
      */
     public function testGetVendorUrlReturnsPhpDotNetWhenRunningPhp(): void
     {
-        $this->assertSame('https://secure.php.net/', $this->env->getVendorUrl());
+        $this->assertSame('https://www.php.net/', $this->env->getVendorUrl());
     }
 
     private function markTestSkippedWhenNotRunningOnPhpdbg(): void
