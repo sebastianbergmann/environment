@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.0.1@b1e2e30026936ef8d5bf6a354d1c3959b6231f44">
+<files psalm-version="4.x-dev@">
   <file src="src/Console.php">
     <ForbiddenCode occurrences="2">
       <code>shell_exec('stty size')</code>
       <code>shell_exec('stty')</code>
     </ForbiddenCode>
-  </file>
-  <file src="src/Runtime.php">
-    <DocblockTypeContradiction occurrences="4">
-      <code>self::$binary === null</code>
-      <code>self::$binary === null</code>
-      <code>self::$binary === null</code>
-      <code>self::$binary === null</code>
-    </DocblockTypeContradiction>
-    <InvalidReturnType occurrences="1">
-      <code>string</code>
-    </InvalidReturnType>
-    <UndefinedConstant occurrences="1">
-      <code>HHVM_VERSION</code>
-    </UndefinedConstant>
   </file>
 </files>
