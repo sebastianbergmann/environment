@@ -2,7 +2,45 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [4.2.4] - 2020-11-30
+## [6.0.0] - 2021-MM-DD
+
+### Removed
+
+* Removed `SebastianBergmann\Environment\OperatingSystem::getFamily()` because this component is no longer supported on PHP versions that do not have `PHP_OS_FAMILY`
+* Removed `SebastianBergmann\Environment\Runtime::isHHVM()`
+* This component is no longer supported on PHP 7
+
+## [5.1.3] - 2020-09-28
+
+### Changed
+
+* Changed PHP version constraint in `composer.json` from `^7.3 || ^8.0` to `>=7.3`
+
+## [5.1.2] - 2020-06-26
+
+### Added
+
+* This component is now supported on PHP 8
+
+## [5.1.1] - 2020-06-15
+
+### Changed
+
+* Tests etc. are now ignored for archive exports
+
+## [5.1.0] - 2020-04-14
+
+### Added
+
+* `Runtime::performsJustInTimeCompilation()` returns `true` if PHP 8's JIT is active, `false` otherwise
+
+## [5.0.2] - 2020-03-31
+
+### Fixed
+
+* [#55](https://github.com/sebastianbergmann/environment/issues/55): `stty` command is executed even if no tty is available
+
+## [5.0.1] - 2020-02-19
 
 ### Changed
 
