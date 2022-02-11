@@ -6,6 +6,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 ### Removed
 
+* Removed `SebastianBergmann\Environment\OperatingSystem::getFamily()` because this component is no longer supported on PHP versions that do not have `PHP_OS_FAMILY`
 * This component is no longer supported on PHP 7
 
 ## [5.1.3] - 2020-09-28
