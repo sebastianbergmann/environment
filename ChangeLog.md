@@ -2,13 +2,13 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [6.0.0] - 2021-MM-DD
+## [6.0.0] - 2022-MM-DD
 
 ### Removed
 
 * Removed `SebastianBergmann\Environment\OperatingSystem::getFamily()` because this component is no longer supported on PHP versions that do not have `PHP_OS_FAMILY`
 * Removed `SebastianBergmann\Environment\Runtime::isHHVM()`
-* This component is no longer supported on PHP 7
+* This component is no longer supported on PHP 7.3, PHP 7.4, and PHP 8.0
 
 ## [5.1.3] - 2020-09-28
 
