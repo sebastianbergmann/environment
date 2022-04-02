@@ -112,6 +112,30 @@ final class RuntimeTest extends TestCase
         $this->assertSame('https://www.php.net/', (new Runtime)->getVendorUrl());
     }
 
+	public function testDiscardingCommentsReturnsFalseIfOpcacheIsNotActive(): void
+	{
+		$this->assertFalse((new Runtime)->discardsComments());
+	}
+
+	public function testGetCurrentSettingsReturnsEmptyDiffIfNoValuesArePassed()
+	{
+		$this->assertSame([], (new Runtime)->getCurrentSettings([]));
+	}
+
+	/**
+     * @requires extension xdebug
+     */
+	public function testGetCurrentSettingsReturnsCorrectDiffIfXdebugValuesArePassed()
+	{
+		$this->assertIsArray((new Runtime)->getCurrentSettings(['xdebug.mode']));
+		$this->assertArrayHasKey('xdebug.mode', (new Runtime)->getCurrentSettings(['xdebug.mode']));
+	}
+
+	public function testGetCurrentSettingsWillSkipSettingsThatIsNotSet()
+	{
+		$this->assertSame([], (new Runtime)->getCurrentSettings(['allow_url_include']));
+	}
+
     private function markTestSkippedWhenNotRunningOnPhpdbg(): void
     {
         if ($this->isRunningOnPhpdbg()) {
