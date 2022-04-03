@@ -142,7 +142,7 @@ final class RuntimeTest extends TestCase
         $this->assertSame('https://secure.php.net/', $this->env->getVendorUrl());
     }
 
-    public function testGetCurrentSettingsReturnsEmptyDiffIfNoValuesArePassed()
+    public function testGetCurrentSettingsReturnsEmptyDiffIfNoValuesArePassed(): void
     {
         $this->assertSame([], (new Runtime)->getCurrentSettings([]));
     }
@@ -150,13 +150,13 @@ final class RuntimeTest extends TestCase
     /**
      * @requires extension xdebug
      */
-    public function testGetCurrentSettingsReturnsCorrectDiffIfXdebugValuesArePassed()
+    public function testGetCurrentSettingsReturnsCorrectDiffIfXdebugValuesArePassed(): void
     {
         $this->assertIsArray((new Runtime)->getCurrentSettings(['xdebug.mode']));
         $this->assertArrayHasKey('xdebug.mode', (new Runtime)->getCurrentSettings(['xdebug.mode']));
     }
 
-    public function testGetCurrentSettingsWillSkipSettingsThatIsNotSet()
+    public function testGetCurrentSettingsWillSkipSettingsThatIsNotSet(): void
     {
         $this->assertSame([], (new Runtime)->getCurrentSettings(['allow_url_include']));
     }
