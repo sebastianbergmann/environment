@@ -142,11 +142,6 @@ final class RuntimeTest extends TestCase
         $this->assertSame('https://secure.php.net/', $this->env->getVendorUrl());
     }
 
-    public function testDiscardingCommentsReturnsFalseIfOpcacheIsNotActive(): void
-    {
-        $this->assertFalse((new Runtime)->discardsComments());
-    }
-
     public function testGetCurrentSettingsReturnsEmptyDiffIfNoValuesArePassed()
     {
         $this->assertSame([], (new Runtime)->getCurrentSettings([]));
