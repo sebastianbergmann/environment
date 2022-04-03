@@ -2,6 +2,12 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [5.1.4] - 2022-MM-DD
+
+### Fixed
+
+* [#63](https://github.com/sebastianbergmann/environment/pull/63): `Runtime::getCurrentSettings()` does not correctly process INI settings
+
 ## [5.1.3] - 2020-09-28
 
 ### Changed
@@ -145,6 +151,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[5.1.4]: https://github.com/sebastianbergmann/environment/compare/5.1.3...5.1
 [5.1.3]: https://github.com/sebastianbergmann/environment/compare/5.1.2...5.1.3
 [5.1.2]: https://github.com/sebastianbergmann/environment/compare/5.1.1...5.1.2
 [5.1.1]: https://github.com/sebastianbergmann/environment/compare/5.1.0...5.1.1
