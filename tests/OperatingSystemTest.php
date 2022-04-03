@@ -9,6 +9,7 @@
  */
 namespace SebastianBergmann\Environment;
 
+use const PHP_OS_FAMILY;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -55,6 +56,6 @@ final class OperatingSystemTest extends TestCase
      */
     public function testGetFamilyReturnsPhpOsFamilyWhenRunningOnPhp72AndGreater(): void
     {
-        $this->assertSame(\PHP_OS_FAMILY, $this->os->getFamily());
+        $this->assertSame(PHP_OS_FAMILY, $this->os->getFamily());
     }
 }

@@ -2,6 +2,24 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [5.1.3] - 2020-09-28
+
+### Changed
+
+* Changed PHP version constraint in `composer.json` from `^7.3 || ^8.0` to `>=7.3`
+
+## [5.1.2] - 2020-06-26
+
+### Added
+
+* This component is now supported on PHP 8
+
+## [5.1.1] - 2020-06-15
+
+### Changed
+
+* Tests etc. are now ignored for archive exports
+
 ## [5.1.0] - 2020-04-14
 
 ### Added
@@ -127,22 +145,25 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
-[5.1.0]: https://github.com/sebastianbergmann/phpunit/compare/5.0.2...5.1.0
-[5.0.2]: https://github.com/sebastianbergmann/phpunit/compare/5.0.1...5.0.2
-[5.0.1]: https://github.com/sebastianbergmann/phpunit/compare/5.0.0...5.0.1
-[5.0.0]: https://github.com/sebastianbergmann/phpunit/compare/4.2.3...5.0.0
-[4.2.3]: https://github.com/sebastianbergmann/phpunit/compare/4.2.2...4.2.3
-[4.2.2]: https://github.com/sebastianbergmann/phpunit/compare/4.2.1...4.2.2
-[4.2.1]: https://github.com/sebastianbergmann/phpunit/compare/4.2.0...4.2.1
-[4.2.0]: https://github.com/sebastianbergmann/phpunit/compare/4.1.0...4.2.0
-[4.1.0]: https://github.com/sebastianbergmann/phpunit/compare/4.0.2...4.1.0
-[4.0.2]: https://github.com/sebastianbergmann/phpunit/compare/4.0.1...4.0.2
-[4.0.1]: https://github.com/sebastianbergmann/phpunit/compare/66691f8e2dc4641909166b275a9a4f45c0e89092...4.0.1
-[4.0.0]: https://github.com/sebastianbergmann/phpunit/compare/3.1.0...66691f8e2dc4641909166b275a9a4f45c0e89092
-[3.1.0]: https://github.com/sebastianbergmann/phpunit/compare/3.0...3.1.0
-[3.0.4]: https://github.com/sebastianbergmann/phpunit/compare/3.0.3...3.0.4
-[3.0.3]: https://github.com/sebastianbergmann/phpunit/compare/3.0.2...3.0.3
-[3.0.2]: https://github.com/sebastianbergmann/phpunit/compare/3.0.1...3.0.2
-[3.0.1]: https://github.com/sebastianbergmann/phpunit/compare/3.0.0...3.0.1
-[3.0.0]: https://github.com/sebastianbergmann/phpunit/compare/2.0...3.0.0
+[5.1.3]: https://github.com/sebastianbergmann/environment/compare/5.1.2...5.1.3
+[5.1.2]: https://github.com/sebastianbergmann/environment/compare/5.1.1...5.1.2
+[5.1.1]: https://github.com/sebastianbergmann/environment/compare/5.1.0...5.1.1
+[5.1.0]: https://github.com/sebastianbergmann/environment/compare/5.0.2...5.1.0
+[5.0.2]: https://github.com/sebastianbergmann/environment/compare/5.0.1...5.0.2
+[5.0.1]: https://github.com/sebastianbergmann/environment/compare/5.0.0...5.0.1
+[5.0.0]: https://github.com/sebastianbergmann/environment/compare/4.2.3...5.0.0
+[4.2.3]: https://github.com/sebastianbergmann/environment/compare/4.2.2...4.2.3
+[4.2.2]: https://github.com/sebastianbergmann/environment/compare/4.2.1...4.2.2
+[4.2.1]: https://github.com/sebastianbergmann/environment/compare/4.2.0...4.2.1
+[4.2.0]: https://github.com/sebastianbergmann/environment/compare/4.1.0...4.2.0
+[4.1.0]: https://github.com/sebastianbergmann/environment/compare/4.0.2...4.1.0
+[4.0.2]: https://github.com/sebastianbergmann/environment/compare/4.0.1...4.0.2
+[4.0.1]: https://github.com/sebastianbergmann/environment/compare/66691f8e2dc4641909166b275a9a4f45c0e89092...4.0.1
+[4.0.0]: https://github.com/sebastianbergmann/environment/compare/3.1.0...66691f8e2dc4641909166b275a9a4f45c0e89092
+[3.1.0]: https://github.com/sebastianbergmann/environment/compare/3.0...3.1.0
+[3.0.4]: https://github.com/sebastianbergmann/environment/compare/3.0.3...3.0.4
+[3.0.3]: https://github.com/sebastianbergmann/environment/compare/3.0.2...3.0.3
+[3.0.2]: https://github.com/sebastianbergmann/environment/compare/3.0.1...3.0.2
+[3.0.1]: https://github.com/sebastianbergmann/environment/compare/3.0.0...3.0.1
+[3.0.0]: https://github.com/sebastianbergmann/environment/compare/2.0...3.0.0
 

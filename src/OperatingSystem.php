@@ -9,6 +9,11 @@
  */
 namespace SebastianBergmann\Environment;
 
+use const DIRECTORY_SEPARATOR;
+use const PHP_OS;
+use const PHP_OS_FAMILY;
+use function defined;
+
 final class OperatingSystem
 {
     /**
@@ -17,15 +22,15 @@ final class OperatingSystem
      */
     public function getFamily(): string
     {
-        if (\defined('PHP_OS_FAMILY')) {
-            return \PHP_OS_FAMILY;
+        if (defined('PHP_OS_FAMILY')) {
+            return PHP_OS_FAMILY;
         }
 
-        if (\DIRECTORY_SEPARATOR === '\\') {
+        if (DIRECTORY_SEPARATOR === '\\') {
             return 'Windows';
         }
 
-        switch (\PHP_OS) {
+        switch (PHP_OS) {
             case 'Darwin':
                 return 'Darwin';
 

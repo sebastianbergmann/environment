@@ -20,11 +20,7 @@
         <exec executable="phive" taskname="phive">
             <arg value="--no-progress"/>
             <arg value="update"/>
-        </exec>
-
-        <exec executable="${basedir}/tools/composer" taskname="composer">
-            <arg value="self-update"/>
-            <arg value="--1"/>
+            <arg value="--force-accept-unsigned"/>
         </exec>
     </target>
 </project>

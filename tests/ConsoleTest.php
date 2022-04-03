@@ -9,6 +9,7 @@
  */
 namespace SebastianBergmann\Environment;
 
+use const STDOUT;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -41,7 +42,7 @@ final class ConsoleTest extends TestCase
      */
     public function testCanDetectIfFileDescriptorIsInteractive(): void
     {
-        $this->assertIsBool($this->console->isInteractive(\STDOUT));
+        $this->assertIsBool($this->console->isInteractive(STDOUT));
     }
 
     /**
