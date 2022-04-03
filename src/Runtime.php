@@ -246,8 +246,12 @@ final class Runtime
             foreach ($values as $value) {
                 $set = ini_get($value);
 
-                if (isset($config[$value]) && $set != $config[$value]) {
-                    $diff[] = sprintf('%s=%s', $value, $set);
+                if (empty($set)) {
+                    continue;
+                }
+
+                if ((!isset($config[$value]) || ($set !== $config[$value]))) {
+                    $diff[$value] = sprintf('%s=%s', $value, $set);
                 }
             }
         }
