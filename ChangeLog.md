@@ -10,6 +10,12 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 * Removed `SebastianBergmann\Environment\Runtime::isHHVM()`
 * This component is no longer supported on PHP 7.3, PHP 7.4, and PHP 8.0
 
+## [5.1.5] - 2022-MM-DD
+
+### Fixed
+
+* [#59](https://github.com/sebastianbergmann/environment/issues/59): Wrong usage of `stream_isatty()`, `fstat()` used without checking whether the function is available
+
 ## [5.1.4] - 2022-04-03
 
 ### Fixed
@@ -159,7 +165,8 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
-[6.0.0]: https://github.com/sebastianbergmann/environment/compare/5.1.4...master
+[6.0.0]: https://github.com/sebastianbergmann/environment/compare/5.1...main
+[5.1.5]: https://github.com/sebastianbergmann/environment/compare/5.1.4...5.1
 [5.1.4]: https://github.com/sebastianbergmann/environment/compare/5.1.3...5.1.4
 [5.1.3]: https://github.com/sebastianbergmann/environment/compare/5.1.2...5.1.3
 [5.1.2]: https://github.com/sebastianbergmann/environment/compare/5.1.1...5.1.2
