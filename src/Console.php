@@ -110,8 +110,7 @@ final class Console
                 return true;
             }
 
-            // Check if formatted mode is S_IFCHR
-            if (function_exists('fstat') && @stream_isatty($fileDescriptor)) {
+            if (function_exists('fstat')) {
                 $stat = @fstat(STDOUT);
 
                 return $stat ? 0020000 === ($stat['mode'] & 0170000) : false;
