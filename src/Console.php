@@ -112,7 +112,7 @@ final class Console
             if (function_exists('fstat')) {
                 $stat = @fstat(STDOUT);
 
-                return $stat ? 0020000 === ($stat['mode'] & 0170000) : false;
+                return $stat && 0020000 === ($stat['mode'] & 0170000);
             }
 
             return false;
