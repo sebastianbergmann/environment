@@ -105,7 +105,6 @@ final class Console
     public function isInteractive($fileDescriptor = self::STDOUT): bool
     {
         if (is_resource($fileDescriptor)) {
-            // These functions require a descriptor that is a real resource, not a numeric ID of it
             if (function_exists('stream_isatty') && @stream_isatty($fileDescriptor)) {
                 return true;
             }
