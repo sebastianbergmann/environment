@@ -2,7 +2,7 @@
     "name": "sebastian/environment",
     "description": "Provides functionality to handle HHVM/PHP environments",
     "keywords": ["environment","hhvm","xdebug"],
-    "homepage": "http://www.github.com/sebastianbergmann/environment",
+    "homepage": "https://github.com/sebastianbergmann/environment",
     "license": "BSD-3-Clause",
     "authors": [
         {
