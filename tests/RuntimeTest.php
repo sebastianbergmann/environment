@@ -11,24 +11,20 @@ namespace SebastianBergmann\Environment;
 
 use const PHP_SAPI;
 use const PHP_VERSION;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Environment\Runtime
- */
+#[CoversClass(Runtime::class)]
 final class RuntimeTest extends TestCase
 {
-    /**
-     * @requires extension xdebug
-     */
+    #[RequiresPhpExtension('xdebug')]
     public function testCanCollectCodeCoverageWhenXdebugExtensionIsEnabled(): void
     {
         $this->assertTrue((new Runtime)->canCollectCodeCoverage());
     }
 
-    /**
-     * @requires extension pcov
-     */
+    #[RequiresPhpExtension('pcov')]
     public function testCanCollectCodeCoverageWhenPcovExtensionIsEnabled(): void
     {
         $this->assertTrue((new Runtime)->canCollectCodeCoverage());
@@ -53,9 +49,7 @@ final class RuntimeTest extends TestCase
         $this->assertTrue((new Runtime)->isPHP());
     }
 
-    /**
-     * @requires extension pcov
-     */
+    #[RequiresPhpExtension('pcov')]
     public function testPCOVCanBeDetected(): void
     {
         $this->assertTrue((new Runtime)->hasPCOV());
@@ -68,9 +62,7 @@ final class RuntimeTest extends TestCase
         $this->assertTrue((new Runtime)->hasPHPDBGCodeCoverage());
     }
 
-    /**
-     * @requires extension xdebug
-     */
+    #[RequiresPhpExtension('xdebug')]
     public function testXdebugCanBeDetected(): void
     {
         $this->markTestSkippedWhenRunningOnPhpdbg();
@@ -117,9 +109,7 @@ final class RuntimeTest extends TestCase
         $this->assertSame([], (new Runtime)->getCurrentSettings([]));
     }
 
-    /**
-     * @requires extension xdebug
-     */
+    #[RequiresPhpExtension('xdebug')]
     public function testGetCurrentSettingsReturnsCorrectDiffIfXdebugValuesArePassed(): void
     {
         $this->assertIsArray((new Runtime)->getCurrentSettings(['xdebug.mode']));

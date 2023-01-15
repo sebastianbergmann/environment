@@ -10,11 +10,10 @@
 namespace SebastianBergmann\Environment;
 
 use const STDOUT;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \SebastianBergmann\Environment\Console
- */
+#[CoversClass(Console::class)]
 final class ConsoleTest extends TestCase
 {
     /**
