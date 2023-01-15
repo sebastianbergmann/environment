@@ -31,7 +31,6 @@ use function strpos;
 final class Runtime
 {
     private static string $binary;
-
     private static bool $initialized = false;
 
     /**
