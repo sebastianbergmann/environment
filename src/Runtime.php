@@ -27,7 +27,9 @@ use function parse_ini_file;
 use function php_ini_loaded_file;
 use function php_ini_scanned_files;
 use function phpversion;
+use function shell_exec;
 use function sprintf;
+use function stripos;
 use function strpos;
 
 /**
@@ -39,6 +41,11 @@ final class Runtime
      * @var string
      */
     private static $binary;
+
+    /**
+     * @var bool
+     */
+    private static $xdebugLoadedByDefault;
 
     /**
      * Returns true when Xdebug or PCOV is available or
@@ -300,6 +307,18 @@ final class Runtime
         }
 
         return $diff;
+    }
+
+    /**
+     * Returns true when PHP is configured to load Xdebug automatically.
+     */
+    public function isXdebugLoadedByDefault(): bool
+    {
+        return self::$xdebugLoadedByDefault
+            ?? self::$xdebugLoadedByDefault = stripos(
+                    shell_exec($this->getBinary() . ' -v 2>&1'),
+                    'xdebug'
+                ) !== false;
     }
 
     private function isOpcacheActive(): bool
