@@ -2,7 +2,7 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [5.1.5] - 2022-MM-DD
+## [5.1.5] - 2023-02-03
 
 ### Fixed
 
@@ -157,7 +157,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
-[5.1.5]: https://github.com/sebastianbergmann/environment/compare/5.1.4...5.1
+[5.1.5]: https://github.com/sebastianbergmann/environment/compare/5.1.4...5.1.5
 [5.1.4]: https://github.com/sebastianbergmann/environment/compare/5.1.3...5.1.4
 [5.1.3]: https://github.com/sebastianbergmann/environment/compare/5.1.2...5.1.3
 [5.1.2]: https://github.com/sebastianbergmann/environment/compare/5.1.1...5.1.2
