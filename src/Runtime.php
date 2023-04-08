@@ -73,6 +73,10 @@ final class Runtime
             return false;
         }
 
+        if (ini_get('opcache.jit_buffer_size' === 0) {
+            return false;
+        }
+
         if (strpos(ini_get('opcache.jit'), '0') === 0) {
             return false;
         }
