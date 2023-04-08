@@ -73,7 +73,13 @@ final class Runtime
             return false;
         }
 
-        if (strpos(ini_get('opcache.jit'), '0') === 0) {
+        $jit = ini_get('opcache.jit');
+
+        if (($jit === 'disable') || ($jit === 'off')) {
+            return false;
+        }
+
+        if (strrpos(ini_get('opcache.jit'), '0') === 3) {
             return false;
         }
 
