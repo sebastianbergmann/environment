@@ -79,7 +79,7 @@ final class Runtime
             return false;
         }
 
-        if (strrpos(ini_get('opcache.jit'), '0') === 3) {
+        if (strrpos($jit, '0') === 3) {
             return false;
         }
 
