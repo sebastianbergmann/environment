@@ -73,6 +73,10 @@ final class Runtime
             return false;
         }
 
+        if (ini_get('opcache.jit_buffer_size') === '0') {
+            return false;
+        }
+        
         $jit = ini_get('opcache.jit');
 
         if (($jit === 'disable') || ($jit === 'off')) {
