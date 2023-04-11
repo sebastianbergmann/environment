@@ -2,6 +2,13 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [6.0.1] - 2023-04-11
+
+### Fixed
+
+* [#68](https://github.com/sebastianbergmann/environment/pull/68): The Just-in-Time compiler is disabled when `opcache.jit_buffer_size` is set to `0`
+* [#70](https://github.com/sebastianbergmann/environment/pull/70): The first `0` of `opcache.jit` only disables CPU-specific optimizations, not the Just-in-Time compiler itself
+
 ## [6.0.0] - 2023-02-03
 
 ### Removed
@@ -165,6 +172,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[6.0.1]: https://github.com/sebastianbergmann/environment/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/sebastianbergmann/environment/compare/5.1.5...6.0.0
 [5.1.5]: https://github.com/sebastianbergmann/environment/compare/5.1.4...5.1.5
 [5.1.4]: https://github.com/sebastianbergmann/environment/compare/5.1.3...5.1.4
