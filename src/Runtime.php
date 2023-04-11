@@ -26,7 +26,7 @@ use function php_ini_loaded_file;
 use function php_ini_scanned_files;
 use function phpversion;
 use function sprintf;
-use function strpos;
+use function strrpos;
 
 final class Runtime
 {
