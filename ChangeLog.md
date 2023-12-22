@@ -2,6 +2,12 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [7.0.0] - 2024-02-02
+
+### Removed
+
+* This component is no longer supported on PHP 8.1
+
 ## [6.0.1] - 2023-04-11
 
 ### Fixed
@@ -172,6 +178,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[7.0.0]: https://github.com/sebastianbergmann/environment/compare/6.0...main
 [6.0.1]: https://github.com/sebastianbergmann/environment/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/sebastianbergmann/environment/compare/5.1.5...6.0.0
 [5.1.5]: https://github.com/sebastianbergmann/environment/compare/5.1.4...5.1.5
