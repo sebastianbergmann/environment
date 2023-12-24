@@ -112,7 +112,7 @@ final class Console
             if (function_exists('fstat')) {
                 $stat = @fstat(STDOUT);
 
-                return $stat && 0020000 === ($stat['mode'] & 0170000);
+                return $stat && 0o020000 === ($stat['mode'] & 0o170000);
             }
 
             return false;
@@ -166,7 +166,7 @@ final class Console
                 $pipes,
                 null,
                 null,
-                ['suppress_errors' => true]
+                ['suppress_errors' => true],
             );
 
             if (is_resource($process)) {
