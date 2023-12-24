@@ -141,7 +141,7 @@ final class Runtime
             return sprintf(
                 '%s with PCOV %s',
                 $this->getNameWithVersion(),
-                phpversion('pcov')
+                phpversion('pcov'),
             );
         }
 
@@ -149,7 +149,7 @@ final class Runtime
             return sprintf(
                 '%s with Xdebug %s',
                 $this->getNameWithVersion(),
-                phpversion('xdebug')
+                phpversion('xdebug'),
             );
         }
 
@@ -244,8 +244,8 @@ final class Runtime
                 $files,
                 array_map(
                     'trim',
-                    explode(",\n", $scanned)
-                )
+                    explode(",\n", $scanned),
+                ),
             );
         }
 
