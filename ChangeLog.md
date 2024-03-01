@@ -2,6 +2,10 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [4.2.5] - 2024-03-01
+
+* No code changes, only updated `.gitattributes` to not export non-essential files.
+
 ## [4.2.4] - 2020-11-30
 
 ### Changed
@@ -109,6 +113,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[4.2.5]: https://github.com/sebastianbergmann/phpunit/compare/4.2.4...4.2.5
 [4.2.4]: https://github.com/sebastianbergmann/phpunit/compare/4.2.3...4.2.4
 [4.2.3]: https://github.com/sebastianbergmann/phpunit/compare/4.2.2...4.2.3
 [4.2.2]: https://github.com/sebastianbergmann/phpunit/compare/4.2.1...4.2.2
