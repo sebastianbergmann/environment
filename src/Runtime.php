@@ -10,7 +10,6 @@
 namespace SebastianBergmann\Environment;
 
 use const PHP_BINARY;
-use const PHP_BINDIR;
 use const PHP_MAJOR_VERSION;
 use const PHP_SAPI;
 use const PHP_VERSION;
@@ -20,7 +19,6 @@ use function escapeshellarg;
 use function explode;
 use function extension_loaded;
 use function ini_get;
-use function is_readable;
 use function parse_ini_file;
 use function php_ini_loaded_file;
 use function php_ini_scanned_files;
@@ -30,9 +28,6 @@ use function strrpos;
 
 final class Runtime
 {
-    private static string $rawBinary;
-    private static bool $initialized = false;
-
     /**
      * Returns true when Xdebug or PCOV is available or
      * the runtime used is PHPDBG.
@@ -92,49 +87,22 @@ final class Runtime
 
     /**
      * Returns the raw path to the binary of the current runtime.
+     *
+     * @deprecated
      */
     public function getRawBinary(): string
     {
-        if (self::$initialized) {
-            return self::$rawBinary;
-        }
-
-        if (PHP_BINARY !== '') {
-            self::$rawBinary   = PHP_BINARY;
-            self::$initialized = true;
-
-            return self::$rawBinary;
-        }
-
-        // @codeCoverageIgnoreStart
-        $possibleBinaryLocations = [
-            PHP_BINDIR . '/php',
-            PHP_BINDIR . '/php-cli.exe',
-            PHP_BINDIR . '/php.exe',
-        ];
-
-        foreach ($possibleBinaryLocations as $binary) {
-            if (is_readable($binary)) {
-                self::$rawBinary   = $binary;
-                self::$initialized = true;
-
-                return self::$rawBinary;
-            }
-        }
-
-        self::$rawBinary   = 'php';
-        self::$initialized = true;
-
-        return self::$rawBinary;
-        // @codeCoverageIgnoreEnd
+        return PHP_BINARY;
     }
 
     /**
      * Returns the escaped path to the binary of the current runtime.
+     *
+     * @deprecated
      */
     public function getBinary(): string
     {
-        return escapeshellarg($this->getRawBinary());
+        return escapeshellarg(PHP_BINARY);
     }
 
     public function getNameWithVersion(): string

@@ -2,6 +2,17 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [7.2.0] - 2024-MM-DD
+
+### Changed
+
+* Removed code left over from a time before PHP 5.4 and when HHVM was still supported
+
+### Deprecated
+
+* The `Runtime::getBinary()` method is now deprecated, use `escapeshellarg(PHP_BINARY)` instead
+* The `Runtime::getRawBinary()` method is now deprecated, use the `PHP_BINARY` constant instead
+
 ## [7.1.0] - 2024-03-23
 
 ### Added
@@ -190,6 +201,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[7.2.0]: https://github.com/sebastianbergmann/environment/compare/7.1.0...main
 [7.1.0]: https://github.com/sebastianbergmann/environment/compare/7.0.0...7.1.0
 [7.0.0]: https://github.com/sebastianbergmann/environment/compare/6.1...7.0.0
 [6.1.0]: https://github.com/sebastianbergmann/environment/compare/6.0.1...6.1.0
