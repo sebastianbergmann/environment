@@ -41,7 +41,7 @@ final class RuntimeTest extends TestCase
     {
         $this->assertNotEmpty((new Runtime)->getBinary());
     }
-    
+
     public function testRawBinaryCanBeRetrieved(): void
     {
         $this->assertNotEmpty((new Runtime)->getRawBinary());
