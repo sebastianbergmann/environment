@@ -93,14 +93,14 @@ final class Runtime
     /**
      * Returns the path to the binary of the current runtime.
      */
-    public function getBinary(): string
+    public function getRawBinary(): string
     {
         if (self::$initialized) {
             return self::$binary;
         }
 
         if (PHP_BINARY !== '') {
-            self::$binary      = escapeshellarg(PHP_BINARY);
+            self::$binary      = PHP_BINARY;
             self::$initialized = true;
 
             return self::$binary;
@@ -115,7 +115,7 @@ final class Runtime
 
         foreach ($possibleBinaryLocations as $binary) {
             if (is_readable($binary)) {
-                self::$binary      = escapeshellarg($binary);
+                self::$binary      = $binary;
                 self::$initialized = true;
 
                 return self::$binary;
@@ -128,6 +128,14 @@ final class Runtime
         // @codeCoverageIgnoreEnd
 
         return self::$binary;
+    }
+
+    /**
+     * Returns the path to the binary of the current runtime.
+     */
+    public function getBinary(): string
+    {
+        return escapeshellarg($this->getRawBinary());
     }
 
     public function getNameWithVersion(): string
