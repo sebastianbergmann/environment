@@ -91,7 +91,7 @@ final class Runtime
     }
 
     /**
-     * Returns the path to the binary of the current runtime.
+     * Returns the raw path to the binary of the current runtime.
      */
     public function getRawBinary(): string
     {
@@ -131,7 +131,7 @@ final class Runtime
     }
 
     /**
-     * Returns the path to the binary of the current runtime.
+     * Returns the escaped path to the binary of the current runtime.
      */
     public function getBinary(): string
     {
