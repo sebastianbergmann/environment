@@ -11,6 +11,7 @@ namespace SebastianBergmann\Environment;
 
 use const PHP_SAPI;
 use const PHP_VERSION;
+use function ini_get;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use PHPUnit\Framework\TestCase;
@@ -117,6 +118,10 @@ final class RuntimeTest extends TestCase
     #[RequiresPhpExtension('xdebug')]
     public function testGetCurrentSettingsReturnsCorrectDiffIfXdebugValuesArePassed(): void
     {
+        if (ini_get('xdebug.mode') === '') {
+            $this->markTestSkipped('xdebug.mode must not be set to "off"');
+        }
+
         $this->assertIsArray((new Runtime)->getCurrentSettings(['xdebug.mode']));
         $this->assertArrayHasKey('xdebug.mode', (new Runtime)->getCurrentSettings(['xdebug.mode']));
     }
