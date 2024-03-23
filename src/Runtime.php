@@ -30,7 +30,7 @@ use function strrpos;
 
 final class Runtime
 {
-    private static string $binary;
+    private static string $rawBinary;
     private static bool $initialized = false;
 
     /**
@@ -96,14 +96,14 @@ final class Runtime
     public function getRawBinary(): string
     {
         if (self::$initialized) {
-            return self::$binary;
+            return self::$rawBinary;
         }
 
         if (PHP_BINARY !== '') {
-            self::$binary      = PHP_BINARY;
+            self::$rawBinary   = PHP_BINARY;
             self::$initialized = true;
 
-            return self::$binary;
+            return self::$rawBinary;
         }
 
         // @codeCoverageIgnoreStart
@@ -115,19 +115,19 @@ final class Runtime
 
         foreach ($possibleBinaryLocations as $binary) {
             if (is_readable($binary)) {
-                self::$binary      = $binary;
+                self::$rawBinary   = $binary;
                 self::$initialized = true;
 
-                return self::$binary;
+                return self::$rawBinary;
             }
         }
 
         // @codeCoverageIgnoreStart
-        self::$binary      = 'php';
+        self::$rawBinary   = 'php';
         self::$initialized = true;
         // @codeCoverageIgnoreEnd
 
-        return self::$binary;
+        return self::$rawBinary;
     }
 
     /**
