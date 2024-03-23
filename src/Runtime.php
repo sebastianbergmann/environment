@@ -122,12 +122,11 @@ final class Runtime
             }
         }
 
-        // @codeCoverageIgnoreStart
         self::$rawBinary   = 'php';
         self::$initialized = true;
-        // @codeCoverageIgnoreEnd
 
         return self::$rawBinary;
+        // @codeCoverageIgnoreEnd
     }
 
     /**
