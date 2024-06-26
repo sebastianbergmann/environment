@@ -176,7 +176,7 @@ final class Console
                 fclose($pipes[2]);
                 proc_close($process);
 
-                if (preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', $info, $matches)) {
+                if (preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', (string) $info, $matches)) {
                     $columns = (int) $matches[2];
                 }
             }

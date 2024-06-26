@@ -72,7 +72,7 @@ final class Runtime
             return false;
         }
 
-        $jit = ini_get('opcache.jit');
+        $jit = (string) ini_get('opcache.jit');
 
         if (($jit === 'disable') || ($jit === 'off')) {
             return false;
@@ -203,7 +203,9 @@ final class Runtime
      * where each string has the format `key=value` denoting
      * the name of a changed php.ini setting with its new value.
      *
-     * @return string[]
+     * @param list<string> $values
+     *
+     * @return array<string, string>
      */
     public function getCurrentSettings(array $values): array
     {
