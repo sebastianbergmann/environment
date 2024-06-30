@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.9.0@8b9ad1eb9e8b7d3101f949291da2b9f7767cd163">
+<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
   <file src="src/Console.php">
     <ForbiddenCode>
       <code><![CDATA[shell_exec('stty size')]]></code>
       <code><![CDATA[shell_exec('stty')]]></code>
     </ForbiddenCode>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[shell_exec('stty size')]]></code>
+      <code><![CDATA[shell_exec('stty')]]></code>
+    </RiskyTruthyFalsyComparison>
+  </file>
+  <file src="src/Runtime.php">
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[$file = php_ini_loaded_file()]]></code>
+      <code><![CDATA[$scanned = php_ini_scanned_files()]]></code>
+      <code><![CDATA[empty($set)]]></code>
+      <code><![CDATA[ini_get('pcov.enabled')]]></code>
+    </RiskyTruthyFalsyComparison>
   </file>
 </files>
