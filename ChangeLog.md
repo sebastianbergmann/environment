@@ -2,6 +2,12 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [6.1.1] - 2024-MM-DD
+
+### Changed
+
+* Synced `Console::hasColorSupport()` with Symfony's `StreamOutput::hasColorSupport()` implementation
+
 ## [6.1.0] - 2024-03-23
 
 ### Added
@@ -178,6 +184,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[6.1.1]: https://github.com/sebastianbergmann/environment/compare/6.1.0...6.1
 [6.1.0]: https://github.com/sebastianbergmann/environment/compare/6.0.1...6.1.0
 [6.0.1]: https://github.com/sebastianbergmann/environment/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/sebastianbergmann/environment/compare/5.1.5...6.0.0

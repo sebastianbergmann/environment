@@ -54,26 +54,37 @@ final class Console
      */
     public function hasColorSupport(): bool
     {
-        if ('Hyper' === getenv('TERM_PROGRAM')) {
+        if (!defined('STDOUT')) {
+            return false;
+        }
+
+        if (isset($_SERVER['NO_COLOR']) || false !== getenv('NO_COLOR')) {
+            return false;
+        }
+
+        if (!@stream_isatty(STDOUT) &&
+            !\in_array(strtoupper((string) getenv('MSYSTEM')), ['MINGW32', 'MINGW64'], true)) {
+            return false;
+        }
+
+        if ($this->isWindows() &&
+            function_exists('sapi_windows_vt100_support') &&
+            @sapi_windows_vt100_support(STDOUT)) {
             return true;
         }
 
-        if ($this->isWindows()) {
-            // @codeCoverageIgnoreStart
-            return (defined('STDOUT') && function_exists('sapi_windows_vt100_support') && @sapi_windows_vt100_support(STDOUT)) ||
-                false !== getenv('ANSICON') ||
-                'ON' === getenv('ConEmuANSI') ||
-                'xterm' === getenv('TERM');
-            // @codeCoverageIgnoreEnd
+        if ('Hyper' === getenv('TERM_PROGRAM') ||
+            false !== getenv('COLORTERM') ||
+            false !== getenv('ANSICON') ||
+            'ON' === getenv('ConEmuANSI')) {
+            return true;
         }
 
-        if (!defined('STDOUT')) {
-            // @codeCoverageIgnoreStart
+        if ('dumb' === $term = (string) getenv('TERM')) {
             return false;
-            // @codeCoverageIgnoreEnd
         }
 
-        return $this->isInteractive(STDOUT);
+        return preg_match('/^((screen|xterm|vt100|vt220|putty|rxvt|ansi|cygwin|linux).*)|(.*-256(color)?(-bce)?)$/', $term);
     }
 
     /**
