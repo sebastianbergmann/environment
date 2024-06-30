@@ -17,6 +17,7 @@ use function fclose;
 use function fstat;
 use function function_exists;
 use function getenv;
+use function in_array;
 use function is_resource;
 use function is_string;
 use function posix_isatty;
@@ -27,6 +28,7 @@ use function sapi_windows_vt100_support;
 use function shell_exec;
 use function stream_get_contents;
 use function stream_isatty;
+use function strtoupper;
 use function trim;
 
 final class Console
@@ -63,7 +65,7 @@ final class Console
         }
 
         if (!@stream_isatty(STDOUT) &&
-            !\in_array(strtoupper((string) getenv('MSYSTEM')), ['MINGW32', 'MINGW64'], true)) {
+            !in_array(strtoupper((string) getenv('MSYSTEM')), ['MINGW32', 'MINGW64'], true)) {
             return false;
         }
 
