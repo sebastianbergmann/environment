@@ -2,12 +2,13 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [7.2.0] - 2024-MM-DD
+## [7.2.0] - 2024-07-03
 
 ### Changed
 
 * Synced `Console::hasColorSupport()` with Symfony's `StreamOutput::hasColorSupport()` implementation
 * Removed code left over from a time before PHP 5.4 and when HHVM was still supported
+* This project now uses PHPStan instead of Psalm for static analysis
 
 ### Deprecated
 
@@ -208,7 +209,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
-[7.2.0]: https://github.com/sebastianbergmann/environment/compare/7.1.0...main
+[7.2.0]: https://github.com/sebastianbergmann/environment/compare/7.1.0...7.2.0
 [7.1.0]: https://github.com/sebastianbergmann/environment/compare/7.0.0...7.1.0
 [7.0.0]: https://github.com/sebastianbergmann/environment/compare/6.1...7.0.0
 [6.1.1]: https://github.com/sebastianbergmann/environment/compare/6.1.0...6.1
