@@ -1,4 +1,4 @@
-[![Latest Stable Version](https://poser.pugx.org/sebastian/environment/v/stable.png)](https://packagist.org/packages/sebastian/environment)
+[![Latest Stable Version](https://poser.pugx.org/sebastian/environment/v)](https://packagist.org/packages/sebastian/environment)
 [![CI Status](https://github.com/sebastianbergmann/environment/workflows/CI/badge.svg)](https://github.com/sebastianbergmann/environment/actions)
 [![codecov](https://codecov.io/gh/sebastianbergmann/environment/branch/main/graph/badge.svg)](https://codecov.io/gh/sebastianbergmann/environment)
 
