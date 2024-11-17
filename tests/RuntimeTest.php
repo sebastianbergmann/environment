@@ -122,7 +122,6 @@ final class RuntimeTest extends TestCase
             $this->markTestSkipped('xdebug.mode must not be set to "off"');
         }
 
-        $this->assertIsArray((new Runtime)->getCurrentSettings(['xdebug.mode']));
         $this->assertArrayHasKey('xdebug.mode', (new Runtime)->getCurrentSettings(['xdebug.mode']));
     }
 

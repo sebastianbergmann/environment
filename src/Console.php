@@ -12,12 +12,14 @@ namespace SebastianBergmann\Environment;
 use const DIRECTORY_SEPARATOR;
 use const STDIN;
 use const STDOUT;
+use function assert;
 use function defined;
 use function fclose;
 use function fstat;
 use function function_exists;
 use function getenv;
 use function in_array;
+use function is_array;
 use function is_resource;
 use function is_string;
 use function posix_isatty;
@@ -181,6 +183,10 @@ final class Console
                 null,
                 ['suppress_errors' => true],
             );
+
+            assert(is_array($pipes));
+            assert(isset($pipes[1]) && is_resource($pipes[1]));
+            assert(isset($pipes[2]) && is_resource($pipes[2]));
 
             if (is_resource($process)) {
                 $info = stream_get_contents($pipes[1]);
