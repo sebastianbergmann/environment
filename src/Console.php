@@ -38,17 +38,17 @@ final class Console
     /**
      * @var int
      */
-    public const STDIN = 0;
+    public const int STDIN = 0;
 
     /**
      * @var int
      */
-    public const STDOUT = 1;
+    public const int STDOUT = 1;
 
     /**
      * @var int
      */
-    public const STDERR = 2;
+    public const int STDERR = 2;
 
     /**
      * Returns true if STDOUT supports colorization.
