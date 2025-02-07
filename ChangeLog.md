@@ -215,7 +215,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
-[8.0.0]: https://github.com/sebastianbergmann/environment/compare/7.2...main
+[8.0.0]: https://github.com/sebastianbergmann/environment/compare/7.2...8.0.0
 [7.2.0]: https://github.com/sebastianbergmann/environment/compare/7.1.0...7.2.0
 [7.1.0]: https://github.com/sebastianbergmann/environment/compare/7.0.0...7.1.0
 [7.0.0]: https://github.com/sebastianbergmann/environment/compare/6.1...7.0.0
