@@ -20,6 +20,7 @@ use function function_exists;
 use function getenv;
 use function in_array;
 use function is_array;
+use function is_int;
 use function is_resource;
 use function is_string;
 use function posix_isatty;
@@ -117,8 +118,10 @@ final class Console
      *
      * @param int|resource $fileDescriptor
      */
-    public function isInteractive($fileDescriptor = self::STDOUT): bool
+    public function isInteractive(mixed $fileDescriptor = self::STDOUT): bool
     {
+        assert(is_int($fileDescriptor) || is_resource($fileDescriptor));
+
         if (is_resource($fileDescriptor)) {
             if (function_exists('stream_isatty') && @stream_isatty($fileDescriptor)) {
                 return true;
