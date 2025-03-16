@@ -186,6 +186,7 @@ final class Console
         $ansicon = getenv('ANSICON');
         $columns = 80;
 
+        /** @phpstan-ignore booleanAnd.rightNotBoolean */
         if (is_string($ansicon) && preg_match('/^(\d+)x\d+ \(\d+x(\d+)\)$/', trim($ansicon), $matches)) {
             $columns = (int) $matches[1];
         } elseif (function_exists('proc_open')) {
@@ -212,6 +213,7 @@ final class Console
                 fclose($pipes[2]);
                 proc_close($process);
 
+                /** @phpstan-ignore if.condNotBoolean */
                 if (preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', (string) $info, $matches)) {
                     $columns = (int) $matches[2];
                 }
