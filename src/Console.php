@@ -130,7 +130,7 @@ final class Console
             if (function_exists('fstat')) {
                 $stat = @fstat(STDOUT);
 
-                return $stat && 0o020000 === ($stat['mode'] & 0o170000);
+                return $stat !== false && 0o020000 === ($stat['mode'] & 0o170000);
             }
 
             return false;
@@ -149,15 +149,29 @@ final class Console
      */
     private function getNumberOfColumnsInteractive(): int
     {
-        if (function_exists('shell_exec') && preg_match('#\d+ (\d+)#', shell_exec('stty size') ?: '', $match) === 1) {
-            if ((int) $match[1] > 0) {
-                return (int) $match[1];
-            }
-        }
+        if (function_exists('shell_exec')) {
+            $stty = shell_exec('stty size');
 
-        if (function_exists('shell_exec') && preg_match('#columns = (\d+);#', shell_exec('stty') ?: '', $match) === 1) {
-            if ((int) $match[1] > 0) {
-                return (int) $match[1];
+            if ($stty === false || $stty === null) {
+                $stty = '';
+            }
+
+            if (preg_match('#\d+ (\d+)#', $stty, $match) === 1) {
+                if ((int) $match[1] > 0) {
+                    return (int) $match[1];
+                }
+            }
+
+            $stty = shell_exec('stty size');
+
+            if ($stty === false || $stty === null) {
+                $stty = '';
+            }
+
+            if (preg_match('#columns = (\d+);#', $stty, $match) === 1) {
+                if ((int) $match[1] > 0) {
+                    return (int) $match[1];
+                }
             }
         }
 
