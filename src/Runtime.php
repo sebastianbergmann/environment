@@ -231,7 +231,7 @@ final class Runtime
             foreach ($values as $value) {
                 $set = ini_get($value);
 
-                if (empty($set)) {
+                if ($set === false || $set === '') {
                     continue;
                 }
 
