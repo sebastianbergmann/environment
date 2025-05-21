@@ -14,16 +14,21 @@ use const PHP_SAPI;
 use const PHP_VERSION;
 use function array_map;
 use function array_merge;
+use function assert;
 use function escapeshellarg;
 use function explode;
 use function extension_loaded;
+use function in_array;
 use function ini_get;
+use function is_array;
 use function parse_ini_file;
 use function php_ini_loaded_file;
 use function php_ini_scanned_files;
 use function phpversion;
 use function sprintf;
 use function strrpos;
+use function version_compare;
+use function xdebug_info;
 
 final class Runtime
 {
@@ -33,7 +38,35 @@ final class Runtime
      */
     public function canCollectCodeCoverage(): bool
     {
-        return $this->hasXdebug() || $this->hasPCOV() || $this->hasPHPDBGCodeCoverage();
+        if ($this->hasPHPDBGCodeCoverage()) {
+            return true;
+        }
+
+        if ($this->hasPCOV()) {
+            return true;
+        }
+
+        if (!$this->hasXdebug()) {
+            return false;
+        }
+
+        $xdebugVersion = phpversion('xdebug');
+
+        assert($xdebugVersion !== false);
+
+        if (version_compare($xdebugVersion, '3', '<')) {
+            return true;
+        }
+
+        $xdebugMode = xdebug_info('mode');
+
+        assert(is_array($xdebugMode));
+
+        if (in_array('coverage', $xdebugMode, true)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
