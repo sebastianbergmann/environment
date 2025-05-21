@@ -2,6 +2,12 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [8.0.2] - 2025-05-21
+
+### Fixed
+
+* [#74](https://github.com/sebastianbergmann/environment/pull/74): Regression introduced in version 8.0.0
+
 ## [8.0.1] - 2025-05-21
 
 ### Fixed
@@ -227,6 +233,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[8.0.2]: https://github.com/sebastianbergmann/environment/compare/8.0.1...8.0.2
 [8.0.1]: https://github.com/sebastianbergmann/environment/compare/8.0.0...8.0.1
 [8.0.0]: https://github.com/sebastianbergmann/environment/compare/7.2...8.0.0
 [7.2.1]: https://github.com/sebastianbergmann/environment/compare/7.2.0...7.2.1
