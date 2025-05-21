@@ -2,6 +2,12 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [8.0.1] - 2025-05-21
+
+### Fixed
+
+* Take Xdebug mode into account for `Runtime::canCollectCodeCoverage()`
+
 ## [8.0.0] - 2025-02-07
 
 ### Removed
@@ -221,6 +227,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[8.0.1]: https://github.com/sebastianbergmann/environment/compare/8.0.0...8.0.1
 [8.0.0]: https://github.com/sebastianbergmann/environment/compare/7.2...8.0.0
 [7.2.1]: https://github.com/sebastianbergmann/environment/compare/7.2.0...7.2.1
 [7.2.0]: https://github.com/sebastianbergmann/environment/compare/7.1.0...7.2.0
