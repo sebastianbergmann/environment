@@ -11,7 +11,11 @@ namespace SebastianBergmann\Environment;
 
 use const PHP_SAPI;
 use const PHP_VERSION;
+use function assert;
+use function in_array;
 use function ini_get;
+use function is_array;
+use function xdebug_info;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +26,15 @@ final class RuntimeTest extends TestCase
     #[RequiresPhpExtension('xdebug')]
     public function testCanCollectCodeCoverageWhenXdebugExtensionIsEnabled(): void
     {
-        $this->assertTrue((new Runtime)->canCollectCodeCoverage());
+        $xdebugMode = xdebug_info('mode');
+
+        assert(is_array($xdebugMode));
+
+        if (in_array('coverage', $xdebugMode, true)) {
+            $this->assertTrue((new Runtime)->canCollectCodeCoverage());
+        } else {
+            $this->assertFalse((new Runtime)->canCollectCodeCoverage());
+        }
     }
 
     #[RequiresPhpExtension('pcov')]
