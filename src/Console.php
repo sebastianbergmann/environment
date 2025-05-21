@@ -162,7 +162,7 @@ final class Console
                 }
             }
 
-            $stty = shell_exec('stty size');
+            $stty = shell_exec('stty');
 
             if ($stty === false || $stty === null) {
                 $stty = '';
