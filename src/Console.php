@@ -19,7 +19,6 @@ use function fstat;
 use function function_exists;
 use function getenv;
 use function in_array;
-use function is_array;
 use function is_int;
 use function is_resource;
 use function is_string;
@@ -202,7 +201,6 @@ final class Console
                 ['suppress_errors' => true],
             );
 
-            assert(is_array($pipes));
             assert(isset($pipes[1]) && is_resource($pipes[1]));
             assert(isset($pipes[2]) && is_resource($pipes[2]));
 
