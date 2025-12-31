@@ -141,18 +141,26 @@ final class Runtime
     public function getNameWithVersionAndCodeCoverageDriver(): string
     {
         if ($this->hasPCOV()) {
+            $version = phpversion('pcov');
+
+            assert($version !== false);
+
             return sprintf(
                 '%s with PCOV %s',
                 $this->getNameWithVersion(),
-                phpversion('pcov'),
+                $version,
             );
         }
 
         if ($this->hasXdebug()) {
+            $version = phpversion('xdebug');
+
+            assert($version !== false);
+
             return sprintf(
                 '%s with Xdebug %s',
                 $this->getNameWithVersion(),
-                phpversion('xdebug'),
+                $version,
             );
         }
 
