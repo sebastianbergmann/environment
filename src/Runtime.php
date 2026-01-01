@@ -260,7 +260,7 @@ final class Runtime
             $files = array_merge(
                 $files,
                 array_map(
-                    'trim',
+                    trim(...),
                     explode(",\n", $scanned),
                 ),
             );
