@@ -177,6 +177,10 @@ final class RuntimeTest extends TestCase
     {
         $this->markTestSkippedWhenXdebugIsLoaded();
 
+        if (!extension_loaded('xdebug')) {
+            return;
+        }
+
         $xdebugMode = xdebug_info('mode');
 
         assert(is_array($xdebugMode));

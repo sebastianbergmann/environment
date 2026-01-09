@@ -92,6 +92,10 @@ jobs:
           - 8.4
           - 8.5
           - 8.6
+        coverage:
+          - none
+          - xdebug
+          - pcov
 
     steps:
       - name: Checkout
@@ -112,7 +116,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          coverage: none
+          coverage: ${{ matrix.coverage }}
           tools: none
 
       - name: Get Composer cache directory
