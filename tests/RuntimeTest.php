@@ -12,6 +12,7 @@ namespace SebastianBergmann\Environment;
 use const PHP_SAPI;
 use const PHP_VERSION;
 use function assert;
+use function extension_loaded;
 use function in_array;
 use function ini_get;
 use function is_array;
@@ -23,29 +24,38 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(Runtime::class)]
 final class RuntimeTest extends TestCase
 {
-    #[RequiresPhpExtension('xdebug')]
-    public function testCanCollectCodeCoverageWhenXdebugExtensionIsEnabled(): void
+    public function testCannotCollectCodeCoverageWhenNeitherXdebugNorPcovAreAvailable(): void
     {
-        $xdebugMode = xdebug_info('mode');
+        $this->markTestSkippedWhenXdebugCanCollectCoverage();
+        $this->markTestSkippedWhenPcovIsLoaded();
+        $this->markTestSkippedWhenRunningOnPhpdbg();
 
-        assert(is_array($xdebugMode));
-
-        if (in_array('coverage', $xdebugMode, true)) {
-            $this->assertTrue((new Runtime)->canCollectCodeCoverage());
-        } else {
-            $this->assertFalse((new Runtime)->canCollectCodeCoverage());
-        }
+        $this->assertFalse((new Runtime)->canCollectCodeCoverage());
     }
 
-    #[RequiresPhpExtension('pcov')]
-    public function testCanCollectCodeCoverageWhenPcovExtensionIsEnabled(): void
+    public function testCanCollectCodeCoverageWhenXdebugCanCollectCoverage(): void
     {
+        $this->markTestSkippedWhenXdebugCannotCollectCoverage();
+        $this->markTestSkippedWhenPcovIsLoaded();
+        $this->markTestSkippedWhenRunningOnPhpdbg();
+
+        $this->assertTrue((new Runtime)->canCollectCodeCoverage());
+    }
+
+    public function testCanCollectCodeCoverageWhenPcovCanCollectCoverage(): void
+    {
+        $this->markTestSkippedWhenPcovIsNotLoaded();
+        $this->markTestSkippedWhenXdebugCanCollectCoverage();
+        $this->markTestSkippedWhenRunningOnPhpdbg();
+
         $this->assertTrue((new Runtime)->canCollectCodeCoverage());
     }
 
     public function testCanCollectCodeCoverageWhenRunningOnPhpdbg(): void
     {
         $this->markTestSkippedWhenNotRunningOnPhpdbg();
+        $this->markTestSkippedWhenXdebugCanCollectCoverage();
+        $this->markTestSkippedWhenPcovIsLoaded();
 
         $this->assertTrue((new Runtime)->canCollectCodeCoverage());
     }
@@ -142,13 +152,58 @@ final class RuntimeTest extends TestCase
         $this->assertSame([], (new Runtime)->getCurrentSettings(['allow_url_include']));
     }
 
-    private function markTestSkippedWhenNotRunningOnPhpdbg(): void
+    private function markTestSkippedWhenPcovIsLoaded(): void
     {
-        if ($this->isRunningOnPhpdbg()) {
-            return;
+        if (extension_loaded('pcov')) {
+            $this->markTestSkipped('PHP extension pcov is loaded');
         }
+    }
 
-        $this->markTestSkipped('PHPDBG is required.');
+    private function markTestSkippedWhenPcovIsNotLoaded(): void
+    {
+        if (!extension_loaded('pcov')) {
+            $this->markTestSkipped('PHP extension pcov is not loaded');
+        }
+    }
+
+    private function markTestSkippedWhenXdebugIsLoaded(): void
+    {
+        if (extension_loaded('xdebug')) {
+            $this->markTestSkipped('PHP extension xdebug is loaded');
+        }
+    }
+
+    private function markTestSkippedWhenXdebugCanCollectCoverage(): void
+    {
+        $this->markTestSkippedWhenXdebugIsLoaded();
+
+        $xdebugMode = xdebug_info('mode');
+
+        assert(is_array($xdebugMode));
+
+        if (in_array('coverage', $xdebugMode, true)) {
+            $this->markTestSkipped('xdebug.mode=coverage must not be set');
+        }
+    }
+
+    private function markTestSkippedWhenXdebugCannotCollectCoverage(): void
+    {
+        $this->markTestSkippedWhenXdebugIsNotLoaded();
+
+        $xdebugMode = xdebug_info('mode');
+
+        assert(is_array($xdebugMode));
+
+        if (!in_array('coverage', $xdebugMode, true)) {
+            $this->markTestSkipped('xdebug.mode=coverage must be set');
+        }
+    }
+
+    private function markTestSkippedWhenXdebugIsNotLoaded(): void
+    {
+        if (!extension_loaded('xdebug')) {
+            $this->markTestSkipped('PHP extension xdebug is not loaded');
+        }
     }
 
     private function markTestSkippedWhenRunningOnPhpdbg(): void
@@ -157,7 +212,16 @@ final class RuntimeTest extends TestCase
             return;
         }
 
-        $this->markTestSkipped('Cannot run on PHPDBG');
+        $this->markTestSkipped('PHPDBG must not be used');
+    }
+
+    private function markTestSkippedWhenNotRunningOnPhpdbg(): void
+    {
+        if ($this->isRunningOnPhpdbg()) {
+            return;
+        }
+
+        $this->markTestSkipped('PHPDBG must be used');
     }
 
     private function isRunningOnPhpdbg(): bool
