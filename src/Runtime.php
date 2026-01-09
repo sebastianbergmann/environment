@@ -25,7 +25,9 @@ use function parse_ini_file;
 use function php_ini_loaded_file;
 use function php_ini_scanned_files;
 use function phpversion;
+use function preg_match;
 use function sprintf;
+use function str_replace;
 use function strrpos;
 use function version_compare;
 use function xdebug_info;
@@ -276,9 +278,18 @@ final class Runtime
                     continue;
                 }
 
-                if ((!isset($config[$value]) || ($set !== $config[$value]))) {
-                    $diff[$value] = sprintf('%s=%s', $value, $set);
-                }
+				if (isset($config[$value]) && $set === $config[$value]) {
+					continue;
+				}
+
+				// https://www.php.net/manual/en/function.parse-ini-file.php
+				// If a value in the ini file contains any non-alphanumeric characters
+				// it needs to be enclosed in double-quotes
+				if (preg_match('/\W/', $set)) {
+					$set = '"' . str_replace(array('\\', '"'), array('\\\\', '\\"'), $set) . '"';
+				}
+
+				$diff[$value] = sprintf('%s=%s', $value, $set);
             }
         }
 
