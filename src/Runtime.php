@@ -247,8 +247,9 @@ final class Runtime
      */
     public function getCurrentSettings(array $values): array
     {
-        $diff  = [];
-        $files = [];
+        $diff   = [];
+        $files  = [];
+        $config = [];
 
         $file = php_ini_loaded_file();
 
@@ -269,30 +270,36 @@ final class Runtime
         }
 
         foreach ($files as $ini) {
-            $config = parse_ini_file($ini, true);
+            $parsed = parse_ini_file($ini, true);
 
-            foreach ($values as $value) {
-                $set = ini_get($value);
-
-				// any empty values must not be skipped
-				// e.g. off as in xdebug.mode=off is reported as empty string
-                if ($set === false) {
-                    continue;
-                }
-
-				if (isset($config[$value]) && $set === $config[$value]) {
-					continue;
-				}
-
-				// https://www.php.net/manual/en/function.parse-ini-file.php
-				// If a value in the ini file contains any non-alphanumeric characters
-				// it needs to be enclosed in double-quotes
-				if (preg_match('/\W/', $set)) {
-					$set = '"' . str_replace(array('\\', '"'), array('\\\\', '\\"'), $set) . '"';
-				}
-
-				$diff[$value] = sprintf('%s=%s', $value, $set);
+            if ($parsed === false) {
+                continue;
             }
+
+            $config = array_merge($config, $parsed);
+        }
+
+        foreach ($values as $value) {
+            $set = ini_get($value);
+
+            // any empty values must not be skipped
+            // e.g. off as in xdebug.mode=off is reported as empty string
+            if ($set === false) {
+                continue;
+            }
+
+            if (isset($config[$value]) && $set === $config[$value]) {
+                continue;
+            }
+
+            // https://www.php.net/manual/en/function.parse-ini-file.php
+            // If a value in the ini file contains any non-alphanumeric characters
+            // it needs to be enclosed in double-quotes
+            if (preg_match('/\W/', $set) === 1) {
+                $set = '"' . str_replace(['\\', '"'], ['\\\\', '\\"'], $set) . '"';
+            }
+
+            $diff[$value] = sprintf('%s=%s', $value, $set);
         }
 
         return $diff;
