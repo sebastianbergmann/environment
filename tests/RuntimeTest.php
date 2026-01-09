@@ -14,7 +14,6 @@ use const PHP_VERSION;
 use function assert;
 use function extension_loaded;
 use function in_array;
-use function ini_get;
 use function is_array;
 use function xdebug_info;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -140,16 +139,17 @@ final class RuntimeTest extends TestCase
     #[RequiresPhpExtension('xdebug')]
     public function testGetCurrentSettingsReturnsCorrectDiffIfXdebugValuesArePassed(): void
     {
-        if (ini_get('xdebug.mode') === '') {
-            $this->markTestSkipped('xdebug.mode must not be set to "off"');
-        }
-
         $this->assertArrayHasKey('xdebug.mode', (new Runtime)->getCurrentSettings(['xdebug.mode']));
+    }
+
+    public function testGetCurrentSettingsWillNotSkipSettingsThatIsOff(): void
+    {
+        $this->assertArrayHasKey('allow_url_include', (new Runtime)->getCurrentSettings(['allow_url_include']));
     }
 
     public function testGetCurrentSettingsWillSkipSettingsThatIsNotSet(): void
     {
-        $this->assertSame([], (new Runtime)->getCurrentSettings(['allow_url_include']));
+        $this->assertSame([], (new Runtime)->getCurrentSettings(['foo']));
     }
 
     private function markTestSkippedWhenPcovIsLoaded(): void

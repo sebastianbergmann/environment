@@ -274,7 +274,9 @@ final class Runtime
             foreach ($values as $value) {
                 $set = ini_get($value);
 
-                if ($set === false || $set === '') {
+				// any empty values must not be skipped
+				// e.g. off as in xdebug.mode=off is reported as empty string
+                if ($set === false) {
                     continue;
                 }
 
