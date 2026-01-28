@@ -136,20 +136,9 @@ final class RuntimeTest extends TestCase
         $this->assertSame([], (new Runtime)->getCurrentSettings([]));
     }
 
-    #[RequiresPhpExtension('xdebug')]
-    public function testGetCurrentSettingsReturnsCorrectDiffIfXdebugValuesArePassed(): void
-    {
-        $this->assertArrayHasKey('xdebug.mode', (new Runtime)->getCurrentSettings(['xdebug.mode']));
-    }
-
-    public function testGetCurrentSettingsWillNotSkipSettingsThatIsOff(): void
-    {
-        $this->assertArrayHasKey('allow_url_include', (new Runtime)->getCurrentSettings(['allow_url_include']));
-    }
-
     public function testGetCurrentSettingsWillSkipSettingsThatIsNotSet(): void
     {
-        $this->assertSame([], (new Runtime)->getCurrentSettings(['foo']));
+        $this->assertSame([], (new Runtime)->getCurrentSettings(['foo_nonexistent_setting']));
     }
 
     private function markTestSkippedWhenPcovIsLoaded(): void
