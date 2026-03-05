@@ -2,6 +2,12 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [9.1.0] - 2026-MM-DD
+
+### Added
+
+* `Host` class
+
 ## [9.0.0] - 2026-02-06
 
 ### Removed
@@ -245,6 +251,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[9.1.0]: https://github.com/sebastianbergmann/environment/compare/9.0.0...main
 [9.0.0]: https://github.com/sebastianbergmann/environment/compare/8.0...9.0.0
 [8.0.3]: https://github.com/sebastianbergmann/environment/compare/8.0.2...8.0.3
 [8.0.2]: https://github.com/sebastianbergmann/environment/compare/8.0.1...8.0.2
