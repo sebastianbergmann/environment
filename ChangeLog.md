@@ -2,11 +2,23 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [9.0.1] - 2026-MM-DD
+
+### Fixed
+
+* [#79](https://github.com/sebastianbergmann/environment/issues/79): Warnings in non-TTY environments
+
 ## [9.0.0] - 2026-02-06
 
 ### Removed
 
 * This component is no longer supported on PHP 8.3
+
+## [8.0.4] - 2026-MM-DD
+
+### Fixed
+
+* [#79](https://github.com/sebastianbergmann/environment/issues/79): Warnings in non-TTY environments
 
 ## [8.0.3] - 2025-08-12
 
@@ -245,7 +257,9 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[9.0.1]: https://github.com/sebastianbergmann/environment/compare/9.0.0...9.0
 [9.0.0]: https://github.com/sebastianbergmann/environment/compare/8.0...9.0.0
+[8.0.4]: https://github.com/sebastianbergmann/environment/compare/8.0.3...8.0
 [8.0.3]: https://github.com/sebastianbergmann/environment/compare/8.0.2...8.0.3
 [8.0.2]: https://github.com/sebastianbergmann/environment/compare/8.0.1...8.0.2
 [8.0.1]: https://github.com/sebastianbergmann/environment/compare/8.0.0...8.0.1
