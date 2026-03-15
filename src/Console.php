@@ -127,7 +127,7 @@ final class Console
             }
 
             if (function_exists('fstat')) {
-                $stat = @fstat(STDOUT);
+                $stat = @fstat($fileDescriptor);
 
                 return $stat !== false && 0o020000 === ($stat['mode'] & 0o170000);
             }
@@ -149,7 +149,7 @@ final class Console
     private function getNumberOfColumnsInteractive(): int
     {
         if (function_exists('shell_exec')) {
-            $stty = shell_exec('stty size');
+            $stty = shell_exec('stty size 2>/dev/null');
 
             if ($stty === false || $stty === null) {
                 $stty = '';
@@ -161,7 +161,7 @@ final class Console
                 }
             }
 
-            $stty = shell_exec('stty');
+            $stty = shell_exec('stty 2>/dev/null');
 
             if ($stty === false || $stty === null) {
                 $stty = '';
