@@ -12,8 +12,12 @@
          failOnWarning="true"
          colors="true">
     <testsuites>
-        <testsuite name="default">
-            <directory>tests</directory>
+        <testsuite name="unit">
+            <directory>tests/unit</directory>
+        </testsuite>
+
+        <testsuite name="end-to-end">
+            <directory suffix=".phpt">tests/end-to-end</directory>
         </testsuite>
     </testsuites>
 
