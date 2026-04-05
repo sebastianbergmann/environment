@@ -62,8 +62,14 @@ final class Console
             return false;
         }
 
+        // Follow https://no-color.org/
         if (isset($_SERVER['NO_COLOR']) || false !== getenv('NO_COLOR')) {
             return false;
+        }
+
+        // Follow https://force-color.org/
+        if (isset($_SERVER['FORCE_COLOR']) || false !== getenv('FORCE_COLOR')) {
+            return true;
         }
 
         if (!@stream_isatty(STDOUT) &&

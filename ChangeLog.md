@@ -2,6 +2,12 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [9.2.0] - 2026-MM-DD
+
+### Added
+
+* [`#80`](https://github.com/sebastianbergmann/environment/issues/80): Support for `FORCE_COLOR` environment variable
+
 ## [9.1.0] - 2026-03-22
 
 ### Added
@@ -263,6 +269,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[9.2.0]: https://github.com/sebastianbergmann/environment/compare/9.1.0...main
 [9.1.0]: https://github.com/sebastianbergmann/environment/compare/9.0.1...9.1.0
 [9.0.1]: https://github.com/sebastianbergmann/environment/compare/9.0.0...9.0.1
 [9.0.0]: https://github.com/sebastianbergmann/environment/compare/8.0...9.0.0
