@@ -41,6 +41,7 @@ final class ConsoleTest extends TestCase
         try {
             $this->assertFalse((new Console)->isInteractive($pipes[1]));
         } finally {
+            stream_get_contents($pipes[1]);
             fclose($pipes[1]);
             proc_close($process);
         }
