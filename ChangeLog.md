@@ -2,7 +2,7 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [9.3.0] - 2026-MM-DD
+## [9.3.0] - 2026-04-15
 
 ### Added
 
@@ -281,7 +281,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
-[9.3.0]: https://github.com/sebastianbergmann/environment/compare/9.2.0...main
+[9.3.0]: https://github.com/sebastianbergmann/environment/compare/9.2.0...9.3.0
 [9.2.0]: https://github.com/sebastianbergmann/environment/compare/9.1.0...9.2.0
 [9.1.0]: https://github.com/sebastianbergmann/environment/compare/9.0.1...9.1.0
 [9.0.1]: https://github.com/sebastianbergmann/environment/compare/9.0.0...9.0.1
