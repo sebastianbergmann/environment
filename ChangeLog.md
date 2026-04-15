@@ -2,6 +2,12 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [9.3.0] - 2026-MM-DD
+
+### Added
+
+* `Runtime::getSettingsNotChangeableAtRuntime()`
+
 ## [9.2.0] - 2026-04-05
 
 ### Added
@@ -25,6 +31,12 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 ### Removed
 
 * This component is no longer supported on PHP 8.3
+
+## [8.1.0] - 2026-MM-DD
+
+### Added
+
+* `Runtime::getSettingsNotChangeableAtRuntime()`
 
 ## [8.0.4] - 2026-03-15
 
@@ -269,10 +281,12 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[9.3.0]: https://github.com/sebastianbergmann/environment/compare/9.2.0...main
 [9.2.0]: https://github.com/sebastianbergmann/environment/compare/9.1.0...9.2.0
 [9.1.0]: https://github.com/sebastianbergmann/environment/compare/9.0.1...9.1.0
 [9.0.1]: https://github.com/sebastianbergmann/environment/compare/9.0.0...9.0.1
 [9.0.0]: https://github.com/sebastianbergmann/environment/compare/8.0...9.0.0
+[8.1.0]: https://github.com/sebastianbergmann/environment/compare/8.0.4...8.0
 [8.0.4]: https://github.com/sebastianbergmann/environment/compare/8.0.3...8.0.4
 [8.0.4]: https://github.com/sebastianbergmann/environment/compare/8.0.3...8.0
 [8.0.3]: https://github.com/sebastianbergmann/environment/compare/8.0.2...8.0.3
