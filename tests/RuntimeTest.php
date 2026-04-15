@@ -9,13 +9,21 @@
  */
 namespace SebastianBergmann\Environment;
 
+use const PHP_BINARY;
 use const PHP_SAPI;
 use const PHP_VERSION;
 use function assert;
+use function dirname;
 use function extension_loaded;
 use function in_array;
 use function ini_get;
 use function is_array;
+use function json_decode;
+use function proc_close;
+use function proc_open;
+use function sprintf;
+use function stream_get_contents;
+use function var_export;
 use function xdebug_info;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
@@ -130,6 +138,42 @@ final class RuntimeTest extends TestCase
     public function testGetVendorUrlReturnsPhpDotNetWhenRunningPhp(): void
     {
         $this->assertSame('https://www.php.net/', (new Runtime)->getVendorUrl());
+    }
+
+    public function testSettingsChangedViaCliDFlagAreDetected(): void
+    {
+        $process = proc_open(
+            [
+                PHP_BINARY,
+                '-d',
+                'disable_functions=phpinfo',
+                '-r',
+                sprintf(
+                    'require %s; echo json_encode((new SebastianBergmann\Environment\Runtime)->getSettingsNotChangeableAtRuntime());',
+                    var_export(dirname(__DIR__) . '/vendor/autoload.php', true),
+                ),
+            ],
+            [
+                1 => ['pipe', 'w'],
+            ],
+            $pipes,
+        );
+
+        assert($process !== false);
+        assert(isset($pipes[1]));
+
+        $stdout = stream_get_contents($pipes[1]);
+
+        assert($stdout !== false);
+
+        proc_close($process);
+
+        $result = json_decode($stdout, true);
+
+        assert(is_array($result));
+        assert(isset($result['disable_functions']));
+
+        $this->assertSame('disable_functions=phpinfo', $result['disable_functions']);
     }
 
     public function testGetCurrentSettingsReturnsEmptyDiffIfNoValuesArePassed(): void

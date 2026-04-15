@@ -20,7 +20,9 @@ use function explode;
 use function extension_loaded;
 use function in_array;
 use function ini_get;
+use function ini_get_all;
 use function is_array;
+use function is_int;
 use function parse_ini_file;
 use function php_ini_loaded_file;
 use function php_ini_scanned_files;
@@ -283,6 +285,48 @@ final class Runtime
         }
 
         return $diff;
+    }
+
+    /**
+     * Returns INI settings that cannot be changed via ini_set()
+     * (PHP_INI_SYSTEM and PHP_INI_PERDIR) and whose current value
+     * differs from the value configured in INI files.
+     *
+     * These settings can only have been changed via CLI -d flags
+     * and must be forwarded as -d flags to child processes because
+     * ini_set() cannot change them at runtime.
+     *
+     * @return array<string, string>
+     */
+    public function getSettingsNotChangeableAtRuntime(): array
+    {
+        $allSettings = ini_get_all(null, true);
+
+        assert($allSettings !== false);
+
+        $nonRuntimeSettable = [];
+
+        foreach ($allSettings as $key => $info) {
+            assert(is_array($info));
+            assert(isset($info['access']));
+            assert(is_int($info['access']));
+
+            /**
+             * Only consider settings that cannot be changed via ini_set().
+             *
+             * PHP_INI_USER = 1
+             * PHP_INI_PERDIR = 2
+             * PHP_INI_SYSTEM = 4
+             * PHP_INI_ALL = 7
+             */
+            if (($info['access'] & 1) !== 0) {
+                continue;
+            }
+
+            $nonRuntimeSettable[] = $key;
+        }
+
+        return $this->getCurrentSettings($nonRuntimeSettable);
     }
 
     public function isOpcacheActive(): bool
