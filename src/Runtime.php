@@ -9,9 +9,11 @@
  */
 namespace SebastianBergmann\Environment;
 
+use const INI_SCANNER_RAW;
 use const PHP_BINARY;
 use const PHP_SAPI;
 use const PHP_VERSION;
+use function addcslashes;
 use function array_map;
 use function array_merge;
 use function assert;
@@ -23,6 +25,7 @@ use function ini_get;
 use function ini_get_all;
 use function is_array;
 use function is_int;
+use function is_string;
 use function parse_ini_file;
 use function php_ini_loaded_file;
 use function php_ini_scanned_files;
@@ -233,13 +236,14 @@ final class Runtime
 
     /**
      * Parses the loaded php.ini file (if any) as well as all
-     * additional php.ini files from the additional ini dir for
-     * a list of all configuration settings loaded from files
-     * at startup. Then checks for each php.ini setting passed
-     * via the `$values` parameter whether this setting has
-     * been changed at runtime. Returns an array of strings
-     * where each string has the format `key=value` denoting
-     * the name of a changed php.ini setting with its new value.
+     * additional php.ini files from the additional ini dir into a
+     * single merged map of settings, then checks for each setting
+     * passed via the `$values` parameter whether the runtime value
+     * (`ini_get()`) differs from what the ini files specified.
+     * Returns an array of `key=value` strings for the changed
+     * settings. The value is wrapped in double quotes (with `"` and
+     * `\` escaped) so the result is safe to pass back to PHP via
+     * the `-d` command-line flag.
      *
      * @param list<string> $values
      *
@@ -247,41 +251,21 @@ final class Runtime
      */
     public function getCurrentSettings(array $values): array
     {
-        $diff  = [];
-        $files = [];
+        $iniFileValues = $this->parseLoadedIniFiles();
+        $diff          = [];
 
-        $file = php_ini_loaded_file();
+        foreach ($values as $value) {
+            $set = ini_get($value);
 
-        if ($file !== false) {
-            $files[] = $file;
-        }
-
-        $scanned = php_ini_scanned_files();
-
-        if ($scanned !== false) {
-            $files = array_merge(
-                $files,
-                array_map(
-                    'trim',
-                    explode(",\n", $scanned),
-                ),
-            );
-        }
-
-        foreach ($files as $ini) {
-            $config = parse_ini_file($ini, true);
-
-            foreach ($values as $value) {
-                $set = ini_get($value);
-
-                if ($set === false || $set === '') {
-                    continue;
-                }
-
-                if ((!isset($config[$value]) || ($set !== $config[$value]))) {
-                    $diff[$value] = sprintf('%s=%s', $value, $set);
-                }
+            if ($set === false || $set === '') {
+                continue;
             }
+
+            if (isset($iniFileValues[$value]) && $iniFileValues[$value] === $set) {
+                continue;
+            }
+
+            $diff[$value] = sprintf('%s=%s', $value, $this->quoteIniValue($set));
         }
 
         return $diff;
@@ -344,5 +328,54 @@ final class Runtime
         }
 
         return false;
+    }
+
+    /**
+     * @return array<array-key, string>
+     */
+    private function parseLoadedIniFiles(): array
+    {
+        $files = [];
+
+        $file = php_ini_loaded_file();
+
+        if ($file !== false) {
+            $files[] = $file;
+        }
+
+        $scanned = php_ini_scanned_files();
+
+        if ($scanned !== false) {
+            $files = array_merge(
+                $files,
+                array_map(
+                    'trim',
+                    explode(",\n", $scanned),
+                ),
+            );
+        }
+
+        $merged = [];
+
+        foreach ($files as $ini) {
+            $parsed = parse_ini_file($ini, false, INI_SCANNER_RAW);
+
+            if ($parsed === false) {
+                continue;
+            }
+
+            foreach ($parsed as $key => $val) {
+                if (is_string($val)) {
+                    $merged[$key] = $val;
+                }
+            }
+        }
+
+        return $merged;
+    }
+
+    private function quoteIniValue(string $value): string
+    {
+        return '"' . addcslashes($value, '"\\') . '"';
     }
 }

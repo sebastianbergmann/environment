@@ -16,7 +16,6 @@ use function assert;
 use function dirname;
 use function extension_loaded;
 use function in_array;
-use function ini_get;
 use function is_array;
 use function json_decode;
 use function proc_close;
@@ -142,20 +141,78 @@ final class RuntimeTest extends TestCase
 
     public function testSettingsChangedViaCliDFlagAreDetected(): void
     {
+        $stdout = $this->runChildPhp(
+            'disable_functions=phpinfo',
+            'echo json_encode((new SebastianBergmann\Environment\Runtime)->getSettingsNotChangeableAtRuntime());',
+        );
+
+        $result = json_decode($stdout, true);
+
+        assert(is_array($result));
+        assert(isset($result['disable_functions']));
+
+        $this->assertSame('disable_functions="phpinfo"', $result['disable_functions']);
+    }
+
+    public function testGetCurrentSettingsReturnsEmptyDiffIfNoValuesArePassed(): void
+    {
+        $this->assertSame([], (new Runtime)->getCurrentSettings([]));
+    }
+
+    public function testGetCurrentSettingsWillSkipSettingsThatIsNotSet(): void
+    {
+        $this->assertSame([], (new Runtime)->getCurrentSettings(['allow_url_include']));
+    }
+
+    public function testGetCurrentSettingsQuotesValuesContainingSpecialCharacters(): void
+    {
+        $stdout = $this->runChildPhp(
+            'error_log="phpstorm://open?file=%f&line=%l"',
+            'echo json_encode((new SebastianBergmann\Environment\Runtime)->getCurrentSettings(["error_log"]));',
+        );
+
+        $result = json_decode($stdout, true);
+
+        assert(is_array($result));
+        assert(isset($result['error_log']));
+
+        $this->assertSame(
+            'error_log="phpstorm://open?file=%f&line=%l"',
+            $result['error_log'],
+        );
+    }
+
+    public function testCurrentSettingsOutputRoundTripsThroughPhpDFlag(): void
+    {
+        $value = 'phpstorm://open?file=%f&line=%l';
+
+        $formatted = $this->runChildPhp(
+            'error_log="' . $value . '"',
+            'echo (new SebastianBergmann\Environment\Runtime)->getCurrentSettings(["error_log"])["error_log"];',
+        );
+
+        $roundTripped = $this->runChildPhp(
+            $formatted,
+            'echo ini_get("error_log");',
+            false,
+        );
+
+        $this->assertSame($value, $roundTripped);
+    }
+
+    private function runChildPhp(string $iniOverride, string $code, bool $autoload = true): string
+    {
+        if ($autoload) {
+            $code = sprintf(
+                'require %s; %s',
+                var_export(dirname(__DIR__) . '/vendor/autoload.php', true),
+                $code,
+            );
+        }
+
         $process = proc_open(
-            [
-                PHP_BINARY,
-                '-d',
-                'disable_functions=phpinfo',
-                '-r',
-                sprintf(
-                    'require %s; echo json_encode((new SebastianBergmann\Environment\Runtime)->getSettingsNotChangeableAtRuntime());',
-                    var_export(dirname(__DIR__) . '/vendor/autoload.php', true),
-                ),
-            ],
-            [
-                1 => ['pipe', 'w'],
-            ],
+            [PHP_BINARY, '-d', $iniOverride, '-r', $code],
+            [1 => ['pipe', 'w']],
             $pipes,
         );
 
@@ -168,32 +225,7 @@ final class RuntimeTest extends TestCase
 
         proc_close($process);
 
-        $result = json_decode($stdout, true);
-
-        assert(is_array($result));
-        assert(isset($result['disable_functions']));
-
-        $this->assertSame('disable_functions=phpinfo', $result['disable_functions']);
-    }
-
-    public function testGetCurrentSettingsReturnsEmptyDiffIfNoValuesArePassed(): void
-    {
-        $this->assertSame([], (new Runtime)->getCurrentSettings([]));
-    }
-
-    #[RequiresPhpExtension('xdebug')]
-    public function testGetCurrentSettingsReturnsCorrectDiffIfXdebugValuesArePassed(): void
-    {
-        if (ini_get('xdebug.mode') === '') {
-            $this->markTestSkipped('xdebug.mode must not be set to "off"');
-        }
-
-        $this->assertArrayHasKey('xdebug.mode', (new Runtime)->getCurrentSettings(['xdebug.mode']));
-    }
-
-    public function testGetCurrentSettingsWillSkipSettingsThatIsNotSet(): void
-    {
-        $this->assertSame([], (new Runtime)->getCurrentSettings(['allow_url_include']));
+        return $stdout;
     }
 
     private function markTestSkippedWhenPcovIsLoaded(): void
