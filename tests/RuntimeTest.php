@@ -151,7 +151,7 @@ final class RuntimeTest extends TestCase
         assert(is_array($result));
         assert(isset($result['disable_functions']));
 
-        $this->assertSame('disable_functions="phpinfo"', $result['disable_functions']);
+        $this->assertSame('disable_functions=phpinfo', $result['disable_functions']);
     }
 
     public function testGetCurrentSettingsReturnsEmptyDiffIfNoValuesArePassed(): void
@@ -164,10 +164,12 @@ final class RuntimeTest extends TestCase
         $this->assertSame([], (new Runtime)->getCurrentSettings(['allow_url_include']));
     }
 
-    public function testGetCurrentSettingsQuotesValuesContainingSpecialCharacters(): void
+    public function testGetCurrentSettingsReturnsValuesVerbatim(): void
     {
+        $value = 'phpstorm://open?file=%f&line=%l';
+
         $stdout = $this->runChildPhp(
-            'error_log="phpstorm://open?file=%f&line=%l"',
+            'error_log="' . $value . '"',
             'echo json_encode((new SebastianBergmann\Environment\Runtime)->getCurrentSettings(["error_log"]));',
         );
 
@@ -176,39 +178,16 @@ final class RuntimeTest extends TestCase
         assert(is_array($result));
         assert(isset($result['error_log']));
 
-        $this->assertSame(
-            'error_log="phpstorm://open?file=%f&line=%l"',
-            $result['error_log'],
-        );
+        $this->assertSame('error_log=' . $value, $result['error_log']);
     }
 
-    public function testCurrentSettingsOutputRoundTripsThroughPhpDFlag(): void
+    private function runChildPhp(string $iniOverride, string $code): string
     {
-        $value = 'phpstorm://open?file=%f&line=%l';
-
-        $formatted = $this->runChildPhp(
-            'error_log="' . $value . '"',
-            'echo (new SebastianBergmann\Environment\Runtime)->getCurrentSettings(["error_log"])["error_log"];',
+        $code = sprintf(
+            'require %s; %s',
+            var_export(dirname(__DIR__) . '/vendor/autoload.php', true),
+            $code,
         );
-
-        $roundTripped = $this->runChildPhp(
-            $formatted,
-            'echo ini_get("error_log");',
-            false,
-        );
-
-        $this->assertSame($value, $roundTripped);
-    }
-
-    private function runChildPhp(string $iniOverride, string $code, bool $autoload = true): string
-    {
-        if ($autoload) {
-            $code = sprintf(
-                'require %s; %s',
-                var_export(dirname(__DIR__) . '/vendor/autoload.php', true),
-                $code,
-            );
-        }
 
         $process = proc_open(
             [PHP_BINARY, '-d', $iniOverride, '-r', $code],

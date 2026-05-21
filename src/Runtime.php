@@ -13,7 +13,6 @@ use const INI_SCANNER_RAW;
 use const PHP_BINARY;
 use const PHP_SAPI;
 use const PHP_VERSION;
-use function addcslashes;
 use function array_map;
 use function array_merge;
 use function assert;
@@ -241,9 +240,7 @@ final class Runtime
      * passed via the `$values` parameter whether the runtime value
      * (`ini_get()`) differs from what the ini files specified.
      * Returns an array of `key=value` strings for the changed
-     * settings. The value is wrapped in double quotes (with `"` and
-     * `\` escaped) so the result is safe to pass back to PHP via
-     * the `-d` command-line flag.
+     * settings.
      *
      * @param list<string> $values
      *
@@ -265,7 +262,7 @@ final class Runtime
                 continue;
             }
 
-            $diff[$value] = sprintf('%s=%s', $value, $this->quoteIniValue($set));
+            $diff[$value] = sprintf('%s=%s', $value, $set);
         }
 
         return $diff;
@@ -372,10 +369,5 @@ final class Runtime
         }
 
         return $merged;
-    }
-
-    private function quoteIniValue(string $value): string
-    {
-        return '"' . addcslashes($value, '"\\') . '"';
     }
 }
