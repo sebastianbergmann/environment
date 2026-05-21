@@ -9,6 +9,7 @@
  */
 namespace SebastianBergmann\Environment;
 
+use const INI_SCANNER_NORMAL;
 use const PHP_BINARY;
 use const PHP_SAPI;
 use const PHP_VERSION;
@@ -23,17 +24,27 @@ use function ini_get;
 use function ini_get_all;
 use function is_array;
 use function is_int;
+use function is_string;
+use function json_decode;
 use function parse_ini_file;
 use function php_ini_loaded_file;
 use function php_ini_scanned_files;
 use function phpversion;
+use function proc_close;
+use function proc_open;
 use function sprintf;
+use function stream_get_contents;
 use function strrpos;
 use function version_compare;
 use function xdebug_info;
 
 final class Runtime
 {
+    /**
+     * @var ?array<string, string>
+     */
+    private static ?array $compiledDefaults = null;
+
     /**
      * Returns true when Xdebug or PCOV is available or
      * the runtime used is PHPDBG.
@@ -233,13 +244,14 @@ final class Runtime
 
     /**
      * Parses the loaded php.ini file (if any) as well as all
-     * additional php.ini files from the additional ini dir for
-     * a list of all configuration settings loaded from files
-     * at startup. Then checks for each php.ini setting passed
-     * via the `$values` parameter whether this setting has
-     * been changed at runtime. Returns an array of strings
-     * where each string has the format `key=value` denoting
-     * the name of a changed php.ini setting with its new value.
+     * additional php.ini files from the additional ini dir into a
+     * single merged map of settings, and also obtains the compiled-in
+     * defaults by spawning a `php -n` child once per process.
+     * Then checks for each setting passed via the `$values` parameter
+     * whether the runtime value (`ini_get()`) differs from what the
+     * ini files specified or, when a setting is not configured in any
+     * ini file, from the compiled-in default. Returns an array of
+     * `key=value` strings for the changed settings.
      *
      * @param list<string> $values
      *
@@ -247,41 +259,26 @@ final class Runtime
      */
     public function getCurrentSettings(array $values): array
     {
-        $diff  = [];
-        $files = [];
+        $iniFileValues    = $this->parseLoadedIniFiles();
+        $compiledDefaults = self::compiledDefaults();
+        $diff             = [];
 
-        $file = php_ini_loaded_file();
+        foreach ($values as $value) {
+            $set = ini_get($value);
 
-        if ($file !== false) {
-            $files[] = $file;
-        }
-
-        $scanned = php_ini_scanned_files();
-
-        if ($scanned !== false) {
-            $files = array_merge(
-                $files,
-                array_map(
-                    trim(...),
-                    explode(",\n", $scanned),
-                ),
-            );
-        }
-
-        foreach ($files as $ini) {
-            $config = parse_ini_file($ini, true);
-
-            foreach ($values as $value) {
-                $set = ini_get($value);
-
-                if ($set === false || $set === '') {
-                    continue;
-                }
-
-                if ((!isset($config[$value]) || ($set !== $config[$value]))) {
-                    $diff[$value] = sprintf('%s=%s', $value, $set);
-                }
+            if ($set === false) {
+                continue;
             }
+
+            if (isset($iniFileValues[$value]) && $iniFileValues[$value] === $set) {
+                continue;
+            }
+
+            if (!isset($iniFileValues[$value]) && ($compiledDefaults[$value] ?? null) === $set) {
+                continue;
+            }
+
+            $diff[$value] = sprintf('%s=%s', $value, $set);
         }
 
         return $diff;
@@ -344,5 +341,111 @@ final class Runtime
         }
 
         return false;
+    }
+
+    /**
+     * @return array<array-key, string>
+     */
+    private function parseLoadedIniFiles(): array
+    {
+        $files = [];
+
+        $file = php_ini_loaded_file();
+
+        if ($file !== false) {
+            $files[] = $file;
+        }
+
+        $scanned = php_ini_scanned_files();
+
+        if ($scanned !== false) {
+            $files = array_merge(
+                $files,
+                array_map(
+                    'trim',
+                    explode(",\n", $scanned),
+                ),
+            );
+        }
+
+        $merged = [];
+
+        foreach ($files as $ini) {
+            $parsed = parse_ini_file($ini, false, INI_SCANNER_NORMAL);
+
+            if ($parsed === false) {
+                continue;
+            }
+
+            foreach ($parsed as $key => $val) {
+                if (is_string($val)) {
+                    $merged[$key] = $val;
+                }
+            }
+        }
+
+        return $merged;
+    }
+
+    /**
+     * Returns the compiled-in default values of every ini setting by
+     * spawning a `php -n` child process once and caching the result
+     * for the lifetime of the PHP process. When the child cannot be
+     * launched or its output is unusable, an empty array is returned
+     * and cached so the failure is not retried.
+     *
+     * @return array<string, string>
+     */
+    private static function compiledDefaults(): array
+    {
+        if (self::$compiledDefaults !== null) {
+            return self::$compiledDefaults;
+        }
+
+        self::$compiledDefaults = [];
+
+        $process = proc_open(
+            [PHP_BINARY, '-n', '-r', 'echo json_encode(ini_get_all(null, true));'],
+            [1 => ['pipe', 'w']],
+            $pipes,
+        );
+
+        if ($process === false) {
+            return self::$compiledDefaults;
+        }
+
+        assert(isset($pipes[1]));
+
+        $stdout = stream_get_contents($pipes[1]);
+
+        proc_close($process);
+
+        if (!is_string($stdout) || $stdout === '') {
+            return self::$compiledDefaults;
+        }
+
+        $parsed = json_decode($stdout, true);
+
+        if (!is_array($parsed)) {
+            return self::$compiledDefaults;
+        }
+
+        foreach ($parsed as $key => $info) {
+            if (!is_string($key)) {
+                continue;
+            }
+
+            if (!is_array($info)) {
+                continue;
+            }
+
+            if (!isset($info['global_value']) || !is_string($info['global_value'])) {
+                continue;
+            }
+
+            self::$compiledDefaults[$key] = $info['global_value'];
+        }
+
+        return self::$compiledDefaults;
     }
 }

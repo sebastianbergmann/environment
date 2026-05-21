@@ -16,7 +16,6 @@ use function assert;
 use function dirname;
 use function extension_loaded;
 use function in_array;
-use function ini_get;
 use function is_array;
 use function json_decode;
 use function proc_close;
@@ -28,6 +27,7 @@ use function xdebug_info;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use PHPUnit\Framework\TestCase;
+use ReflectionProperty;
 
 #[CoversClass(Runtime::class)]
 final class RuntimeTest extends TestCase
@@ -142,31 +142,10 @@ final class RuntimeTest extends TestCase
 
     public function testSettingsChangedViaCliDFlagAreDetected(): void
     {
-        $process = proc_open(
-            [
-                PHP_BINARY,
-                '-d',
-                'disable_functions=phpinfo',
-                '-r',
-                sprintf(
-                    'require %s; echo json_encode((new SebastianBergmann\Environment\Runtime)->getSettingsNotChangeableAtRuntime());',
-                    var_export(dirname(__DIR__) . '/vendor/autoload.php', true),
-                ),
-            ],
-            [
-                1 => ['pipe', 'w'],
-            ],
-            $pipes,
+        $stdout = $this->runChildPhp(
+            'disable_functions=phpinfo',
+            'echo json_encode((new SebastianBergmann\Environment\Runtime)->getSettingsNotChangeableAtRuntime());',
         );
-
-        assert($process !== false);
-        assert(isset($pipes[1]));
-
-        $stdout = stream_get_contents($pipes[1]);
-
-        assert($stdout !== false);
-
-        proc_close($process);
 
         $result = json_decode($stdout, true);
 
@@ -181,19 +160,114 @@ final class RuntimeTest extends TestCase
         $this->assertSame([], (new Runtime)->getCurrentSettings([]));
     }
 
-    #[RequiresPhpExtension('xdebug')]
-    public function testGetCurrentSettingsReturnsCorrectDiffIfXdebugValuesArePassed(): void
-    {
-        if (ini_get('xdebug.mode') === '') {
-            $this->markTestSkipped('xdebug.mode must not be set to "off"');
-        }
-
-        $this->assertArrayHasKey('xdebug.mode', (new Runtime)->getCurrentSettings(['xdebug.mode']));
-    }
-
     public function testGetCurrentSettingsWillSkipSettingsThatIsNotSet(): void
     {
         $this->assertSame([], (new Runtime)->getCurrentSettings(['allow_url_include']));
+    }
+
+    public function testGetCurrentSettingsReturnsValuesVerbatim(): void
+    {
+        $value = 'phpstorm://open?file=%f&line=%l';
+
+        $stdout = $this->runChildPhp(
+            'error_log="' . $value . '"',
+            'echo json_encode((new SebastianBergmann\Environment\Runtime)->getCurrentSettings(["error_log"]));',
+        );
+
+        $result = json_decode($stdout, true);
+
+        assert(is_array($result));
+        assert(isset($result['error_log']));
+
+        $this->assertSame('error_log=' . $value, $result['error_log']);
+    }
+
+    public function testGetCurrentSettingsSkipsValuesThatEqualTheCompiledInDefaultWhenNoIniFileIsLoaded(): void
+    {
+        $stdout = $this->runChildPhpWithFlags(
+            ['-n'],
+            'echo json_encode((new SebastianBergmann\Environment\Runtime)->getCurrentSettings(["precision"]));',
+        );
+
+        $result = json_decode($stdout, true);
+
+        assert(is_array($result));
+
+        $this->assertArrayNotHasKey('precision', $result);
+    }
+
+    public function testGetCurrentSettingsReportsEmptyValueThatDiffersFromTheCompiledInDefault(): void
+    {
+        $stdout = $this->runChildPhpWithFlags(
+            ['-n', '-d', 'display_errors=Off'],
+            'echo json_encode((new SebastianBergmann\Environment\Runtime)->getCurrentSettings(["display_errors"]));',
+        );
+
+        $result = json_decode($stdout, true);
+
+        assert(is_array($result));
+
+        $this->assertSame('display_errors=', $result['display_errors'] ?? null);
+    }
+
+    public function testCompiledInDefaultsAreCachedAcrossInstances(): void
+    {
+        $property = new ReflectionProperty(Runtime::class, 'compiledDefaults');
+        $original = $property->getValue();
+
+        try {
+            $property->setValue(null, null);
+
+            (new Runtime)->getCurrentSettings(['precision']);
+
+            $afterFirstCall = $property->getValue();
+
+            $this->assertIsArray($afterFirstCall);
+            $this->assertNotEmpty($afterFirstCall);
+
+            $sentinel = ['__sentinel__' => 'cached'];
+            $property->setValue(null, $sentinel);
+
+            (new Runtime)->getCurrentSettings(['precision']);
+
+            $this->assertSame($sentinel, $property->getValue());
+        } finally {
+            $property->setValue(null, $original);
+        }
+    }
+
+    private function runChildPhp(string $iniOverride, string $code): string
+    {
+        return $this->runChildPhpWithFlags(['-d', $iniOverride], $code);
+    }
+
+    /**
+     * @param list<string> $flags
+     */
+    private function runChildPhpWithFlags(array $flags, string $code): string
+    {
+        $code = sprintf(
+            'require %s; %s',
+            var_export(dirname(__DIR__) . '/vendor/autoload.php', true),
+            $code,
+        );
+
+        $process = proc_open(
+            [PHP_BINARY, ...$flags, '-r', $code],
+            [1 => ['pipe', 'w']],
+            $pipes,
+        );
+
+        assert($process !== false);
+        assert(isset($pipes[1]));
+
+        $stdout = stream_get_contents($pipes[1]);
+
+        assert($stdout !== false);
+
+        proc_close($process);
+
+        return $stdout;
     }
 
     private function markTestSkippedWhenPcovIsLoaded(): void
