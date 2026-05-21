@@ -2,6 +2,12 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [8.1.1] - 2026-MM-DD
+
+### Fixed
+
+* [#64](https://github.com/sebastianbergmann/environment/issues/64): `Runtime::getCurrentSettings()` does not quote values, breaking `php -d` round-trip
+
 ## [8.1.0] - 2026-04-15
 
 ### Added
@@ -251,6 +257,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 5.6
 
+[8.1.1]: https://github.com/sebastianbergmann/environment/compare/8.1.0...8.1
 [8.1.0]: https://github.com/sebastianbergmann/environment/compare/8.0.4...8.1.0
 [8.0.4]: https://github.com/sebastianbergmann/environment/compare/8.0.3...8.0.4
 [8.0.3]: https://github.com/sebastianbergmann/environment/compare/8.0.2...8.0.3
