@@ -26,6 +26,7 @@ use function var_export;
 use function xdebug_info;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\RequiresPhpExtension;
+use PHPUnit\Framework\Attributes\Ticket;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
@@ -208,6 +209,27 @@ final class RuntimeTest extends TestCase
         assert(is_array($result));
 
         $this->assertSame('display_errors=', $result['display_errors'] ?? null);
+    }
+
+    #[Ticket('https://github.com/sebastianbergmann/environment/issues/99')]
+    public function testGetCurrentSettingsLeavesAloneEmptyValueAbsentFromIniFilesAndCompiledInDefaults(): void
+    {
+        // A setting whose runtime value is the empty string but that is absent from both the
+        // loaded ini files and the compiled-in defaults (e.g. an ini setting of an extension
+        // loaded only via php.ini, which the `php -n` probe does not load) must not be
+        // forwarded as an empty `-d key=` override to child processes.
+        $stdout = $this->runChildPhpWithFlags(
+            ['-n', '-d', 'error_log='],
+            '$property = new ReflectionProperty(SebastianBergmann\Environment\Runtime::class, "compiledDefaults");' .
+            '$property->setValue(null, ["precision" => "14"]);' .
+            'echo json_encode((new SebastianBergmann\Environment\Runtime)->getCurrentSettings(["error_log"]));',
+        );
+
+        $result = json_decode($stdout, true);
+
+        assert(is_array($result));
+
+        $this->assertArrayNotHasKey('error_log', $result);
     }
 
     public function testCompiledInDefaultsAreCachedAcrossInstances(): void

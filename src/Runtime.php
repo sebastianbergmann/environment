@@ -13,6 +13,7 @@ use const INI_SCANNER_NORMAL;
 use const PHP_BINARY;
 use const PHP_SAPI;
 use const PHP_VERSION;
+use function array_key_exists;
 use function array_map;
 use function array_merge;
 use function assert;
@@ -253,6 +254,15 @@ final class Runtime
      * ini file, from the compiled-in default. Returns an array of
      * `key=value` strings for the changed settings.
      *
+     * A setting whose runtime value is the empty string but that is
+     * absent from both the ini files and the compiled-in defaults is
+     * left alone: there is no evidence that it was overridden, so it
+     * is not forwarded. This avoids spurious empty overrides for
+     * settings of extensions that are not visible to the compiled-in
+     * defaults probe (e.g. extensions loaded only via php.ini), which
+     * would otherwise break child processes (see
+     * https://github.com/sebastianbergmann/environment/issues/99).
+     *
      * @param list<string> $values
      *
      * @return array<string, string>
@@ -275,6 +285,12 @@ final class Runtime
             }
 
             if (!isset($iniFileValues[$value]) && ($compiledDefaults[$value] ?? null) === $set) {
+                continue;
+            }
+
+            if ($set === '' &&
+                !isset($iniFileValues[$value]) &&
+                !array_key_exists($value, $compiledDefaults)) {
                 continue;
             }
 
