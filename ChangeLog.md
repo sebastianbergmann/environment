@@ -2,6 +2,12 @@
 
 All notable changes in `sebastianbergmann/environment` are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [9.3.2] - 2026-MM-DD
+
+### Fixed
+
+* [#99](https://github.com/sebastianbergmann/environment/issues/99): `Runtime::getCurrentSettings()` forwards empty-string overrides for php.ini-only extensions
+
 ## [9.3.1] - 2026-05-21
 
 ### Fixed
@@ -37,6 +43,12 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 ### Removed
 
 * This component is no longer supported on PHP 8.3
+
+## [8.1.2] - 2026-MM-DD
+
+### Fixed
+
+* [#99](https://github.com/sebastianbergmann/environment/issues/99): `Runtime::getCurrentSettings()` forwards empty-string overrides for php.ini-only extensions
 
 ## [8.1.1] - 2026-05-21
 
@@ -299,7 +311,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 [9.1.0]: https://github.com/sebastianbergmann/environment/compare/9.0.1...9.1.0
 [9.0.1]: https://github.com/sebastianbergmann/environment/compare/9.0.0...9.0.1
 [9.0.0]: https://github.com/sebastianbergmann/environment/compare/8.1...9.0.0
-[8.1.1]: https://github.com/sebastianbergmann/environment/compare/8.1.0...8.1
+[8.1.2]: https://github.com/sebastianbergmann/environment/compare/8.1.1...8.1
 [8.1.1]: https://github.com/sebastianbergmann/environment/compare/8.1.0...8.1.1
 [8.1.0]: https://github.com/sebastianbergmann/environment/compare/8.0.4...8.1.0
 [8.0.4]: https://github.com/sebastianbergmann/environment/compare/8.0.3...8.0.4
