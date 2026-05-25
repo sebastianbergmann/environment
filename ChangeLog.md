@@ -44,7 +44,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 
 * This component is no longer supported on PHP 8.3
 
-## [8.1.2] - 2026-MM-DD
+## [8.1.2] - 2026-05-25
 
 ### Fixed
 
@@ -311,7 +311,7 @@ All notable changes in `sebastianbergmann/environment` are documented in this fi
 [9.1.0]: https://github.com/sebastianbergmann/environment/compare/9.0.1...9.1.0
 [9.0.1]: https://github.com/sebastianbergmann/environment/compare/9.0.0...9.0.1
 [9.0.0]: https://github.com/sebastianbergmann/environment/compare/8.1...9.0.0
-[8.1.2]: https://github.com/sebastianbergmann/environment/compare/8.1.1...8.1
+[8.1.2]: https://github.com/sebastianbergmann/environment/compare/8.1.1...8.1.2
 [8.1.1]: https://github.com/sebastianbergmann/environment/compare/8.1.0...8.1.1
 [8.1.0]: https://github.com/sebastianbergmann/environment/compare/8.0.4...8.1.0
 [8.0.4]: https://github.com/sebastianbergmann/environment/compare/8.0.3...8.0.4
