@@ -33,6 +33,7 @@ use function php_ini_scanned_files;
 use function phpversion;
 use function proc_close;
 use function proc_open;
+use function reset;
 use function sprintf;
 use function stream_get_contents;
 use function strrpos;
@@ -247,7 +248,8 @@ final class Runtime
      * Parses the loaded php.ini file (if any) as well as all
      * additional php.ini files from the additional ini dir into a
      * single merged map of settings, and also obtains the compiled-in
-     * defaults by spawning a `php -n` child once per process.
+     * defaults (read in-process from ini_get_all() where available,
+     * otherwise by spawning a `php -n` child once per process).
      * Then checks for each setting passed via the `$values` parameter
      * whether the runtime value (`ini_get()`) differs from what the
      * ini files specified or, when a setting is not configured in any
@@ -404,11 +406,16 @@ final class Runtime
     }
 
     /**
-     * Returns the compiled-in default values of every ini setting by
-     * spawning a `php -n` child process once and caching the result
-     * for the lifetime of the PHP process. When the child cannot be
-     * launched or its output is unusable, an empty array is returned
-     * and cached so the failure is not retried.
+     * Returns the compiled-in default values of every ini setting,
+     * caching the result for the lifetime of the PHP process.
+     *
+     * On PHP versions where ini_get_all() exposes the
+     * `builtin_default_value` of each setting (see
+     * https://github.com/php/php-src/issues/22133) the defaults are
+     * read in-process. On older versions they are
+     * obtained by spawning a `php -n` child process once, which is
+     * avoided where possible because forking can trigger unwanted
+     * side effects from extension fork handlers.
      *
      * @return array<string, string>
      */
@@ -418,6 +425,42 @@ final class Runtime
             return self::$compiledDefaults;
         }
 
+        $allSettings = ini_get_all(null, true);
+
+        if ($allSettings !== false) {
+            $first = reset($allSettings);
+
+            if (is_array($first) && array_key_exists('builtin_default_value', $first)) {
+                self::$compiledDefaults = [];
+
+                foreach ($allSettings as $key => $info) {
+                    if (!is_string($key) || !is_array($info)) {
+                        continue;
+                    }
+
+                    if (isset($info['builtin_default_value']) && is_string($info['builtin_default_value'])) {
+                        self::$compiledDefaults[$key] = $info['builtin_default_value'];
+                    }
+                }
+
+                return self::$compiledDefaults;
+            }
+        }
+
+        return self::compiledDefaultsViaChildProcess();
+    }
+
+    /**
+     * Returns the compiled-in default values of every ini setting by
+     * spawning a `php -n` child process once and caching the result
+     * for the lifetime of the PHP process. When the child cannot be
+     * launched or its output is unusable, an empty array is returned
+     * and cached so the failure is not retried.
+     *
+     * @return array<string, string>
+     */
+    private static function compiledDefaultsViaChildProcess(): array
+    {
         self::$compiledDefaults = [];
 
         $process = proc_open(
