@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => '8.1.x-dev',
         'version' => '8.1.9999999.9999999-dev',
-        'reference' => 'e674ff0d0b8ab5e6b7bd839d40faf0a69d622f73',
+        'reference' => '426216319d468fa624dba0ea5f11c681e87c2342',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => '8.1.x-dev',
             'version' => '8.1.9999999.9999999-dev',
-            'reference' => 'e674ff0d0b8ab5e6b7bd839d40faf0a69d622f73',
+            'reference' => '426216319d468fa624dba0ea5f11c681e87c2342',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
