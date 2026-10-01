@@ -43,6 +43,22 @@ use function xdebug_info;
 final class Runtime
 {
     /**
+     * Settings that the CLI SAPI overrides at startup, before any
+     * php.ini file is loaded (see HARDCODED_INI and
+     * sapi_cli_ini_defaults() in sapi/cli/php_cli.c). Their
+     * `builtin_default_value` reported by ini_get_all() is not
+     * the value a `php` child process starts with.
+     */
+    private const array CLI_SAPI_DEFAULTS = [
+        'display_errors'     => '1',
+        'html_errors'        => '0',
+        'implicit_flush'     => '1',
+        'max_execution_time' => '0',
+        'max_input_time'     => '-1',
+        'output_buffering'   => '0',
+    ];
+
+    /**
      * @var ?array<string, string>
      */
     private static ?array $compiledDefaults = null;
@@ -402,6 +418,10 @@ final class Runtime
      * avoided where possible because forking can trigger unwanted
      * side effects from extension fork handlers.
      *
+     * When running on the CLI SAPI, the in-process defaults are
+     * amended with the settings the CLI SAPI overrides at startup so
+     * that they match what a `php -n` child process would report.
+     *
      * @return array<string, string>
      */
     private static function compiledDefaults(): array
@@ -426,6 +446,10 @@ final class Runtime
                     if (isset($info['builtin_default_value']) && is_string($info['builtin_default_value'])) {
                         self::$compiledDefaults[$key] = $info['builtin_default_value'];
                     }
+                }
+
+                if (PHP_SAPI === 'cli') {
+                    self::$compiledDefaults = array_merge(self::$compiledDefaults, self::CLI_SAPI_DEFAULTS);
                 }
 
                 return self::$compiledDefaults;

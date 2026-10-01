@@ -236,6 +236,54 @@ final class RuntimeTest extends TestCase
         }
     }
 
+    public function testCompiledInDefaultsReflectSettingsOverriddenByTheCliSapi(): void
+    {
+        $this->markTestSkippedWhenRunningOnPhpdbg();
+
+        // The built-in defaults of these settings are html_errors=1, implicit_flush=0, and
+        // max_execution_time=30, but the CLI SAPI overrides them at startup.
+        $property = new ReflectionProperty(Runtime::class, 'compiledDefaults');
+        $original = $property->getValue();
+
+        try {
+            $property->setValue(null, null);
+
+            (new Runtime)->getCurrentSettings([]);
+
+            $defaults = $property->getValue();
+
+            $this->assertIsArray($defaults);
+            $this->assertSame('0', $defaults['html_errors'] ?? null);
+            $this->assertSame('1', $defaults['implicit_flush'] ?? null);
+            $this->assertSame('0', $defaults['max_execution_time'] ?? null);
+        } finally {
+            $property->setValue(null, $original);
+        }
+    }
+
+    public function testGetCurrentSettingsReportsBuiltInDefaultValuesThatDifferFromTheDefaultsOfTheCliSapi(): void
+    {
+        // A child process started with the CLI SAPI would not use these values, which are the
+        // built-in defaults of these settings, unless they are forwarded.
+        $stdout = $this->runChildPhpWithFlags(
+            ['-n', '-d', 'html_errors=1', '-d', 'implicit_flush=0', '-d', 'max_execution_time=30'],
+            'echo json_encode((new SebastianBergmann\Environment\Runtime)->getCurrentSettings(["html_errors", "implicit_flush", "max_execution_time"]));',
+        );
+
+        $result = json_decode($stdout, true);
+
+        assert(is_array($result));
+
+        $this->assertSame(
+            [
+                'html_errors'        => 'html_errors=1',
+                'implicit_flush'     => 'implicit_flush=0',
+                'max_execution_time' => 'max_execution_time=30',
+            ],
+            $result,
+        );
+    }
+
     private function runChildPhp(string $iniOverride, string $code): string
     {
         return $this->runChildPhpWithFlags(['-d', $iniOverride], $code);
