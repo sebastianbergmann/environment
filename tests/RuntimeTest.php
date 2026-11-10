@@ -14,6 +14,7 @@ use const PHP_SAPI;
 use const PHP_VERSION;
 use function assert;
 use function dirname;
+use function escapeshellarg;
 use function extension_loaded;
 use function in_array;
 use function is_array;
@@ -71,12 +72,12 @@ final class RuntimeTest extends TestCase
 
     public function testBinaryCanBeRetrieved(): void
     {
-        $this->assertNotEmpty((new Runtime)->getBinary());
+        $this->assertSame(escapeshellarg(PHP_BINARY), (new Runtime)->getBinary());
     }
 
     public function testRawBinaryCanBeRetrieved(): void
     {
-        $this->assertNotEmpty((new Runtime)->getRawBinary());
+        $this->assertSame(PHP_BINARY, (new Runtime)->getRawBinary());
     }
 
     public function testIsPhpReturnsTrueWhenRunningOnPhp(): void
@@ -109,7 +110,9 @@ final class RuntimeTest extends TestCase
 
     public function testNameAndVersionCanBeRetrieved(): void
     {
-        $this->assertNotEmpty((new Runtime)->getNameWithVersion());
+        $runtime = new Runtime;
+
+        $this->assertSame($runtime->getName() . ' ' . PHP_VERSION, $runtime->getNameWithVersion());
     }
 
     public function testGetNameReturnsPhpdbgWhenRunningOnPhpdbg(): void
@@ -128,7 +131,9 @@ final class RuntimeTest extends TestCase
 
     public function testNameAndCodeCoverageDriverCanBeRetrieved(): void
     {
-        $this->assertNotEmpty((new Runtime)->getNameWithVersionAndCodeCoverageDriver());
+        $runtime = new Runtime;
+
+        $this->assertStringStartsWith($runtime->getName() . ' ' . PHP_VERSION, $runtime->getNameWithVersionAndCodeCoverageDriver());
     }
 
     public function testGetVersionReturnsPhpVersionWhenRunningPhp(): void
@@ -245,7 +250,7 @@ final class RuntimeTest extends TestCase
             $afterFirstCall = $property->getValue();
 
             $this->assertIsArray($afterFirstCall);
-            $this->assertNotEmpty($afterFirstCall);
+            $this->assertNotCount(0, $afterFirstCall);
 
             $sentinel = ['__sentinel__' => 'cached'];
             $property->setValue(null, $sentinel);
