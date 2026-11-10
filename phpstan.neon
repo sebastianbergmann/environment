@@ -38,5 +38,13 @@ parameters:
         privateInFinalClass:
             enabled: true
 
+    ignoreErrors:
+        # ignore usage of deprecated functionality in the tests for that functionality
+        -
+            message: '#^Call to deprecated method get(?:Raw)?Binary\(\) of class SebastianBergmann\\Environment\\Runtime\.$#'
+            identifier: method.deprecated
+            path: tests/RuntimeTest.php
+            count: 2
+
 includes:
 	- phar://phpstan.phar/conf/bleedingEdge.neon
